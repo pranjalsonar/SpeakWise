@@ -312,3 +312,28 @@
 - Understand every generated file and folder
 - Run the frontend locally
 - Create the first SpeakWise homepage
+
+2026-08-08
+# SpeakWise Development Log
+
+## Session 9
+
+### Completed
+
+- Created first reusable React component (Navbar)
+- Generated component using Codex
+- Created Navbar.css
+- Imported Navbar into App.tsx
+- Successfully ran React application using Vite
+- Learned React component structure
+- Understood React import/export workflow
+- Fixed npm package.json directory issue
+- Successfully rendered first UI component
+
+---
+
+## Next Session
+
+- Build Hero component
+- Learn React Props
+- Create reusable Button component
