@@ -332,8 +332,41 @@
 
 ---
 
+2026-08-10
+# SpeakWise Development Log
+
+## Session 13
+
+### Completed
+
+- Installed FastAPI
+- Installed Uvicorn
+- Generated requirements.txt
+- Created first FastAPI application
+- Learned FastAPI project structure
+- Learned API endpoints
+- Learned how Uvicorn works
+- Debugged module import issue (apps → app)
+- Successfully started local backend server
+- Tested API using browser
+- Verified JSON response from root endpoint
+
+---
+
+## Skills Learned
+
+- FastAPI fundamentals
+- Uvicorn server
+- API routing
+- JSON responses
+- Python module resolution
+- Backend project structure
+
+---
+
 ## Next Session
 
-- Build Hero component
-- Learn React Props
-- Create reusable Button component
+- Learn HTTP methods (GET vs POST)
+- Learn path operations
+- Build first real API
+- Test APIs using Swagger
