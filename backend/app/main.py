@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.api.routes.users import router as user_router
 from app.api.routes.health import router as health_router
 from app.api.routes.speech import router as speech_router
+from app.api.routes.auth import router as auth_router
 
 from app.core.config import settings
 
@@ -20,3 +21,4 @@ app = FastAPI(
 app.include_router(health_router)
 app.include_router(speech_router)
 app.include_router(user_router)
+app.include_router(auth_router)
