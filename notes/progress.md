@@ -1,296 +1,372 @@
-SpeakWise - Backend Development Notes
-Progress Log (Sprint 1 & Sprint 2)
-Last Updated: 11 August 2026
-Project Overview
-SpeakWise is an AI-powered Public Speaking Coach that analyzes:
-Speech content
-Voice characteristics
-Eye contact
-Hand gestures
-Body posture
-Facial expressions
-The backend is being developed using FastAPI, following a layered architecture to keep the project scalable and maintainable.
-Current Backend Architecture
-Client
-    │
-    ▼
-FastAPI Routes
-    │
-    ▼
-Service Layer
-    │
-    ▼
-CRUD Layer
-    │
-    ▼
-SQLAlchemy ORM
-    │
-    ▼
-PostgreSQL
-Each layer has a single responsibility.
-Folder Structure
-backend/
-│
-├── app/
-│   │
-│   ├── api/
-│   │    └── routes/
-│   │          ├── health.py
-│   │          ├── speech.py
-│   │          ├── users.py
-│   │          └── auth.py
-│   │
-│   ├── auth/
-│   │      ├── hashing.py
-│   │      └── jwt_handler.py
-│   │
-│   ├── core/
-│   │      └── config.py
-│   │
-│   ├── crud/
-│   │      └── user.py
-│   │
-│   ├── db/
-│   │      ├── database.py
-│   │      └── session.py
-│   │
-│   ├── models/
-│   │      └── user.py
-│   │
-│   ├── schemas/
-│   │      ├── speech.py
-│   │      ├── user.py
-│   │      └── auth.py
-│   │
-│   ├── services/
-│   │      ├── speech_service.py
-│   │      ├── user_service.py
-│   │      └── auth_service.py
-│   │
-│   └── main.py
-│
-├── requirements.txt
-├── .env
-└── README.md
-Sprint 1 - Backend Foundation
-Completed
-FastAPI Setup
-Created the FastAPI application.
-Configured:
-Project Name
-Version
-Host
-Port
-Swagger documentation available at:
-/docs
-Configuration Management
-Introduced:
-app/core/config.py
-Purpose:
-Centralize application configuration.
-Load environment variables from .env.
-Current configuration:
-Project Name
-Version
-Host
-Port
-JWT Secret
-JWT Algorithm
-JWT Expiry
-Health Endpoint
-Implemented a simple health route to verify the backend is operational.
-Speech Endpoint
-Created the initial speech route and service.
-At present, this is a placeholder used to validate API architecture.
-Future versions will integrate Whisper and AI analysis.
-Service Layer
-Business logic is separated from routes.
-Routes never contain business logic.
-Schemas
-Implemented Pydantic schemas for request and response validation.
-Sprint 2 - Database Integration
-PostgreSQL
-Installed:
-PostgreSQL 17
-pgAdmin 4
-Created database:
-speakwise_db
-SQLAlchemy
-Installed:
-SQLAlchemy
-Alembic
-psycopg2
-Connected FastAPI to PostgreSQL.
-Database Layer
-Created:
-database.py
-Contains:
-Engine
-SessionLocal
-Base
-Session Management
-Created:
-session.py
-Purpose:
-Open database connection
-Yield session
-Automatically close session
-Uses FastAPI dependency injection.
-Models
-Created first SQLAlchemy model:
-User
-Fields:
-id
-name
-email
-password
-Automatic Table Creation
-Current implementation:
-Base.metadata.create_all()
-Used only during development.
-Future production version will use Alembic migrations.
-CRUD Layer
-Created:
-crud/user.py
-Responsibilities:
-Retrieve user by email
-Create user
-No business logic exists in CRUD.
-CRUD only communicates with the database.
-User Schemas
-Created:
-UserCreate
-UserResponse
-Important design decision:
-Passwords are never returned by the API.
-User Registration
-Implemented:
-POST /users/register
-Flow:
-Client
+2026-08-08
 
-↓
+# SpeakWise Development Log
 
-Validation
+## Session 1
 
-↓
+### Completed
 
-Service
+- Finalized project idea: SpeakWise – AI Powered Public Speaking Coach
+- Defined the primary objective of improving public speaking confidence and communication skills
+- Identified target audience (students and learners)
+- Defined major project features
+- Planned Random Topic and Custom Topic speaking modes
+- Planned timed preparation phase (15-minute reading and note-taking)
+- Planned configurable speech duration (1, 3, or 5 minutes)
+- Planned speech evaluation workflow
+- Planned personalized improvement recommendations
+- Defined overall user journey
 
-↓
+### Concepts Learned
 
-CRUD
+- Problem Statement
+- Product Vision
+- User Flow Design
+- MVP (Minimum Viable Product)
 
-↓
+### Deliverables
 
-PostgreSQL
-Implemented:
-Duplicate email detection
-User insertion
-Response model
-Password Security
-Initially passwords were stored as plain text.
-This was replaced with bcrypt hashing.
-Created:
-auth/hashing.py
-Functions:
-hash_password()
-verify_password()
-Passwords are now hashed before storage.
-Dependency Issue Resolved
-Encountered compatibility issue:
-passlib 1.7.4
-with
-bcrypt 5.0.0
-Resolution:
-Downgraded bcrypt to:
-bcrypt==4.0.1
-Recommendation:
-Pin dependency versions inside requirements.txt.
-Authentication Module
-Created:
-auth/jwt_handler.py
-Responsibilities:
-JWT creation
-Expiry
-Signing
-Configuration loaded from:
-.env
-instead of hardcoding secrets.
-Login Schemas
-Created:
-LoginRequest
+- Initial project concept
+- User workflow
 
-Token
-Used for authentication APIs.
-Authentication Service
-Created:
-auth_service.py
-Responsibilities:
-Verify email
-Verify hashed password
-Generate JWT
-Return access token
-Authentication Route
-Created:
-POST /auth/login
-Flow:
-Client
+---
 
-↓
+## Session 2
 
-Find User
+### Completed
 
-↓
+- Planned complete 7-week project roadmap
+- Identified major technologies required
+- Researched similar platforms and competitors
+- Compared competitor strengths and weaknesses
+- Prepared mentor pitch document
+- Prepared quick-read project proposal
+- Identified research scope
+- Selected Multi-Agent AI architecture
+- Identified use of NLP, Machine Learning, RAG, LLMs and Computer Vision
 
-Verify Password
+### Concepts Learned
 
-↓
+- Product Planning
+- AI System Architecture
+- Multi-Agent Systems
+- Retrieval-Augmented Generation (RAG)
 
-Generate JWT
+### Deliverables
 
-↓
+- Project roadmap
+- Mentor proposal
+- Technology stack document
 
-Return Access Token
-Current Backend Capabilities
-✔ FastAPI
-✔ Swagger Documentation
-✔ PostgreSQL
-✔ SQLAlchemy ORM
-✔ Layered Architecture
-✔ Environment Configuration
-✔ User Registration
-✔ Duplicate Email Validation
-✔ Password Hashing
-✔ JWT Generation
-✔ Login Endpoint
-Architecture Principles
-The project follows strict separation of concerns.
-Routes
-Responsible only for:
-Receiving requests
-Returning responses
-No business logic.
-Services
-Responsible for:
-Business rules
-Validation
-Authentication
-Password hashing
-No SQL queries.
-CRUD
-Responsible only for:
-Database operations
-No validation or business logic.
-Models
-Represent database tables.
-Schemas
-Represent request/response payloads.
-Next Sprint
-Authentication Completion
-Remaining:
-JWT verification
-Protected routes
-Current authenticated user
-Logout
-Refresh token (optional)
+---
+
+## Session 3
+
+### Completed
+
+- Created SpeakWise project directory
+- Opened project in VS Code
+- Created project folder structure
+- Created:
+  - backend/
+  - frontend/
+  - docs/
+  - datasets/
+  - research_papers/
+- Created PROJECT_VISION.md
+- Learned Markdown (.md) files and their purpose
+
+### Concepts Learned
+
+- Project organization
+- Documentation-first development
+- Markdown basics
+
+### Deliverables
+
+- Organized project structure
+- Project documentation
+
+---
+
+## Session 4
+
+### Completed
+
+- Verified Python installation
+- Verified pip installation
+- Created Python virtual environment (.venv)
+- Solved PowerShell activation issue
+- Successfully activated virtual environment
+
+### Concepts Learned
+
+- Python virtual environments
+- PowerShell execution
+- Python environment isolation
+
+### Issues Faced
+
+- PowerShell could not locate activation script
+
+### Solution
+
+- Verified virtual environment structure
+- Used correct activation command
+- Successfully activated virtual environment
+
+### Deliverables
+
+- Working Python development environment
+
+---
+
+## Session 5
+
+### Completed
+
+- Installed Git
+- Learned Git fundamentals
+- Initialized local Git repository
+- Created GitHub repository (SpeakWise)
+- Learned difference between Git and GitHub
+- Learned local vs remote repositories
+- Learned branches and version control
+
+### Concepts Learned
+
+- Version Control
+- Repository
+- Commit
+- Branch
+- Remote Repository
+
+### Deliverables
+
+- Local Git repository
+- Remote GitHub repository
+
+---
+
+## Session 6
+
+### Completed
+
+- Installed Node.js LTS
+- Installed npm
+- Verified Node.js installation
+- Verified npm installation
+- Learned why React requires Node.js
+- Learned purpose of npm
+- Learned purpose of Vite
+- Understood frontend vs backend architecture
+- Understood APIs and JSON communication
+- Understood React's role in the application
+
+### Concepts Learned
+
+- Node.js
+- npm
+- React ecosystem
+- APIs
+- JSON
+- Frontend architecture
+- Backend architecture
+
+### Deliverables
+
+- JavaScript development environment
+
+---
+
+## Session 7
+
+### Completed
+
+- Created PROJECT_RULES.md
+- Created DEVELOPMENT_LOG.md
+- Learned professional project documentation practices
+- Learned importance of maintaining development logs
+
+### Concepts Learned
+
+- Software engineering documentation
+- Project management
+- Development tracking
+
+### Deliverables
+
+- Development documentation
+- Project rules
+
+---
+
+## Session 8
+
+### Completed
+
+- Renamed Git branch from master to main
+- Connected local repository to GitHub remote
+- Created .gitignore
+- Removed virtual environment from Git tracking
+- Learned why .venv should never be committed
+- Successfully pushed project to GitHub
+- Verified remote repository synchronization
+
+### Concepts Learned
+
+- .gitignore
+- Git remote
+- Git push
+- Repository synchronization
+- Clean repository practices
+
+### Issues Faced
+
+- Git was tracking the entire .venv folder
+
+### Solution
+
+- Added .venv to .gitignore
+- Removed cached .venv using:
+  - `git rm -r --cached .venv`
+- Committed cleanup
+- Successfully pushed clean repository
+
+### Git Commit
+
+- Initial project setup and add .gitignore
+
+### Deliverables
+
+- Clean GitHub repository
+- Professional repository structure
+
+---
+
+# Overall Progress
+
+## Completed
+
+### Planning
+
+- ✅ Project finalized
+- ✅ User workflow finalized
+- ✅ Technology stack selected
+- ✅ Development roadmap created
+- ✅ Multi-agent architecture planned
+
+### Development Environment
+
+- ✅ Python
+- ✅ pip
+- ✅ Virtual Environment
+- ✅ Git
+- ✅ GitHub
+- ✅ Node.js
+- ✅ npm
+- ✅ VS Code
+
+### Documentation
+
+- ✅ PROJECT_VISION.md
+- ✅ PROJECT_RULES.md
+- ✅ DEVELOPMENT_LOG.md
+
+### Version Control
+
+- ✅ Local Repository
+- ✅ Remote Repository
+- ✅ .gitignore
+- ✅ Clean Git History
+
+---
+
+# Current Project Status
+
+🟢 Planning Phase: **100% Complete**
+
+🟢 Development Environment: **100% Complete**
+
+🟢 Documentation: **100% Complete**
+
+🟢 Version Control Setup: **100% Complete**
+
+🟡 Frontend Development: **0% (Starting Next)**
+
+🟡 Backend Development: **0%**
+
+🟡 Database Setup: **0%**
+
+🟡 AI Agents: **0%**
+
+🟡 Deployment: **0%**
+
+---
+
+# Next Session
+
+- Learn React fundamentals
+- Understand Vite project generation
+- Create the SpeakWise React application
+- Understand every generated file and folder
+- Run the frontend locally
+- Create the first SpeakWise homepage
+
+2026-08-08
+# SpeakWise Development Log
+
+## Session 9
+
+### Completed
+
+- Created first reusable React component (Navbar)
+- Generated component using Codex
+- Created Navbar.css
+- Imported Navbar into App.tsx
+- Successfully ran React application using Vite
+- Learned React component structure
+- Understood React import/export workflow
+- Fixed npm package.json directory issue
+- Successfully rendered first UI component
+
+---
+
+2026-08-10
+# SpeakWise Development Log
+
+## Session 13
+
+### Completed
+
+- Installed FastAPI
+- Installed Uvicorn
+- Generated requirements.txt
+- Created first FastAPI application
+- Learned FastAPI project structure
+- Learned API endpoints
+- Learned how Uvicorn works
+- Debugged module import issue (apps → app)
+- Successfully started local backend server
+- Tested API using browser
+- Verified JSON response from root endpoint
+
+---
+
+## Skills Learned
+
+- FastAPI fundamentals
+- Uvicorn server
+- API routing
+- JSON responses
+- Python module resolution
+- Backend project structure
+
+---
+
+## Next Session
+
+- Learn HTTP methods (GET vs POST)
+- Learn path operations
+- Build first real API
+- Test APIs using Swagger
