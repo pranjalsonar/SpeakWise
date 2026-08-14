@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 from app.db.database import Base
 
@@ -13,3 +14,10 @@ class User(Base):
     email = Column(String, unique=True, index=True)
 
     password = Column(String, nullable=False)
+
+    # Relationship: One User -> Many Practice Sessions
+    practice_sessions = relationship(
+        "PracticeSession",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
