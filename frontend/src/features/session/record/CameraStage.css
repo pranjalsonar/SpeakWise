@@ -1,0 +1,121 @@
+.camera-stage {
+  position: relative;
+  overflow: hidden;
+  background: repeating-linear-gradient(135deg, #2a2723 0 12px, #26231f 12px 24px);
+  color: var(--on-dark);
+}
+
+.camera-stage--fill {
+  position: absolute;
+  inset: 0;
+}
+
+.camera-stage--framed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 36px;
+  background: repeating-linear-gradient(135deg, #2a2723 0 14px, #26231f 14px 28px);
+}
+
+.camera-stage__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  /* Mirror the preview only — the recorded file is not mirrored. */
+  transform: scaleX(-1);
+}
+
+.camera-stage__placeholder,
+.camera-stage__head,
+.camera-stage__body,
+.camera-stage__guide {
+  position: absolute;
+}
+
+.camera-stage__placeholder {
+  inset: 0;
+}
+
+.camera-stage__head,
+.camera-stage__body {
+  left: 50%;
+  background: var(--neutral-800);
+}
+
+.camera-stage__head {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.camera-stage__guide {
+  left: 50%;
+  border: 2px dashed rgba(249, 244, 237, 0.35);
+}
+
+/* Mobile full-screen geometry */
+.camera-stage--fill .camera-stage__head {
+  top: 29%;
+  margin-left: -75px;
+}
+
+.camera-stage--fill .camera-stage__body {
+  top: calc(29% + 165px);
+  width: 300px;
+  height: 260px;
+  margin-left: -150px;
+  border-radius: 150px 150px 0 0;
+}
+
+.camera-stage--fill .camera-stage__guide {
+  top: calc(29% - 40px);
+  width: 230px;
+  height: 300px;
+  margin-left: -115px;
+  border-radius: 115px;
+}
+
+/* Top and bottom fades keep overlaid text readable over live video. */
+.camera-stage__fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--camera-bg), rgba(31, 29, 26, 0)) top / 100% 200px no-repeat,
+    linear-gradient(rgba(31, 29, 26, 0), var(--camera-bg) 55%) bottom / 100% 340px no-repeat;
+  pointer-events: none;
+}
+
+/* Desktop framed geometry */
+.camera-stage--framed .camera-stage__head {
+  top: 22%;
+  margin-left: -75px;
+}
+
+.camera-stage--framed .camera-stage__body {
+  bottom: 0;
+  width: 340px;
+  height: 190px;
+  margin-left: -170px;
+  border-radius: 170px 170px 0 0;
+}
+
+.camera-stage--framed .camera-stage__guide {
+  top: 14%;
+  width: 220px;
+  height: 290px;
+  margin-left: -110px;
+  border-radius: 110px;
+  border-color: rgba(249, 244, 237, 0.3);
+}
+
+.camera-stage__label {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(249, 244, 237, 0.5);
+}

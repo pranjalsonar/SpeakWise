@@ -1,0 +1,67 @@
+.step-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: stretch;
+  padding: 18px 20px;
+  border-radius: 28px;
+  background: var(--color-surface);
+  text-align: left;
+}
+
+.step-checklist__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+}
+
+.step-checklist__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.step-checklist__item--done,
+.step-checklist__item--active {
+  font-weight: 700;
+}
+
+.step-checklist__item--done .step-checklist__icon {
+  background: var(--sage-600);
+  color: var(--on-dark);
+}
+
+.step-checklist__item--active .step-checklist__icon {
+  border: 3px solid var(--color-accent);
+  border-right-color: transparent;
+  animation: spin 0.9s linear infinite;
+}
+
+.step-checklist__item--todo {
+  color: var(--neutral-700);
+}
+
+.step-checklist__item--todo .step-checklist__icon {
+  border: 2px solid var(--neutral-400);
+}
+
+@media (min-width: 768px) {
+  .step-checklist {
+    gap: 14px;
+    padding: 22px 26px;
+    border-radius: var(--radius-card);
+  }
+
+  .step-checklist__item {
+    font-size: 16px;
+  }
+
+  .step-checklist__icon {
+    width: 28px;
+    height: 28px;
+  }
+}

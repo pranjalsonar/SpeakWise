@@ -1,0 +1,132 @@
+/* Mobile order: greeting, start card, stats, today's topic, recent sessions. */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.home-page__greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-page__title {
+  font-size: 26px;
+  line-height: 1.15;
+}
+
+.home-page__subtitle {
+  font-size: 16px;
+  color: var(--neutral-700);
+}
+
+/* On mobile the hero grid dissolves so the stats can sit between its two cards. */
+.home-page__hero {
+  display: contents;
+}
+
+.home-page__start {
+  order: 1;
+}
+
+.home-page__stats {
+  order: 2;
+}
+
+.home-page__today {
+  order: 3;
+}
+
+.home-page__recent,
+.home-page__empty {
+  order: 4;
+}
+
+.home-page__recent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-page__recent-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.home-page__recent-title {
+  font-size: 20px;
+}
+
+.home-page__view-all {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.home-page__recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .home-page {
+    gap: 28px;
+    max-width: 1080px;
+  }
+
+  .home-page__greeting {
+    gap: 6px;
+  }
+
+  .home-page__title {
+    font-size: 44px;
+    line-height: 1.12;
+  }
+
+  .home-page__subtitle {
+    font-size: 18px;
+  }
+
+  .home-page__hero {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+    order: 1;
+  }
+
+  .home-page__start,
+  .home-page__today {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-page__start > *,
+  .home-page__today > * {
+    flex: 1;
+  }
+
+  .home-page__recent {
+    gap: 8px;
+    padding: 28px;
+    border-radius: var(--radius-panel);
+    background: var(--color-surface);
+  }
+
+  .home-page__recent-head {
+    padding: 0 8px 8px;
+  }
+
+  .home-page__recent-title {
+    font-size: 24px;
+  }
+
+  .home-page__view-all {
+    font-size: 15px;
+  }
+
+  .home-page__recent-list {
+    gap: 0;
+  }
+}

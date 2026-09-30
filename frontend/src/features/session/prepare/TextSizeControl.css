@@ -1,0 +1,37 @@
+.text-size {
+  display: flex;
+  gap: 4px;
+}
+
+.text-size__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 700;
+  transition: background-color var(--duration-fast);
+}
+
+.text-size__btn--up {
+  font-size: 17px;
+}
+
+.text-size__btn:disabled {
+  opacity: 0.45;
+}
+
+.text-size--surface .text-size__btn {
+  background: var(--color-surface);
+}
+
+.text-size--raised {
+  gap: 6px;
+}
+
+.text-size--raised .text-size__btn {
+  background: var(--color-raised);
+}
+
+.text-size__btn:hover:not(:disabled) {
+  background: var(--neutral-300);
+}

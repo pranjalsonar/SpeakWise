@@ -1,0 +1,65 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.avatar--sage {
+  background: var(--sage-300);
+  color: var(--sage-900);
+}
+
+.avatar--accent {
+  background: var(--accent-300);
+  color: var(--accent-900);
+}
+
+.avatar--raised {
+  background: var(--color-raised);
+  color: var(--color-text);
+}
+
+.avatar--36 {
+  width: 36px;
+  height: 36px;
+  font-size: 12px;
+}
+
+.avatar--40 {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.avatar--44 {
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+}
+
+.avatar--48 {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+}
+
+.avatar--64 {
+  width: 64px;
+  height: 64px;
+  font-size: 22px;
+}
+
+.avatar--72 {
+  width: 72px;
+  height: 72px;
+  font-size: 24px;
+}
+
+.avatar--88 {
+  width: 88px;
+  height: 88px;
+  font-size: 30px;
+}

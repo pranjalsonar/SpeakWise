@@ -1,0 +1,117 @@
+.week-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 28px;
+  background: var(--color-surface);
+}
+
+.week-chart__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.week-chart__title {
+  font-size: 18px;
+}
+
+.week-chart__title-long,
+.week-chart__range {
+  display: none;
+}
+
+/* Mobile: bare bars with a start/end footer. */
+.week-chart__plot {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 140px;
+}
+
+.week-chart__col {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+}
+
+.week-chart__value,
+.week-chart__label {
+  display: none;
+}
+
+/* The bar's height is a % of this flexible area (the space left after the labels). */
+.week-chart__area {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  width: 100%;
+  min-height: 0;
+}
+
+.week-chart__bar {
+  width: 100%;
+  border-radius: 10px 10px 4px 4px;
+  background: var(--color-accent);
+}
+
+.week-chart__foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--neutral-700);
+}
+
+@media (min-width: 768px) {
+  .week-chart {
+    gap: 16px;
+    padding: 26px;
+    border-radius: 36px;
+  }
+
+  .week-chart__title {
+    font-size: 22px;
+  }
+
+  .week-chart__title-long,
+  .week-chart__range {
+    display: inline;
+  }
+
+  .week-chart__title-short,
+  .week-chart__foot {
+    display: none;
+  }
+
+  .week-chart__range {
+    font-size: 14px;
+    color: var(--neutral-700);
+  }
+
+  .week-chart__plot {
+    gap: 14px;
+    height: 220px;
+  }
+
+  .week-chart__value {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .week-chart__label {
+    display: block;
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--neutral-700);
+  }
+
+  .week-chart__bar {
+    border-radius: 14px 14px 6px 6px;
+  }
+}

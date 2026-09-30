@@ -1,0 +1,15 @@
+.skeleton {
+  width: 100%;
+  background: var(--color-surface);
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}

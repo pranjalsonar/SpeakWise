@@ -1,0 +1,56 @@
+.progress {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+}
+
+.progress--h4 {
+  height: 4px;
+}
+
+.progress--h5 {
+  height: 5px;
+}
+
+.progress--h6 {
+  height: 6px;
+}
+
+.progress--h8 {
+  height: 8px;
+}
+
+.progress--track-neutral {
+  background: var(--neutral-300);
+}
+
+.progress--track-dark {
+  background: rgba(249, 244, 237, 0.18);
+}
+
+.progress--track-none {
+  background: transparent;
+}
+
+.progress--square,
+.progress--square .progress__fill {
+  border-radius: 0;
+}
+
+.progress__fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.25s linear;
+}
+
+.progress__fill--accent {
+  background: var(--color-accent);
+}
+
+.progress__fill--sage {
+  background: var(--sage-600);
+}
+
+.progress__fill--light {
+  background: var(--on-dark);
+}

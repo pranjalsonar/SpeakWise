@@ -1,0 +1,28 @@
+.score-circle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background: var(--sage-200);
+  color: var(--sage-900);
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+
+.score-circle--44 {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+}
+
+.score-circle--40 {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
+}
+
+.score-circle--36 {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}

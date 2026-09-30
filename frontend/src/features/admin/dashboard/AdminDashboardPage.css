@@ -1,0 +1,62 @@
+.admin-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Mobile: the title sits in the top bar. */
+.admin-dash__header {
+  display: none;
+}
+
+.admin-dash__charts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* The category breakdown is desktop-only in the design. */
+.admin-dash__categories {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .admin-dash {
+    gap: 24px;
+    max-width: 1120px;
+  }
+
+  .admin-dash__header {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .admin-dash__heading {
+    flex: 1;
+  }
+
+  .admin-dash__title {
+    margin-bottom: 6px;
+    font-size: 42px;
+  }
+
+  .admin-dash__subtitle {
+    font-size: 16px;
+    color: var(--neutral-700);
+  }
+
+  .admin-dash__charts {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 16px;
+  }
+
+  .admin-dash__categories {
+    display: flex;
+  }
+
+  .admin-dash__categories > * {
+    flex: 1;
+  }
+}

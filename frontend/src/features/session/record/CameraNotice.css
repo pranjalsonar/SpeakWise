@@ -1,0 +1,14 @@
+.camera-notice {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(249, 244, 237, 0.8);
+}
+
+.camera-notice__retry {
+  margin-left: 8px;
+  color: var(--accent-300);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

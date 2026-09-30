@@ -1,0 +1,21 @@
+.topic-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* On the cream page ground the category pill uses the surface colour. */
+.topic-badges--surface .topic-badges__category {
+  background: var(--color-surface);
+}
+
+@media (min-width: 768px) {
+  .topic-badges {
+    gap: 8px;
+  }
+
+  .topic-badges .badge {
+    padding: 5px 14px;
+    font-size: 14px;
+  }
+}

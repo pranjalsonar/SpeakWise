@@ -1,0 +1,85 @@
+.history-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* On mobile the title lives in the app top bar. */
+.history-page__header {
+  display: none;
+}
+
+.history-page__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-page__sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.history-page__count {
+  flex: 1;
+  color: var(--neutral-700);
+}
+
+.history-page__sort-label {
+  color: var(--neutral-700);
+}
+
+.history-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .history-page {
+    gap: 24px;
+    max-width: 1080px;
+  }
+
+  .history-page__header {
+    display: block;
+  }
+
+  .history-page__title {
+    margin-bottom: 6px;
+    font-size: 44px;
+  }
+
+  .history-page__subtitle {
+    font-size: 17px;
+    color: var(--neutral-700);
+  }
+
+  .history-page__toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .history-page__search {
+    width: 320px;
+  }
+
+  .history-page__sort {
+    margin-left: auto;
+  }
+
+  /* The count moves into the table header on desktop. */
+  .history-page__count {
+    display: none;
+  }
+
+  .history-page__list {
+    gap: 4px;
+    padding: 20px 28px 28px;
+    border-radius: var(--radius-panel);
+    background: var(--color-surface);
+  }
+}

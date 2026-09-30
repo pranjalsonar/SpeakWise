@@ -1,0 +1,183 @@
+.record-desk {
+  display: flex;
+  flex: 1;
+  gap: 28px;
+  min-height: 0;
+  padding: 0 32px 32px;
+}
+
+.record-desk__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.record-desk__pills,
+.record-desk__rec {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.record-desk__controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.record-desk__tips {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-size: 14px;
+  color: rgba(249, 244, 237, 0.75);
+}
+
+.record-desk__tips li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.record-desk__start {
+  flex: none;
+  width: 88px;
+  height: 88px;
+  margin-left: auto;
+  border: 5px solid var(--on-dark);
+  border-radius: 50%;
+  background: var(--recording);
+  color: var(--on-dark);
+  font-family: var(--font-heading);
+  font-size: 18px;
+  transition: background-color var(--duration-fast);
+}
+
+.record-desk__start:hover {
+  background: #c93c27;
+}
+
+.record-desk__spacer {
+  flex: 1;
+  height: 88px;
+}
+
+.record-desk__elapsed {
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: rgba(249, 244, 237, 0.2);
+}
+
+.record-desk__elapsed-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--on-dark);
+  transition: width 0.2s linear;
+}
+
+.record-desk__stop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 2px solid rgba(249, 244, 237, 0.5);
+  border-radius: var(--radius-pill);
+  color: var(--on-dark);
+  font-family: var(--font-heading);
+  font-size: 16px;
+  transition: background-color var(--duration-fast);
+}
+
+.record-desk__stop:hover {
+  background: rgba(249, 244, 237, 0.1);
+}
+
+.record-desk__stop-icon {
+  color: var(--recording);
+  fill: currentColor;
+}
+
+.record-desk__panel {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 16px;
+  width: 300px;
+}
+
+.record-desk__card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: rgba(249, 244, 237, 0.07);
+}
+
+.record-desk__card--grow {
+  flex: 1;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.record-desk__timer {
+  font-family: var(--font-heading);
+  font-size: 72px;
+  line-height: 1;
+}
+
+.record-desk__timer--final,
+.record-desk__hint--final {
+  color: var(--timer-final);
+}
+
+.record-desk__duration {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  line-height: 1;
+}
+
+.record-desk__hint {
+  font-size: 14px;
+  color: rgba(249, 244, 237, 0.7);
+}
+
+.record-desk__hint--final {
+  font-weight: 700;
+}
+
+.record-desk__overline {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-300);
+}
+
+.record-desk__topic {
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.record-desk__cue-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+  .record-desk__panel {
+    width: 360px;
+  }
+
+  .record-desk__timer {
+    font-size: 88px;
+  }
+}

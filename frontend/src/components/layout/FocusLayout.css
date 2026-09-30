@@ -1,0 +1,228 @@
+.focus-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--color-bg);
+}
+
+.focus-layout--dark {
+  background: var(--camera-bg);
+  color: var(--on-dark);
+}
+
+.focus-layout--fit {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.focus-layout--no-segments .focus-layout__segments {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .focus-layout--no-mobile-topbar .focus-layout__topbar {
+    display: none;
+  }
+}
+
+.focus-layout--no-segments .focus-layout__topbar {
+  padding-bottom: 10px;
+}
+
+/* ---------- Mobile top bar ---------- */
+.focus-layout__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px 12px;
+  background: inherit;
+}
+
+.focus-layout__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.focus-layout__mobile-title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.focus-layout__step-name {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.focus-layout__step-count {
+  font-size: 12px;
+  color: var(--neutral-700);
+}
+
+.focus-layout--dark .focus-layout__step-count {
+  color: var(--on-dark-muted);
+}
+
+.focus-layout__mobile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.focus-layout__steps,
+.focus-layout__step-summary {
+  display: none;
+}
+
+.focus-layout__segments {
+  display: flex;
+  gap: 6px;
+}
+
+.focus-layout__segment {
+  flex: 1;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--neutral-300);
+}
+
+.focus-layout--dark .focus-layout__segment {
+  background: rgba(249, 244, 237, 0.2);
+}
+
+.focus-layout__segment--on,
+.focus-layout--dark .focus-layout__segment--on {
+  background: var(--color-accent);
+}
+
+/* ---------- Desktop top bar ---------- */
+@media (min-width: 768px) {
+  .focus-layout__topbar {
+    height: var(--focus-topbar-height);
+    justify-content: center;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .focus-layout--dark .focus-layout__topbar,
+  .focus-layout--borderless .focus-layout__topbar {
+    border-bottom: 0;
+  }
+
+  .focus-layout--no-segments .focus-layout__topbar {
+    padding-bottom: 0;
+  }
+
+  .focus-layout__row {
+    gap: 24px;
+  }
+
+  .focus-layout__mobile-title,
+  .focus-layout__mobile-actions,
+  .focus-layout__segments {
+    display: none;
+  }
+
+  .focus-layout__steps {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .focus-layout__step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .focus-layout__line {
+    width: 48px;
+    height: 2px;
+    background: var(--neutral-400);
+  }
+
+  .focus-layout__dot {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .focus-layout__label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .focus-layout__step--done .focus-layout__dot {
+    background: var(--sage-600);
+    color: var(--on-dark);
+  }
+
+  .focus-layout__step--current .focus-layout__dot {
+    background: var(--color-accent);
+    color: var(--on-dark);
+  }
+
+  .focus-layout__step--current .focus-layout__label {
+    font-weight: 700;
+  }
+
+  .focus-layout__step--todo .focus-layout__dot {
+    border: 2px solid var(--neutral-400);
+    color: var(--neutral-700);
+  }
+
+  .focus-layout__step--todo .focus-layout__label {
+    color: var(--neutral-700);
+  }
+
+  .focus-layout__step-summary {
+    display: block;
+    width: 140px;
+    font-size: 14px;
+    text-align: right;
+    color: var(--neutral-700);
+  }
+
+  /* Dark (Record): the indicator becomes 4 thin segments. */
+  .focus-layout--dark .focus-layout__steps {
+    display: none;
+  }
+
+  .focus-layout--dark .focus-layout__segments {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    transform: translateX(-50%);
+  }
+
+  .focus-layout--dark .focus-layout__segment {
+    flex: none;
+    width: 72px;
+    height: 5px;
+    background: rgba(249, 244, 237, 0.2);
+  }
+
+  .focus-layout--dark .focus-layout__segment--on {
+    background: var(--color-accent);
+  }
+
+  .focus-layout--dark .focus-layout__row {
+    justify-content: space-between;
+  }
+
+  .focus-layout--dark .focus-layout__step-summary {
+    color: rgba(249, 244, 237, 0.75);
+  }
+}

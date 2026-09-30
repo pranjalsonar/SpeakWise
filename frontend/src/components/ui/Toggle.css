@@ -1,0 +1,55 @@
+.toggle {
+  position: relative;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--neutral-400);
+  transition: background-color var(--duration-fast);
+}
+
+.toggle--md {
+  width: 52px;
+  height: 32px;
+}
+
+.toggle--sm {
+  width: 48px;
+  height: 28px;
+}
+
+.toggle--accent.toggle--on {
+  background: var(--color-accent);
+}
+
+.toggle--status.toggle--on {
+  background: var(--sage-600);
+}
+
+.toggle__knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  border-radius: 50%;
+  background: var(--color-raised);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.toggle--md .toggle__knob {
+  width: 24px;
+  height: 24px;
+}
+
+.toggle--sm .toggle__knob {
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+}
+
+.toggle--md.toggle--on .toggle__knob {
+  transform: translateX(20px);
+}
+
+.toggle--sm.toggle--on .toggle__knob {
+  transform: translateX(20px);
+}
