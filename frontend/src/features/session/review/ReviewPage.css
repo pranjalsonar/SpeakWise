@@ -1,0 +1,135 @@
+.review-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px var(--gutter-mobile) 20px;
+}
+
+.review-page__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Mobile: title/facts/actions live elsewhere (top bar + sticky bar). */
+.review-page__title,
+.review-page__facts,
+.review-page__actions {
+  display: none;
+}
+
+.review-page__topic {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.review-page__meta {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
+
+.review-page__row {
+  display: flex;
+  gap: 8px;
+}
+
+.review-page__download {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  border-radius: var(--radius-pill);
+  color: var(--accent-700);
+  font-family: var(--font-heading);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.review-page__download:hover {
+  background: var(--accent-100);
+}
+
+@media (min-width: 768px) {
+  .review-page {
+    flex-direction: row;
+    gap: 32px;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .review-page__player {
+    flex: 1;
+    min-width: 0;
+    align-self: flex-start;
+  }
+
+  .review-page__panel {
+    flex: none;
+    gap: 16px;
+    width: 300px;
+  }
+
+  .review-page__title {
+    display: block;
+    font-size: 36px;
+  }
+
+  .review-page__summary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    font-size: 15px;
+  }
+
+  .review-page__meta {
+    display: none;
+  }
+
+  .review-page__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+
+  .review-page__facts div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .review-page__facts dt {
+    color: var(--neutral-700);
+  }
+
+  .review-page__facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .review-page__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .review-page__download {
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .review-page {
+    padding: 40px 64px;
+  }
+
+  .review-page__panel {
+    width: 360px;
+  }
+}

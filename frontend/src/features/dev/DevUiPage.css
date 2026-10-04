@@ -1,0 +1,21 @@
+.dev-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px var(--gutter-mobile) 80px;
+}
+
+.dev-ui__section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dev-ui__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}

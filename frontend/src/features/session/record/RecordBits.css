@@ -1,0 +1,141 @@
+/* Status pills */
+.rec-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.rec-pills__pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rec-pills__pill--ok {
+  background: rgba(122, 138, 94, 0.4);
+  color: var(--sage-200);
+}
+
+.rec-pills__pill--off {
+  background: rgba(179, 64, 44, 0.4);
+  color: var(--danger-bg);
+}
+
+/* Mic meter */
+.mic-meter {
+  display: flex;
+  align-items: flex-end;
+  color: var(--sage-400);
+}
+
+.mic-meter--sm {
+  gap: 3px;
+  height: 24px;
+}
+
+.mic-meter--md {
+  gap: 4px;
+  height: 28px;
+}
+
+.mic-meter svg {
+  align-self: center;
+}
+
+.mic-meter__bar {
+  border-radius: var(--radius-pill);
+  background: var(--sage-400);
+  transition: height 0.12s linear;
+}
+
+.mic-meter--sm .mic-meter__bar {
+  width: 5px;
+}
+
+.mic-meter--md .mic-meter__bar {
+  width: 6px;
+}
+
+/* REC pill */
+.rec-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--on-dark);
+}
+
+.rec-pill--sm {
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.45);
+  font-size: 13px;
+}
+
+.rec-pill--md {
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+}
+
+.rec-pill__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--rec-dot);
+  animation: recPulse 1.2s ease-in-out infinite;
+}
+
+/* Countdown overlay */
+.countdown {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(31, 29, 26, 0.6);
+}
+
+.countdown--sm {
+  gap: 16px;
+}
+
+.countdown--md {
+  gap: 12px;
+}
+
+.countdown__label {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(249, 244, 237, 0.8);
+}
+
+.countdown__num {
+  font-family: var(--font-heading);
+  line-height: 1;
+  color: var(--on-dark);
+  animation: cdPop 1s ease-out both;
+}
+
+.countdown--sm .countdown__num {
+  font-size: 180px;
+}
+
+.countdown--md .countdown__num {
+  font-size: 240px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown__num {
+    animation: none;
+  }
+}

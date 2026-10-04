@@ -1,0 +1,62 @@
+.today-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.today-card__label.overline {
+  font-size: 11px;
+}
+
+.today-card__title {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.today-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.today-card__badges .badge {
+  font-weight: 600;
+}
+
+/* The mobile card is informational only. */
+.today-card__use {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .today-card {
+    gap: 12px;
+    padding: 28px;
+    border-radius: var(--radius-panel);
+    transition: transform var(--duration-fast);
+  }
+
+  .today-card__label.overline {
+    font-size: 12px;
+  }
+
+  .today-card__title {
+    font-size: 24px;
+  }
+
+  .today-card__use {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 0 20px;
+  }
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  .today-card:hover {
+    transform: translateY(-3px);
+  }
+}

@@ -1,0 +1,67 @@
+.transcript {
+  padding: 18px 20px;
+  border-radius: 28px;
+  background: var(--color-surface);
+}
+
+.transcript__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 32px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+}
+
+.transcript__hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-700);
+}
+
+/* The filler count only fits on desktop. */
+.transcript__count {
+  display: none;
+}
+
+.transcript__body {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.transcript__filler {
+  padding: 1px 4px;
+  border-radius: var(--radius-xs);
+  background: var(--accent-300);
+  color: var(--accent-900);
+}
+
+@media (min-width: 768px) {
+  .transcript {
+    padding: 22px 26px;
+    border-radius: var(--radius-card);
+    background: var(--color-raised);
+  }
+
+  .transcript__toggle {
+    min-height: 36px;
+    font-size: 20px;
+  }
+
+  .transcript__count {
+    display: inline;
+  }
+
+  .transcript__body {
+    max-width: 780px;
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+}

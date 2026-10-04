@@ -1,0 +1,193 @@
+.app-shell {
+  min-height: 100dvh;
+  background: var(--color-bg);
+}
+
+/* ---------- Mobile ---------- */
+.app-shell__sidebar {
+  display: none;
+}
+
+.app-shell__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 8px var(--gutter-mobile) 12px;
+  background: var(--color-bg);
+}
+
+.app-shell__topbar--custom {
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+.app-shell__topbar-logo {
+  font-family: var(--font-heading);
+  font-size: 22px;
+}
+
+.app-shell__topbar-title {
+  font-size: 24px;
+}
+
+.app-shell__main {
+  padding: 8px var(--gutter-mobile) calc(var(--tabbar-height) + 24px + env(safe-area-inset-bottom));
+}
+
+.app-shell--no-tabs .app-shell__main {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+.app-shell__tabbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  height: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+  padding: 8px 12px calc(24px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-divider);
+  background: var(--color-raised);
+}
+
+.app-shell__tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--neutral-700);
+  text-decoration: none;
+}
+
+.app-shell__tab--active {
+  color: var(--accent-700);
+}
+
+.app-shell__tab--start {
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.app-shell__start-circle {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-top: -26px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-raised);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 768px) {
+  .app-shell {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .app-shell__topbar,
+  .app-shell__tabbar {
+    display: none;
+  }
+
+  .app-shell__sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100dvh;
+    padding: 28px 20px;
+    background: var(--color-surface);
+  }
+
+  .app-shell__logo {
+    padding-left: 8px;
+    font-family: var(--font-heading);
+    font-size: 24px;
+  }
+
+  .app-shell__start {
+    font-size: 16px;
+  }
+
+  .app-shell__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .app-shell__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color var(--duration-fast);
+  }
+
+  .app-shell__nav-item:hover {
+    background: var(--neutral-200);
+  }
+
+  .app-shell__nav-item--active,
+  .app-shell__nav-item--active:hover {
+    background: var(--color-raised);
+    color: var(--accent-800);
+    font-weight: 700;
+  }
+
+  .app-shell__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 8px;
+  }
+
+  .app-shell__user-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .app-shell__user-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .app-shell__user-email {
+    overflow: hidden;
+    font-size: 12px;
+    color: var(--neutral-700);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-shell__main,
+  .app-shell--no-tabs .app-shell__main {
+    padding: 40px 40px 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell__main,
+  .app-shell--no-tabs .app-shell__main {
+    padding: 48px 64px 64px;
+  }
+}

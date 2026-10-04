@@ -1,0 +1,141 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* On mobile the title lives in the app top bar. */
+.profile-page__title {
+  display: none;
+}
+
+.profile-page__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.profile-page__avatar {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+.profile-page__identity {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-page__name {
+  font-family: var(--font-heading);
+  font-size: 20px;
+}
+
+.profile-page__email {
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--neutral-700);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-page__overline {
+  padding: 8px 4px 0;
+}
+
+.profile-page__prefs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+/* The card heading is desktop-only; mobile uses the overline above the card. */
+.profile-page__prefs-title {
+  display: none;
+}
+
+.profile-page__durations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.profile-page__duration {
+  min-height: 44px;
+}
+
+.profile-page__logout {
+  color: var(--danger);
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .profile-page {
+    gap: 24px;
+    max-width: 780px;
+  }
+
+  .profile-page__title {
+    display: block;
+    font-size: 44px;
+  }
+
+  .profile-page__card {
+    gap: 20px;
+    padding: 28px;
+    border-radius: var(--radius-panel);
+  }
+
+  .profile-page__name {
+    font-size: 26px;
+  }
+
+  .profile-page__email {
+    font-size: 16px;
+  }
+
+  .profile-page__overline {
+    display: none;
+  }
+
+  .profile-page__prefs {
+    gap: 0;
+    padding: 12px 28px;
+    border-radius: var(--radius-panel);
+  }
+
+  .profile-page__prefs-title {
+    display: block;
+    padding: 16px 0 8px;
+    font-size: 22px;
+  }
+
+  .profile-page__durations {
+    display: flex;
+  }
+
+  .profile-page__duration {
+    padding: 0 18px;
+  }
+
+  .profile-page__select {
+    width: 280px;
+  }
+
+  .profile-page__logout {
+    align-self: flex-start;
+    border-color: var(--danger);
+    font-size: 15px;
+  }
+
+  .profile-page__logout:hover:not(:disabled) {
+    background: var(--danger-bg);
+  }
+}

@@ -1,0 +1,104 @@
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius-row);
+  background: var(--color-raised);
+  transition:
+    transform var(--duration-fast),
+    box-shadow var(--duration-fast);
+}
+
+.metric-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.metric-card__name {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.metric-card__score {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.metric-card__track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--neutral-300);
+}
+
+.metric-card__fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+.metric-card__fill--good {
+  background: var(--sage-600);
+}
+
+.metric-card__fill--ok {
+  background: var(--color-accent);
+}
+
+.metric-card__fill--low {
+  background: var(--accent-700);
+}
+
+.metric-card__value {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.metric-card__insight {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--neutral-800);
+}
+
+@media (min-width: 768px) {
+  .metric-card {
+    gap: 10px;
+    padding: 22px;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .metric-card__name {
+    font-size: 15px;
+  }
+
+  .metric-card__score {
+    font-size: 30px;
+  }
+
+  .metric-card__track {
+    height: 8px;
+  }
+
+  .metric-card__value,
+  .metric-card__insight {
+    font-size: 14px;
+  }
+
+  .metric-card__insight {
+    line-height: 1.45;
+  }
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  .metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+}

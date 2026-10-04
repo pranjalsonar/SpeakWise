@@ -1,0 +1,68 @@
+.duration-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.duration-picker__label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.duration-picker__options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.duration-picker__option {
+  min-height: 72px;
+  border: 2px solid transparent;
+  border-radius: 28px;
+  background: var(--color-surface);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  transition:
+    background-color var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.duration-picker__option:hover:not(.duration-picker__option--selected) {
+  background: var(--neutral-300);
+}
+
+.duration-picker__option--selected {
+  border-color: var(--color-accent);
+  background: var(--accent-100);
+  color: var(--accent-800);
+}
+
+.duration-picker__helper {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
+
+@media (min-width: 768px) {
+  .duration-picker {
+    gap: 12px;
+  }
+
+  .duration-picker__label {
+    font-size: 16px;
+  }
+
+  .duration-picker__options {
+    grid-template-columns: repeat(3, minmax(0, 180px));
+    gap: 12px;
+  }
+
+  .duration-picker__option {
+    min-height: 84px;
+    border-radius: var(--radius-card);
+    font-size: 26px;
+  }
+
+  .duration-picker__helper {
+    font-size: 15px;
+  }
+}

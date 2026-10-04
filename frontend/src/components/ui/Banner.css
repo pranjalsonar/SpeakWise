@@ -1,0 +1,9 @@
+.banner {
+  padding: 14px 18px;
+  border-radius: var(--radius-row);
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}

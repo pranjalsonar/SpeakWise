@@ -1,0 +1,174 @@
+.record-mob {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  color: var(--on-dark);
+}
+
+.record-mob__header {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 16px;
+  left: 16px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.record-mob__exit {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(249, 244, 237, 0.14);
+  color: var(--on-dark);
+}
+
+.record-mob__step {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(249, 244, 237, 0.8);
+}
+
+.record-mob__pills {
+  position: absolute;
+  top: calc(70px + env(safe-area-inset-top));
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.record-mob__bottom {
+  position: absolute;
+  right: 20px;
+  bottom: calc(36px + env(safe-area-inset-bottom));
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.record-mob__bottom--live {
+  right: 16px;
+  left: 16px;
+}
+
+.record-mob__topic {
+  font-size: 22px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.record-mob__tips {
+  font-size: 14px;
+  color: rgba(249, 244, 237, 0.8);
+}
+
+.record-mob__start {
+  width: 84px;
+  height: 84px;
+  border: 5px solid var(--on-dark);
+  border-radius: 50%;
+  background: var(--recording);
+  color: var(--on-dark);
+  font-family: var(--font-heading);
+  font-size: 17px;
+}
+
+.record-mob__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(249, 244, 237, 0.5);
+}
+
+.record-mob__timer-wrap {
+  position: absolute;
+  top: calc(70px + env(safe-area-inset-top));
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.record-mob__timer {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  line-height: 1;
+}
+
+.record-mob__timer--final,
+.record-mob__wrap-up {
+  color: var(--timer-final);
+}
+
+.record-mob__wrap-up {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.record-mob__elapsed {
+  width: 200px;
+  height: 5px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: rgba(249, 244, 237, 0.2);
+}
+
+.record-mob__elapsed-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--on-dark);
+  transition: width 0.2s linear;
+}
+
+.record-mob__cue {
+  align-self: stretch;
+  padding: 14px 16px;
+  border-radius: var(--radius-row);
+  background: rgba(249, 244, 237, 0.12);
+  text-align: left;
+}
+
+.record-mob__cue-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 28px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-dark);
+}
+
+.record-mob__cue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: rgba(249, 244, 237, 0.9);
+}
+
+.record-mob__stop {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 4px solid var(--on-dark);
+  border-radius: 50%;
+  color: var(--recording);
+}
+
+.record-mob__stop svg {
+  fill: currentColor;
+}

@@ -1,0 +1,61 @@
+.pref-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pref-row--compact {
+  gap: 8px;
+}
+
+.pref-row--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.pref-row__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.pref-row__label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Mobile shows helpers only on inline rows (Notifications). */
+.pref-row__helper {
+  display: none;
+  font-size: 13px;
+  color: var(--neutral-700);
+}
+
+.pref-row--inline .pref-row__helper {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .pref-row,
+  .pref-row--compact {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .pref-row:last-child {
+    border-bottom: 0;
+  }
+
+  .pref-row__label {
+    font-size: 16px;
+  }
+
+  .pref-row__helper {
+    display: block;
+    font-size: 14px;
+  }
+}

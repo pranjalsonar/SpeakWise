@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npx playwright install chromium)"
+    ]
+  }
+}

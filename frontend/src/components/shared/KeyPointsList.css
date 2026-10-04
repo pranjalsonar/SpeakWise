@@ -1,0 +1,35 @@
+.key-points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.key-points__item {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.key-points__num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sage-300);
+  color: var(--sage-900);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.key-points--dark .key-points__item {
+  font-size: 15px;
+  color: rgba(249, 244, 237, 0.9);
+}
+
+.key-points--dark .key-points__num {
+  background: rgba(174, 191, 146, 0.3);
+  color: var(--sage-200);
+}

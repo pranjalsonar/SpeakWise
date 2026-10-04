@@ -1,0 +1,58 @@
+.icon-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  color: var(--color-text);
+  transition: background-color var(--duration-fast);
+}
+
+.icon-btn--40 {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-btn--44 {
+  width: 44px;
+  height: 44px;
+}
+
+.icon-btn--48 {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-btn--outline {
+  border-color: var(--color-divider);
+  background: transparent;
+}
+
+.icon-btn--outline:hover {
+  background: var(--neutral-200);
+}
+
+.icon-btn--surface {
+  background: var(--color-surface);
+}
+
+.icon-btn--surface:hover {
+  background: var(--neutral-300);
+}
+
+.icon-btn--dark {
+  background: rgba(249, 244, 237, 0.12);
+  color: var(--on-dark);
+}
+
+.icon-btn--dark:hover {
+  background: rgba(249, 244, 237, 0.2);
+}
+
+.icon-btn--plain {
+  background: transparent;
+}
+
+.icon-btn--plain:hover {
+  background: var(--neutral-200);
+}

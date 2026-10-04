@@ -1,0 +1,92 @@
+.topic-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 36px;
+  background: var(--color-surface);
+}
+
+/* Decorative circle is desktop-only. */
+.topic-card__circle {
+  display: none;
+}
+
+.topic-card__badges,
+.topic-card__title,
+.topic-card__teaser,
+.topic-card__reroll {
+  position: relative;
+}
+
+.topic-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.topic-card__title {
+  font-size: 28px;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.topic-card__teaser {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--neutral-800);
+}
+
+.topic-card__reroll {
+  align-self: flex-start;
+  padding: 0 18px;
+  background: var(--color-raised);
+}
+
+@media (min-width: 768px) {
+  .topic-card {
+    gap: 16px;
+    padding: 40px;
+    border-radius: var(--radius-hero);
+  }
+
+  .topic-card__circle {
+    position: absolute;
+    right: -60px;
+    bottom: -80px;
+    display: block;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--sage-200);
+  }
+
+  .topic-card__badges {
+    gap: 8px;
+  }
+
+  .topic-card__badges .badge {
+    padding: 5px 14px;
+    font-size: 14px;
+  }
+
+  .topic-card__title {
+    max-width: 640px;
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .topic-card__teaser {
+    max-width: 560px;
+    font-size: 18px;
+  }
+
+  .topic-card__reroll {
+    min-height: 48px;
+    margin-top: 8px;
+    padding: 0 22px;
+    font-size: 16px;
+  }
+}

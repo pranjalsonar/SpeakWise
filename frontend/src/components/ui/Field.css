@@ -1,0 +1,174 @@
+/* Shared by TextField, PasswordField, SearchInput, Textarea and Select. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field__label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.field__label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.field--lg .field__control {
+  min-height: 52px;
+}
+
+.field--lg .field__input {
+  height: 49px;
+}
+
+.field__control {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  border: 1.5px solid var(--color-divider);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  transition: border-color var(--duration-fast);
+}
+
+.field__control:focus-within {
+  border-color: var(--color-accent);
+}
+
+.field__control--error,
+.field__control--error:focus-within {
+  border-color: var(--danger);
+}
+
+.field__input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 20px;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+}
+
+.field__input::placeholder,
+.field__textarea::placeholder {
+  color: var(--neutral-700);
+  opacity: 0.8;
+}
+
+/* Hide the browser's own search clear button; the design has none. */
+.field__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.field__control--start .field__input {
+  padding-left: 10px;
+}
+
+.field__control--end .field__input {
+  padding-right: 8px;
+}
+
+.field__start {
+  display: grid;
+  place-items: center;
+  padding-left: 18px;
+  color: var(--neutral-700);
+}
+
+.field__end {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 6px;
+}
+
+.field__toggle {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-700);
+}
+
+.field__status {
+  display: grid;
+  place-items: center;
+  padding: 0 10px;
+  color: var(--sage-700);
+}
+
+.field__toggle:hover {
+  background: var(--accent-100);
+}
+
+.field__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__error {
+  padding-left: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+.field__helper {
+  padding-left: 12px;
+  font-size: 13px;
+  color: var(--neutral-700);
+}
+
+.field__textarea {
+  min-height: 80px;
+  padding: 14px 20px;
+  border: 1.5px solid var(--color-divider);
+  border-radius: var(--radius-row);
+  background: var(--color-raised);
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  transition: border-color var(--duration-fast);
+}
+
+.field__textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.field__select-wrap {
+  position: relative;
+}
+
+.field__select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 44px 0 20px;
+  border: 1.5px solid var(--color-divider);
+  border-radius: var(--radius-pill);
+  background: var(--color-raised);
+  font-size: 15px;
+  font-weight: 600;
+  appearance: none;
+  cursor: pointer;
+}
+
+.field__select:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.field__select-icon {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

@@ -1,0 +1,22 @@
+.notes-sheet__done {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-weight: 700;
+}
+
+.notes-sheet__input {
+  flex: 1;
+  padding: 16px;
+  border: 1.5px solid var(--color-divider);
+  border-radius: var(--radius-row);
+  background: var(--color-raised);
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+}
+
+.notes-sheet__input:focus {
+  border-color: var(--color-accent);
+}

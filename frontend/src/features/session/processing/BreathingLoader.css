@@ -1,0 +1,19 @@
+.breathing-loader {
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--sage-200);
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.breathing-loader__core {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--sage-600);
+  color: var(--on-dark);
+}

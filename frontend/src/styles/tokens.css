@@ -1,0 +1,107 @@
+/*
+ * SpeakWise design tokens — "Organic" design system.
+ * Source: design_handoff_speakwise/README.md. Change values here only.
+ *
+ * Breakpoints (literal in media queries, CSS vars can't be used there):
+ *   base      360px+   mobile layout
+ *   768px+            desktop layout, narrower rails
+ *   1024px+           full desktop layout
+ */
+:root {
+  /* Ground & surfaces */
+  --color-bg: #f5ead8;
+  --color-surface: #ebddc5;
+  --color-raised: #f9f4ed;
+  --color-text: #201e1d;
+  --color-divider: rgba(32, 30, 29, 0.16);
+
+  /* Accent (terracotta) */
+  --color-accent: #c67139;
+  --accent-100: #fff2eb;
+  --accent-200: #ffe1d0;
+  --accent-300: #ffc6a5;
+  --accent-500: #d67f48;
+  --accent-600: #b2622d;
+  --accent-700: #8c491a;
+  --accent-800: #643312;
+  --accent-900: #402310;
+
+  /* Sage */
+  --sage-100: #f0fae1;
+  --sage-200: #e1eecc;
+  --sage-300: #ccdbb2;
+  --sage-400: #aebf92;
+  --sage-500: #8fa073;
+  --sage-600: #728157;
+  --sage-700: #56633f;
+  --sage-800: #3d472b;
+  --sage-900: #272e1b;
+
+  /* Neutrals */
+  --neutral-200: #eee7db;
+  --neutral-300: #dcd3c4;
+  --neutral-400: #c0b6a5;
+  --neutral-700: #645c50;
+  --neutral-800: #474238;
+  --neutral-900: #2e2b25;
+
+  /* Semantic */
+  --danger: #b3402c;
+  --danger-bg: #f7ddd6;
+  --danger-text: #7d2a1b;
+  --warning: #b7791f;
+  --warning-text: #8a5a12;
+  --recording: #e04a33;
+  --rec-dot: #ff5a3d;
+  --timer-final: #ff7a5f;
+
+  /* Dark (camera, admin) */
+  --camera-bg: #1f1d1a;
+  --camera-panel: #2e2b27;
+  --on-dark: #f9f4ed;
+  --on-dark-muted: rgba(249, 244, 237, 0.62);
+  --on-dark-divider: rgba(249, 244, 237, 0.14);
+
+  /* Typography */
+  --font-heading: 'Caprasimo', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --font-reading: 'Literata', Georgia, serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-row: 24px;
+  --radius-card: 32px;
+  --radius-panel: 40px;
+  --radius-hero: 44px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(46, 43, 37, 0.14);
+  --shadow-md: 0 3px 10px rgba(46, 43, 37, 0.16);
+  --shadow-lg: 0 12px 32px rgba(46, 43, 37, 0.22);
+
+  /* Layout */
+  --gutter-mobile: 20px;
+  --sidebar-width: 240px;
+  --rail-width: 380px;
+  --tabbar-height: 84px;
+  --focus-topbar-height: 76px;
+  --content-max: 1200px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 0.2s;
+}

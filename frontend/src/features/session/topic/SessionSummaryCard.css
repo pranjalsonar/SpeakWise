@@ -1,0 +1,43 @@
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  border-radius: var(--radius-panel);
+  background: var(--color-raised);
+  box-shadow: var(--shadow-md);
+}
+
+.summary-card__title {
+  font-size: 22px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.summary-card__facts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.summary-card__fact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-card__fact dt {
+  flex: 1;
+}
+
+.summary-card__fact dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.summary-card__summary {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
