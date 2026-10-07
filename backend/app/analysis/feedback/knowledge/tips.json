@@ -1,0 +1,304 @@
+[
+  {
+    "id": "fill_pause",
+    "title": "Replace fillers with a silent pause",
+    "issues": [
+      "filler_words"
+    ],
+    "text": "Fillers like \"um\" and \"uh\" usually appear when you are thinking of what to say next. A short silent pause covers the same moment, sounds more confident, and gives listeners time to absorb your last point. When you feel a filler coming, close your mouth, breathe in, and continue when the next phrase is ready.",
+    "drill": "Record a 60-second talk on any topic. Every time you notice an \"um\" coming, stay silent for one breath instead. Replay it and count how many fillers you caught.",
+    "primary_for": [
+      "filler_words"
+    ]
+  },
+  {
+    "id": "fill_awareness",
+    "title": "Target your one favourite filler first",
+    "issues": [
+      "filler_words"
+    ],
+    "text": "Most speakers rely on one or two favourite fillers. Trying to remove every filler at once is overwhelming, so look at the filler counts in your report, pick the most frequent one, and aim only at that word for your next few sessions.",
+    "drill": "Write your top filler on a sticky note next to your screen. In your next session, count only that word and try to halve it."
+  },
+  {
+    "id": "fill_structure",
+    "title": "Use a simple structure so you always know what comes next",
+    "issues": [
+      "filler_words",
+      "hesitation_pauses",
+      "long_pauses"
+    ],
+    "text": "Fillers and mid-sentence stalls often come from not knowing your next point. Use a repeatable structure such as PREP: state your Point, give a Reason, add an Example, then restate the Point. Knowing the shape of your answer lets you speak in complete, confident chunks.",
+    "drill": "Pick three random topics and answer each in 60 seconds using PREP. Practise until the four steps feel automatic."
+  },
+  {
+    "id": "fill_slow",
+    "title": "Slow down so your thinking can keep up with your mouth",
+    "issues": [
+      "filler_words",
+      "pace_fast"
+    ],
+    "text": "Fillers rise when your speech runs ahead of your planning. Slow down slightly and decide the first few words of your next sentence while you finish the current one. A slower, steadier pace also makes you sound more authoritative.",
+    "drill": "Read a paragraph aloud with a timer at about 140 words per minute, then repeat the same pace when speaking without a script."
+  },
+  {
+    "id": "pause_boundary",
+    "title": "Pause at the end of ideas, not in the middle of them",
+    "issues": [
+      "hesitation_pauses",
+      "long_pauses"
+    ],
+    "text": "Pauses are a tool, not a flaw, when they land at the end of a sentence or idea: they signal that a point is finished and let it sink in. Stalls in the middle of a phrase sound like hesitation. Aim to finish each sentence, pause for a beat, and only then start the next.",
+    "drill": "Mark the ends of sentences in a short script with a slash. Read it aloud and pause for one full beat at every slash and nowhere else.",
+    "primary_for": [
+      "hesitation_pauses"
+    ]
+  },
+  {
+    "id": "pause_recover",
+    "title": "Recover from a blank with a bridge phrase",
+    "issues": [
+      "long_pauses",
+      "hesitation_pauses"
+    ],
+    "text": "Everyone goes blank sometimes. Instead of freezing, take a breath and use a bridge: repeat your last key point, say \"The key idea here is...\", or move to the next point you remember. Listeners rarely notice a recovery that is calm and deliberate.",
+    "drill": "Practise with a partner or a timer: stop mid-talk at random, then recover using one of your bridge phrases within three seconds.",
+    "primary_for": [
+      "long_pauses"
+    ]
+  },
+  {
+    "id": "pause_keywords",
+    "title": "Use keyword notes, not full sentences",
+    "issues": [
+      "long_pauses",
+      "hesitation_pauses",
+      "reading_notes"
+    ],
+    "text": "Writing whole sentences makes you read, and losing your place causes long stalls. Notes of three to five keywords per point are enough to jog your memory, and you can glance at them during natural pauses without breaking eye contact for long.",
+    "drill": "Turn your notes for the next topic into one keyword per idea, then deliver the talk with only that list in front of you."
+  },
+  {
+    "id": "rep_start",
+    "title": "Decide the first words of a sentence before you start it",
+    "issues": [
+      "repetitions"
+    ],
+    "text": "Repeating a word (\"the the\", \"we we\") or restarting a sentence usually happens when you begin speaking before you know how the sentence will go. Take a breath, settle the first three or four words, then speak. It is fine to start a little later than feels natural.",
+    "drill": "Answer five quick questions. Before each answer, silently plan your first four words, then say them cleanly.",
+    "primary_for": [
+      "repetitions"
+    ]
+  },
+  {
+    "id": "pace_fast",
+    "title": "Bring your pace down to a conversational speed",
+    "issues": [
+      "pace_fast"
+    ],
+    "text": "A comfortable speaking pace for most audiences is roughly 120 to 160 words per minute. Speaking much faster than that makes it hard for listeners to follow, and it often comes from nerves. Breathe at every full stop and slow down on your key points.",
+    "drill": "Time yourself reading a 150-word paragraph aloud. It should take about one minute. Practise until that length feels natural.",
+    "primary_for": [
+      "pace_fast"
+    ]
+  },
+  {
+    "id": "pace_slow",
+    "title": "Tighten and energise a slow pace",
+    "issues": [
+      "pace_slow"
+    ],
+    "text": "A very slow pace can come from searching for words or from over-careful phrasing, and it can lose the audience's attention. Rehearse key terms for your topic aloud beforehand so they come easily, and aim for a steady rhythm of roughly 120 to 160 words per minute.",
+    "drill": "Before a session, say the five most important terms for the topic aloud three times each, then deliver your talk aiming to finish the points a little sooner.",
+    "primary_for": [
+      "pace_slow"
+    ]
+  },
+  {
+    "id": "pitch_emphasis",
+    "title": "Emphasise a few key words with pitch and volume",
+    "issues": [
+      "monotone"
+    ],
+    "text": "A flat voice makes even interesting content sound dull. Choose two or three key words in each minute and give them extra pitch and volume, then let your voice relax again. Variation tells the audience what matters most.",
+    "drill": "Take one sentence and say it five times, each time stressing a different word. Notice how the meaning changes, then apply this to your own key phrases.",
+    "primary_for": [
+      "monotone"
+    ]
+  },
+  {
+    "id": "pitch_variety",
+    "title": "Vary your delivery with questions and pauses",
+    "issues": [
+      "monotone"
+    ],
+    "text": "Rhetorical questions, short pauses before important points, and shifts in volume all add natural variety. Smile slightly as you speak, as it also lifts your tone. Treat the talk like telling a story to a friend rather than reciting.",
+    "drill": "Retell your topic to an imaginary friend in two minutes as if it were a surprising story, then compare the energy to your usual delivery."
+  },
+  {
+    "id": "eye_lens",
+    "title": "Treat the camera lens as a person",
+    "issues": [
+      "low_eye_contact"
+    ],
+    "text": "On video, eye contact means looking at the camera lens, not at your own image on screen. Put a small sticky note with a pair of eyes drawn near the lens and talk to that person. It feels odd at first and quickly becomes natural.",
+    "drill": "Record 60 seconds while keeping your eyes on the lens except during natural thinking breaks, and check how much of the time you managed.",
+    "primary_for": [
+      "low_eye_contact"
+    ]
+  },
+  {
+    "id": "eye_thought",
+    "title": "Look away only between ideas",
+    "issues": [
+      "low_eye_contact"
+    ],
+    "text": "It is natural to glance away when you think. The trick is to do it between ideas, not in the middle of a sentence: finish a thought while looking at the camera, glance away briefly to gather the next one, then return and continue.",
+    "drill": "Practise speaking in short complete thoughts. Hold eye contact until each thought ends, then allow a brief glance away before the next."
+  },
+  {
+    "id": "eye_notes",
+    "title": "Glance at your notes, do not read them",
+    "issues": [
+      "reading_notes"
+    ],
+    "text": "Long looks downward make you appear unsure and break your connection with the audience. Keep notes short, place them close to the camera, and look at them only during pauses, for a second or two at a time. Practise enough that a keyword is all you need.",
+    "drill": "Rehearse the talk twice out loud. On the third attempt, limit yourself to three quick glances at your keyword notes.",
+    "primary_for": [
+      "reading_notes"
+    ]
+  },
+  {
+    "id": "face_frame",
+    "title": "Check your camera setup and stay in frame",
+    "issues": [
+      "face_lost"
+    ],
+    "text": "If your face leaves the frame or is hard to see, analysis and your audience both lose you. Place the camera at eye level, make sure the light is in front of you, and keep your head and shoulders in view for the whole talk.",
+    "drill": "Do a 10-second test recording and check that your face and shoulders are centred and well lit before each real session.",
+    "primary_for": [
+      "face_lost"
+    ]
+  },
+  {
+    "id": "post_height",
+    "title": "Raise the camera to eye level",
+    "issues": [
+      "slouching"
+    ],
+    "text": "A laptop sitting low pulls your head and shoulders forward and encourages slouching. Raise the camera to eye level with a stack of books or a stand, sit near the front of the chair with feet flat on the floor, and keep your shoulders relaxed and slightly back.",
+    "drill": "Set up your camera at eye level and do a one-minute posture check: feet flat, back supported, shoulders down, head level.",
+    "primary_for": [
+      "slouching"
+    ]
+  },
+  {
+    "id": "post_ground",
+    "title": "Ground yourself before you start",
+    "issues": [
+      "slouching",
+      "leaning",
+      "swaying"
+    ],
+    "text": "Good posture starts from a stable base. Sit or stand with your weight even, imagine a string lifting the crown of your head, and let your shoulders drop. If you drift into a slump or lean to one side, reset on your next breath.",
+    "drill": "Set a quiet reminder to reset your posture at the end of every point you make.",
+    "primary_for": [
+      "leaning"
+    ]
+  },
+  {
+    "id": "sway_plant",
+    "title": "Plant your feet and move with purpose",
+    "issues": [
+      "swaying",
+      "leaning"
+    ],
+    "text": "Rocking or swaying is a common nervous habit and can distract from your message. Keep your weight steady and, if you stand, move only to mark a change of topic. Stillness between gestures reads as confidence.",
+    "drill": "Record a one-minute talk standing with both feet planted. Only allow yourself to move when you change to a new point.",
+    "primary_for": [
+      "swaying"
+    ]
+  },
+  {
+    "id": "hands_gesture",
+    "title": "Give your hands a job",
+    "issues": [
+      "fidgeting"
+    ],
+    "text": "Restless hands draw attention away from your words. Use open, deliberate gestures at about waist height to underline points, and rest your hands loosely together or on the table between gestures instead of fiddling with objects.",
+    "drill": "Choose three gestures (count a list on your fingers, show size with open hands, point to the audience) and use each at least once in your next talk.",
+    "primary_for": [
+      "fidgeting"
+    ]
+  },
+  {
+    "id": "face_touch",
+    "title": "Break the face-touching habit",
+    "issues": [
+      "face_touching"
+    ],
+    "text": "Touching your face or hair is a common sign of nerves and can distract the audience. Rest your hands on the table or loosely clasped, and when you notice a hand rising, turn it into a gesture instead. Slow breathing before you begin reduces the urge.",
+    "drill": "Review your debug video and note when your hand goes to your face; pick a calm resting position for that hand and use it for the next session.",
+    "primary_for": [
+      "face_touching"
+    ]
+  },
+  {
+    "id": "anx_breath",
+    "title": "Slow your breathing before you speak",
+    "issues": [
+      "filler_words",
+      "pace_fast",
+      "fidgeting",
+      "swaying",
+      "face_touching",
+      "low_eye_contact"
+    ],
+    "text": "Nerves speed up breathing and speech and make hands restless. Before you start, breathe in for about four seconds and out for about six, for a minute. A calmer body makes it easier to pace yourself, pause, and keep your hands still.",
+    "drill": "Do one minute of slow 4-in, 6-out breathing before each practice session and compare how you feel."
+  },
+  {
+    "id": "anx_repeat",
+    "title": "Build confidence with short, repeated practice",
+    "issues": [
+      "filler_words",
+      "low_eye_contact",
+      "long_pauses",
+      "hesitation_pauses"
+    ],
+    "text": "Confidence grows through repetition. Several short sessions a week are more effective than one long one, and re-recording the same topic lets you see real improvement. Focus on one skill per session instead of everything at once.",
+    "drill": "Plan three one-minute recordings this week on different topics, each with a single goal such as fewer fillers or steadier eye contact."
+  },
+  {
+    "id": "vocab_specific",
+    "title": "Swap vague words for specific ones",
+    "issues": [
+      "vocabulary"
+    ],
+    "text": "Words like \"good\", \"thing\" and \"very\" carry little meaning. Replace them with a precise word that says exactly what you mean, such as \"effective\", \"challenge\" or \"crucial\". A specific word is clearer and also expands your vocabulary.",
+    "drill": "Pick three vague words you overuse and write two precise alternatives for each. Use at least one alternative in every session this week.",
+    "primary_for": [
+      "vocabulary"
+    ]
+  },
+  {
+    "id": "vocab_topic",
+    "title": "Learn topic vocabulary before you speak",
+    "issues": [
+      "vocabulary"
+    ],
+    "text": "When you know the key terms for a topic, you speak with less searching and fewer fillers. During your study time, list the five to ten most important terms, make sure you can define each in a sentence, and plan to use them in the talk.",
+    "drill": "During the 15-minute reading time, write down eight key terms and use at least five of them in your talk."
+  },
+  {
+    "id": "open_close",
+    "title": "Prepare a strong opening and closing line",
+    "issues": [
+      "filler_words",
+      "hesitation_pauses",
+      "long_pauses"
+    ],
+    "text": "The first and last sentences are where speakers are most nervous and most remembered. Write and rehearse them word for word so you can start without hesitation and finish decisively, even if the middle is improvised.",
+    "drill": "Memorise a one-sentence opening and a one-sentence closing for your next topic and deliver them cleanly three times in a row."
+  }
+]
