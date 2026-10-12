@@ -106,3 +106,26 @@ def choose_asr(model: str, device: str, compute_type: str, env: dict[str, Any]) 
                     "reason": f"CPU only, {ram} GB RAM available: largest of small/base/tiny that fits"}
     return {"model": "tiny", "device": dev, "compute_type": ctype,
             "reason": f"CPU only and only {ram} GB RAM available: 'tiny' may still fail to load"}
+
+
+def preload_cuda12_libs() -> int:
+    """Load pip-installed CUDA 12 cuBLAS/cuDNN (packages nvidia-cublas-cu12, nvidia-cudnn-cu12)
+    into this process so CTranslate2 finds them. Needed when the system CUDA is newer (e.g.
+    Colab with CUDA 13). Returns the number of libraries loaded (0 if the packages are absent)."""
+    import ctypes
+    import glob
+
+    loaded = 0
+    for pkg in ("nvidia.cublas", "nvidia.cudnn"):
+        try:
+            mod = importlib.import_module(pkg)
+        except ImportError:
+            continue
+        for d in getattr(mod, "__path__", []):
+            for so in sorted(glob.glob(os.path.join(d, "lib", "lib*.so*"))):
+                try:
+                    ctypes.CDLL(so, mode=ctypes.RTLD_GLOBAL)
+                    loaded += 1
+                except OSError:
+                    pass
+    return loaded

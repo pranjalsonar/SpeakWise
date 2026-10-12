@@ -30,8 +30,10 @@ RUBRIC (version 0.1-provisional). Four separate dimensions, never merged silentl
    (>= 6 words) are matched to the 3 closest material passages; an NLI model compares
    each (passage -> claim):
      supported              entailment >= 0.60
-     potentially_inconsistent contradiction >= 0.70 with a closely related passage
-                              (cosine >= 0.45) and entailment < 0.30
+     potentially_inconsistent contradiction >= 0.80 from the single closest passage,
+                              which must have cosine >= 0.60, and entailment < 0.30
+                              (rule tuned on the seed set; the NLI model over-predicts
+                              contradiction for merely related or unrelated passages)
      not_addressed          no related passage (cosine < 0.35) or neither label decisive
      unable_to_evaluate     words recognised with low confidence, or no NLI model
    "Not addressed" is not "wrong": speakers may add valid outside knowledge.
@@ -456,8 +458,11 @@ def _evaluate_claims(words, timed, passages, embedder, nli, cfg: PipelineConfig,
                             reason="no closely related passage in the material"))
             continue
         ent_j, ent = max(((j, p.get("entailment", 0.0)) for j, p in results), key=lambda x: x[1])
-        close = [(j, p.get("contradiction", 0.0)) for j, p in results if S[i, j] >= cfg.ctx_contradict_min_sim]
-        con_j, con = max(close, key=lambda x: x[1]) if close else (best_j, 0.0)
+        # Contradiction is only trusted against the single closest passage: the NLI model also
+        # returns high "contradiction" for unrelated passages (measured on the seed set).
+        top1 = [p for j, p in results if j == best_j]
+        con_j = best_j
+        con = top1[0].get("contradiction", 0.0) if top1 and best_sim >= cfg.ctx_contradict_min_sim else 0.0
         if ent >= cfg.ctx_entail_min:
             out.append(make(i, "supported", evidence=_snip(passages[ent_j], 240), retrieval_similarity=round(float(S[i, ent_j]), 3),
                             entailment=round(ent, 3), contradiction=round(con, 3)))

@@ -134,3 +134,44 @@ def test_quiet_and_clipped_recordings_are_flagged():
     assert any("quiet" in w for w in quiet.warnings)
     clipped = audio_quality(np.clip(signal(3.0, speech, level=1.5), -1, 1), RATE, speech, CFG)
     assert any("clips" in w for w in clipped.warnings)
+
+
+# ---- regressions found in the first Colab run ---------------------------------
+def test_digital_silence_does_not_give_absurd_snr():
+    speech = [(1.0, 2.0)]
+    audio = signal(3.0, speech, noise=0.0)  # exact zeros outside speech (synthetic audio)
+    q = audio_quality(audio, RATE, speech, CFG)
+    assert q.noise_floor_dbfs.value >= -96.0 and q.snr_estimate_db.value < 100
+
+
+def test_no_transcript_keeps_signal_metrics_but_not_clarity():
+    from speakwise.schemas import Transcription
+    speech = [(0.5, 2.0), (4.5, 6.0)]
+    failed = Transcription(status=Status.failed, warnings=["ASR failed"])
+    aa = analyze_audio(signal(7.0, speech), RATE, failed, 7.0, CFG, speech=speech)
+    assert aa.clarity.status == Status.unavailable and aa.clarity.unclear_segments.value is None
+    assert aa.pauses.long_pauses.value == 1  # signal-based measurement survives
+    assert aa.fillers.total.value is None and aa.status == Status.warning
+
+
+def test_gpu_failure_falls_back_to_cpu(monkeypatch):
+    import speakwise.audio_transcription as at
+    calls = []
+
+    class FakeModel:
+        def transcribe(self, audio, **kw):
+            class Info: language, language_probability = "en", 0.99
+            return iter([]), Info()
+
+    def fake_load(name, device, compute_type, threads=0):
+        calls.append(device)
+        if device == "cuda":
+            raise at.ASRError("Library libcublas.so.12 is not found")
+        return FakeModel()
+
+    monkeypatch.setattr(at, "load_model", fake_load)
+    monkeypatch.setattr(at, "preload_cuda12_libs", lambda: 0)
+    env = {"cuda_for_asr": True, "ram_available_gb": 8}
+    tr = at.transcribe(np.zeros(16000, np.float32), RATE, PipelineConfig(), env)
+    assert calls == ["cuda", "cpu"]
+    assert tr.model["device"] == "cpu" and any("fell back to CPU" in w for w in tr.warnings)

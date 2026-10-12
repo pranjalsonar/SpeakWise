@@ -33,6 +33,7 @@ LEXICONS = {
 # "kind of" / "sort of" are fillers only when set off; keep them in a separate guarded set
 _GUARDED_PHRASES = {("kind", "of"), ("sort", "of")}
 _EDGE = re.compile(r"^\W+|\W+$")
+DB_FLOOR = -96.0  # 16-bit quantisation floor: digital silence must not produce absurd SNRs
 
 
 def norm(text: str) -> str:
@@ -140,15 +141,15 @@ def frame_db(audio: np.ndarray, rate: int, frame_s: float = 0.03) -> tuple[np.nd
         return np.array([-200.0]), frame_s
     fr = audio[: m * n].reshape(m, n).astype(np.float64)
     rms = np.sqrt((fr ** 2).mean(axis=1))
-    return 20 * np.log10(np.maximum(rms, 1e-10)), frame_s
+    return np.maximum(20 * np.log10(np.maximum(rms, 1e-10)), DB_FLOOR), frame_s
 
 
 def interval_db(audio: np.ndarray, rate: int, start: float, end: float) -> float:
     seg = audio[int(start * rate): int(end * rate)].astype(np.float64)
     if seg.size == 0:
-        return -200.0
+        return DB_FLOOR
     rms = float(np.sqrt((seg ** 2).mean()))
-    return 20 * np.log10(rms) if rms > 1e-10 else -200.0
+    return max(20 * np.log10(rms), DB_FLOOR) if rms > 1e-10 else DB_FLOOR
 
 
 def vad_segments(audio: np.ndarray, rate: int, cfg: PipelineConfig) -> list[tuple[float, float]]:
@@ -170,7 +171,7 @@ def audio_quality(audio: np.ndarray, rate: int, speech: list[tuple[float, float]
     peak = float(np.max(np.abs(audio))) if audio.size else 0.0
     q = AudioQuality(
         status=Status.ok,
-        peak_dbfs=Metric.measured(20 * np.log10(max(peak, 1e-10)), "dbfs"),
+        peak_dbfs=Metric.measured(max(20 * np.log10(max(peak, 1e-10)), DB_FLOOR), "dbfs"),
         rms_dbfs=Metric.measured(interval_db(audio, rate, 0, len(audio) / rate), "dbfs"),
         clipping_ratio=Metric.measured(float((np.abs(audio) >= 0.999).mean()) if audio.size else 0.0, "ratio",
                                        denominator="all samples"),
@@ -185,7 +186,7 @@ def audio_quality(audio: np.ndarray, rate: int, speech: list[tuple[float, float]
             seg = audio[int(s * rate): int(e * rate)].astype(np.float64)
             sumsq += float((seg ** 2).sum())
             count += seg.size
-        speech_db = float(20 * np.log10(max(np.sqrt(sumsq / max(count, 1)), 1e-10)))
+        speech_db = max(float(20 * np.log10(max(np.sqrt(sumsq / max(count, 1)), 1e-10))), DB_FLOOR)
         q.speech_rms_dbfs = Metric.measured(speech_db, "dbfs", denominator="VAD speech samples")
         if (~mask).sum() * fs >= 1.0:
             noise_db, note = float(np.median(db[~mask])), "median of non-speech frames"
@@ -338,7 +339,14 @@ def analyze_audio(audio: np.ndarray, rate: int, transcription: Transcription, du
     fillers = detect_fillers(words, cfg)
     reps = detect_repetitions(words, fillers, cfg)
     pauses = detect_pauses(words, speech, fillers, audio, rate, q.speech_rms_dbfs.value, duration_s, cfg)
-    clarity, hesitation_bits = detect_clarity(words, speech, audio, rate, q, cfg)
+    have_transcript = transcription.status in (Status.ok, Status.warning) or bool(words)
+    if have_transcript:
+        clarity, hesitation_bits = detect_clarity(words, speech, audio, rate, q, cfg)
+    else:  # without a transcript every stretch of speech would look "unrecognised"
+        clarity = ClarityAnalysis(status=Status.unavailable, unclear_segments=Metric.missing("count", "no transcript"),
+                                  unclear_speech_s=Metric.missing("seconds", "no transcript"),
+                                  warnings=["Clarity needs a transcript; none is available."])
+        hesitation_bits = 0
 
     speaking = sum(e - s for s, e in speech)
     span = (words[-1].end - words[0].start) if words else 0.0
@@ -361,7 +369,7 @@ def analyze_audio(audio: np.ndarray, rate: int, transcription: Transcription, du
                                       denominator=f"{n_words} words excluding fillers", warn=trans_warn)
         if n_words else Metric.missing("per_100_words", "no words recognised"),
         by_type=dict(by_type.most_common()), by_kind=dict(by_kind), events=fillers,
-        possible_untranscribed_hesitations=Metric.measured(
+        possible_untranscribed_hesitations=Metric.missing("count", "no transcript") if not words else Metric.measured(
             hesitation_bits, "count", warn=True,
             note=f"short voiced sounds (<= {cfg.hesitation_sound_max_s}s) with no recognised word; may be "
                  "fillers the recogniser dropped, or noise. Not included in the filler total."),
@@ -416,8 +424,11 @@ def analyze_audio(audio: np.ndarray, rate: int, transcription: Transcription, du
         fillers=fa, repetitions=ra, pauses=pauses, clarity=clarity, audio_quality=q)
     parts = [fa, ra, pauses, clarity, q]
     if not words:
-        aa.status = Status.unavailable
-        aa.warnings.append("No speech was recognised; speech metrics are unavailable.")
+        # signal-level results (pauses from VAD, recording quality) remain valid without a transcript
+        signal_ok = pauses.status != Status.unavailable  # i.e. the VAD found speech
+        aa.status = Status.warning if signal_ok else Status.unavailable
+        aa.warnings.append("No transcript: fillers, repetitions, pace and clarity are unavailable; "
+                           "pauses and recording quality are measured from the audio signal.")
     elif any(p.status in (Status.warning, Status.unavailable) for p in parts):
         aa.status = Status.warning
     return aa

@@ -51,14 +51,20 @@ md("## 3. Install dependencies")
 code("""
 !apt-get -qq update > /dev/null && apt-get -qq install -y espeak-ng > /dev/null && espeak-ng --version
 !pip install -q -r requirements.txt
+# faster-whisper's CTranslate2 needs CUDA 12 cuBLAS + cuDNN 9; Colab may ship a newer CUDA.
+# The pipeline preloads these automatically (speakwise.environment.preload_cuda12_libs).
+!nvidia-smi -L > /dev/null 2>&1 && pip install -q nvidia-cublas-cu12 "nvidia-cudnn-cu12==9.*" || echo "No GPU: CPU mode"
 !pip install -q -e . --no-deps
-import importlib, speakwise; importlib.reload(speakwise)
+# An editable install is only visible to NEW processes (scripts, pytest); make it importable in
+# this already-running kernel too, without a runtime restart:
+import sys
+sys.path.insert(0, "/content/SpeakWise/speakwise_pipeline/src")
 from speakwise.environment import inspect_environment, choose_asr
 env = inspect_environment("/content")
 import json; print(json.dumps({k: v for k, v in env.items() if k != "libraries"}, indent=1)); print(env["libraries"])
 print("ASR choice:", choose_asr("auto", "auto", "auto", env))
 """)
-md("## 4. Download models (MiniLM 23 MB, NLI 293 MB, MediaPipe 10 MB; Whisper downloads on first use)")
+md("## 4. Download the default models (MiniLM 23 MB, NLI 96 MB, MediaPipe 10 MB; Whisper downloads on first use)")
 code("""
 !python -m speakwise.models download
 """)
@@ -96,6 +102,7 @@ The 8-bit model gave wrong labels on simple pairs during local testing. This com
 `data/nli_pairs.jsonl` (20 author-written pairs: catches a broken model, does not prove a good one).
 """)
 code("""
+!python -m speakwise.models download all   # adds the two 293 MB NLI candidates
 !python scripts/compare_nli_models.py
 """)
 md("## 8. Experiment: context evaluation on the seed set (PRELIMINARY: author-written expectations)")
@@ -108,13 +115,15 @@ Word error rate against the fixture's reference script, time and memory per mode
 natural speech; repeat on real annotated recordings before choosing a model for production.
 """)
 code("""
-import gc, psutil, time, numpy as np
+import gc, json, psutil, time, numpy as np
+from speakwise.config import PipelineConfig
 from speakwise.audio_transcription import transcribe, release_models
 from speakwise.media_preprocessing import preprocess_mp4
 from speakwise.environment import inspect_environment
 import importlib.util, sys
 spec = importlib.util.spec_from_file_location("ev", "scripts/evaluate_annotations.py"); ev = importlib.util.module_from_spec(spec); spec.loader.exec_module(ev)
 
+truth = json.load(open("outputs/fixture/ground_truth.json"))  # from section 6
 prep = preprocess_mp4("outputs/fixture/fixture.mp4", PipelineConfig(keep_artifacts=False))
 audio, rate = prep.load_audio(); prep.workspace.cleanup()
 env = inspect_environment()

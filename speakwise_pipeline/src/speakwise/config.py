@@ -75,7 +75,7 @@ class PipelineConfig:
 
     # ------------------------------------------------------------- context
     embed_model: str = "all-MiniLM-L6-v2"
-    nli_model: str = "nli-deberta-v3-xsmall"
+    nli_model: str = "nli-deberta-v3-xsmall-q8"  # same accuracy as full precision in Colab test, 1/3 the size
     ctx_sim_floor: float = 0.12  # cosine at/below = unrelated (anchors measured on seed data; see README)
     ctx_sim_full: float = 0.50  # cosine at/above = clearly the same subject
     ctx_unit_min_words: int = 12
@@ -91,8 +91,8 @@ class PipelineConfig:
     ctx_retrieval_k: int = 3
     ctx_retrieval_min_sim: float = 0.35  # claim must be at least this close to a passage to be checked
     ctx_entail_min: float = 0.60
-    ctx_contradict_min: float = 0.70
-    ctx_contradict_min_sim: float = 0.45
+    ctx_contradict_min: float = 0.80  # tuned on seed data (see README); not validated
+    ctx_contradict_min_sim: float = 0.60  # only the closest passage, and it must be clearly related
     ctx_min_speech_words: int = 30
     ctx_low_asr_conf: float = 0.6  # mean word probability below this = context result unreliable
     ctx_relevance_weight: float = 0.6  # composite = 0.6 relevance + 0.4 duration-adjusted coverage

@@ -128,7 +128,7 @@ def test_composite_is_documented_and_provisional():
 
 def test_claim_labels():
     text = ("Coal oil and gas are burned for electricity and release carbon dioxide. "
-            "Carbon dioxide never traps heat in the atmosphere at all. "
+            "Carbon dioxide never traps heat in the atmosphere and never raises the global temperature. "
             "My cousin bought a new bicycle from the market last weekend. ") * 2
     ce = run(timed(text))
     labels = {c.text.split()[0]: c.label for c in ce.claims}

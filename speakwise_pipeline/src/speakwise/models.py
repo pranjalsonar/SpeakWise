@@ -1,7 +1,8 @@
 """Model registry: where each model comes from, its size, licence, and local path.
 
     python -m speakwise.models            # list status
-    python -m speakwise.models download   # fetch everything that's missing
+    python -m speakwise.models download       # fetch the models the default config needs
+    python -m speakwise.models download all   # also the NLI candidates used by compare_nli_models.py
 
 Whisper weights are managed by faster-whisper (Hugging Face cache) and are not listed here.
 """
@@ -94,9 +95,15 @@ def status(cfg: Optional[PipelineConfig] = None) -> dict[str, dict]:
                 "purpose": s["purpose"]} for n, s in REGISTRY.items()}
 
 
+def defaults(cfg: Optional[PipelineConfig] = None) -> list[str]:
+    """Models the default configuration needs."""
+    cfg = cfg or PipelineConfig()
+    return [cfg.embed_model, cfg.nli_model, "face_landmarker", "pose_landmarker_lite"]
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "download":
-        for n in REGISTRY:
+        for n in (list(REGISTRY) if sys.argv[2:3] == ["all"] else defaults()):
             ensure(n)
     for n, s in status().items():
         print(f"{'OK ' if s['available'] else '-- '} {n:24s} {s['size_mb']:>5} MB  {s['license']:10s} {s['purpose']}")
