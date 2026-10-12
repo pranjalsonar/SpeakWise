@@ -180,6 +180,84 @@ from google.colab import drive
 drive.mount("/content/drive")
 !mkdir -p /content/drive/MyDrive/speakwise_outputs && cp -r outputs/reports outputs/*.json /content/drive/MyDrive/speakwise_outputs/ 2>/dev/null; ls /content/drive/MyDrive/speakwise_outputs
 """)
+md("""
+## 13. Desktop app worker (Google Drive handoff)
+For the SpeakWise desktop app. Run sections 1-4 first, then this cell, signed in with the **same Google
+account** the desktop app is connected to. The cell watches the `SpeakWise Desktop` Drive folder that the
+app creates, analyses each uploaded session with `process_session`, and writes the report back into the
+placeholder file the app made (`report_<session_id>.json`). It also updates `colab_heartbeat.json` so the
+app can show whether the worker is running. Stop it with the cell's stop button.
+""")
+code("""
+import io, json, shutil, time, traceback
+from datetime import datetime, timezone
+from pathlib import Path
+from google.colab import auth
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload, MediaIoBaseUpload
+from speakwise.config import PipelineConfig
+from speakwise.pipeline import process_session
+
+auth.authenticate_user()
+svc = build("drive", "v3", cache_discovery=False)
+ROOT_NAME, POLL_S = "SpeakWise Desktop", 15
+JOBS = Path("/content/desktop_jobs")
+
+def find(q):
+    return svc.files().list(q=q + " and trashed=false", fields="files(id,name,modifiedTime)",
+                            orderBy="modifiedTime desc", pageSize=100).execute().get("files", [])
+
+def download(file_id, dest=None):
+    buf = open(dest, "wb") if dest else io.BytesIO()
+    dl = MediaIoBaseDownload(buf, svc.files().get_media(fileId=file_id), chunksize=16 * 2**20)
+    done = False
+    while not done:
+        _, done = dl.next_chunk()
+    if dest:
+        buf.close(); return dest
+    return buf.getvalue()
+
+def write_json(file_id, obj):
+    body = MediaIoBaseUpload(io.BytesIO(json.dumps(obj).encode("utf-8")), mimetype="application/json")
+    svc.files().update(fileId=file_id, media_body=body).execute()
+
+roots = find(f"name='{ROOT_NAME}' and mimeType='application/vnd.google-apps.folder'")
+assert roots, "No 'SpeakWise Desktop' folder: open the desktop app and click Test Connection first."
+root = roots[0]["id"]
+beats = find(f"name='colab_heartbeat.json' and '{root}' in parents")
+
+def handle(session_file):
+    s = json.loads(download(session_file["id"]))
+    sid, report_id = s["session_id"], s["report_file_id"]
+    if json.loads(download(report_id)).get("status") != "pending":
+        return
+    print(f"[{datetime.now():%H:%M:%S}] analysing {sid}: {s['topic']} ({s['speaking_duration_s']}s)")
+    write_json(report_id, {"status": "processing", "session_id": sid})
+    job = JOBS / sid
+    (job / "work").mkdir(parents=True, exist_ok=True)
+    try:
+        mp4 = download(s["recording_file_id"], str(job / "recording.mp4"))
+        rep = process_session(mp4, s["topic"], s["reading_material"], speaking_duration=s["speaking_duration_s"],
+                              config=PipelineConfig(output_dir=job / "reports", work_dir=job / "work"))
+        write_json(report_id, {"status": "done", "session_id": sid, "report": json.loads(rep.to_json())})
+        print("  done:", len(rep.errors), "errors,", len(rep.warnings), "warnings")
+    except Exception as exc:
+        traceback.print_exc()
+        write_json(report_id, {"status": "error", "session_id": sid, "error": f"{type(exc).__name__}: {exc}"})
+    finally:
+        shutil.rmtree(job, ignore_errors=True)
+
+print("Watching Google Drive for desktop sessions. Stop this cell to end.")
+while True:
+    if beats:
+        write_json(beats[0]["id"], {"alive_at": datetime.now(timezone.utc).isoformat()})
+    for f in find(f"'{root}' in parents and name contains 'session_'"):
+        try:
+            handle(f)
+        except Exception:
+            traceback.print_exc()
+    time.sleep(POLL_S)
+""")
 
 nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "name": "python3"},
                                    "language_info": {"name": "python"}, "colab": {"provenance": []},

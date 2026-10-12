@@ -1,0 +1,5 @@
+{
+  "googleClientId": "YOUR_CLIENT_ID.apps.googleusercontent.com",
+  "googleClientSecret": "YOUR_DESKTOP_CLIENT_SECRET",
+  "colabNotebookUrl": "https://colab.research.google.com/github/pranjalsonar/SpeakWise/blob/backend-auth-api/speakwise_pipeline/notebooks/speakwise_pipeline_colab.ipynb"
+}

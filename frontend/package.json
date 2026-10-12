@@ -10,6 +10,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "build:desktop": "tsc -b && vite build --config vite.desktop.config.ts",
+    "test:desktop": "node --test \"tests-unit/*.test.ts\"",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",

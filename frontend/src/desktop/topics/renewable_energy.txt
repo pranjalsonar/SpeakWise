@@ -1,0 +1,41 @@
+Renewable Energy: How the World Is Changing the Way It Makes Power
+
+For most of the last two centuries, the world has run on coal, oil and natural gas. These fossil fuels made modern industry, transport and electricity possible, but burning them releases carbon dioxide and other pollutants. Renewable energy comes from sources that are naturally replenished on a human timescale: sunlight, wind, flowing water, the heat of the Earth and plant material. Over the past twenty years renewable energy has moved from a small, expensive niche to the fastest growing part of the global power system.
+
+The main renewable sources
+
+Solar power captures energy from sunlight. Photovoltaic panels, usually made from silicon, convert light directly into electricity. A single panel produces only a few hundred watts, but panels can be combined into rooftop systems for homes or into solar farms that cover many hectares and supply whole towns. Solar thermal systems use sunlight to heat water or, in larger plants, use mirrors to concentrate sunlight and drive a steam turbine.
+
+Wind power uses turbines whose blades are turned by moving air. The rotation drives a generator that produces electricity. Onshore wind farms are built on land, often on hills or open plains, while offshore wind farms are built at sea, where winds are stronger and more consistent. Modern offshore turbines are among the largest machines ever built, with blades longer than a football field.
+
+Hydropower is the oldest large-scale renewable source. Dams hold back rivers, and water released through the dam spins turbines. Hydropower provides a large share of electricity in countries such as Norway, Brazil and Canada. It can be switched on and off quickly, which makes it useful for balancing the grid. However, large dams flood valleys, displace communities and change river ecosystems.
+
+Geothermal energy uses heat from inside the Earth. In volcanic regions such as Iceland and Kenya, hot water and steam from underground are used to generate electricity and to heat buildings. Bioenergy comes from burning or processing plant material, agricultural waste or wood. It can be renewable if the plants are regrown, but it can also cause deforestation and compete with food production if it is not managed carefully.
+
+Why renewable energy has grown so quickly
+
+The most important reason for the rapid growth of renewables is falling cost. The price of solar panels has fallen by roughly ninety percent since 2010, and the cost of wind power has also fallen sharply. In many countries, building a new solar or wind farm is now cheaper than building a new coal or gas power plant. This change happened because of mass production, improvements in technology and the experience gained from building thousands of projects.
+
+Government policy has also played a major role. Subsidies, tax credits and guaranteed prices for renewable electricity helped early projects become profitable. International agreements such as the Paris Agreement encouraged countries to set targets for reducing emissions. Concern about air pollution, which causes millions of early deaths each year, has also pushed governments away from coal.
+
+Energy security is another motivation. Countries that import most of their oil and gas are exposed to sudden price rises and political pressure from supplier countries. Sunlight and wind cannot be blocked by another country, so renewables can make a nation's energy supply more independent.
+
+The challenge of variability
+
+The biggest technical challenge for solar and wind is that they are variable. The sun does not shine at night, and the wind does not always blow. Electricity grids must match supply and demand every second, so a power system that relies heavily on solar and wind needs ways to cope with these changes.
+
+Several solutions are used together. Batteries store electricity when production is high and release it when production falls. Large lithium-ion battery installations can now supply power for several hours. Pumped hydro storage moves water uphill to a reservoir when electricity is cheap and lets it flow back down through turbines when electricity is needed. Stronger connections between regions allow power to be shared, so that wind in one area can make up for calm weather in another. Demand can also be made more flexible, for example by charging electric cars when electricity is plentiful.
+
+Some experts argue that a reliable low-carbon system will still need sources that can run at any time, such as hydropower, geothermal energy, nuclear power or gas plants that capture their carbon emissions. The right mix depends on each country's geography, resources and politics.
+
+Environmental and social questions
+
+Renewable energy is much cleaner than fossil fuels, but it is not free of impacts. Solar panels and batteries require mining for materials such as lithium, cobalt, copper and rare earth elements. Mining can damage landscapes and has sometimes involved poor working conditions. Recycling of old panels and batteries is still developing. Wind turbines can harm birds and bats if they are badly placed, and some local residents object to the noise or the change to the landscape.
+
+There are also questions of fairness. Workers and communities that depend on coal mining or oil production can lose jobs as the energy system changes. Many governments now talk about a "just transition", meaning that retraining, new industries and financial support should be provided so that the costs of change do not fall only on a few regions. At the same time, hundreds of millions of people in poorer countries still lack reliable electricity, and small solar systems are often the fastest way to bring them power.
+
+Looking ahead
+
+Renewables already produce around a third of the world's electricity, and most new power capacity built each year is solar or wind. However, electricity is only part of total energy use. Transport, heating and heavy industry such as steel and cement still rely mostly on fossil fuels. Electrifying these sectors, through electric vehicles, heat pumps and new industrial processes, is the next stage of the transition. Green hydrogen, made by using renewable electricity to split water, may help in industries that are hard to electrify directly.
+
+The speed of the transition will depend on investment, on how quickly grids and storage can be built, and on political decisions. What is clear is that the way humanity produces energy is changing faster now than at any time since the industrial revolution.

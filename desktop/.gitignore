@@ -1,0 +1,3 @@
+node_modules/
+# Holds the Google OAuth client; never commit it.
+speakwise.config.json
