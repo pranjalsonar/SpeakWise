@@ -42,6 +42,8 @@ md("## 2. Get the code (public repository, no credentials needed)")
 code("""
 REPO = "https://github.com/pranjalsonar/SpeakWise.git"
 BRANCH = "poc_model"
+%cd /content
+# leave the folder before deleting it, so re-running this cell in the same runtime works
 !rm -rf /content/SpeakWise
 !git clone --quiet --depth 1 --branch {BRANCH} {REPO} /content/SpeakWise
 %cd /content/SpeakWise/speakwise_pipeline
