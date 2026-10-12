@@ -23,8 +23,16 @@ REGISTRY = {
         "source": "huggingface", "repo": "Xenova/all-MiniLM-L6-v2", "license": "Apache-2.0", "size_mb": 23,
         "files": ["onnx/model_quantized.onnx", "tokenizer.json", "config.json"],
         "main": "onnx/model_quantized.onnx", "purpose": "sentence embeddings (context relevance, retrieval)"},
-    # NLI candidates. The 8-bit file was the first choice but gave wrong labels on simple
-    # pairs (see README "Model selection"); scripts/compare_nli_models.py decides the default.
+    # NLI candidates, compared in Colab with scripts/compare_nli_models.py (README "Results").
+    # Default: nli-deberta-v3-base-q8 (best accuracy, no false inconsistency flags on the seed set).
+    "nli-deberta-v3-base-q8": {
+        "source": "huggingface", "repo": "cross-encoder/nli-deberta-v3-base", "license": "Apache-2.0", "size_mb": 253,
+        "files": ["onnx/model_quint8_avx2.onnx", "tokenizer.json", "config.json"],
+        "main": "onnx/model_quint8_avx2.onnx", "purpose": "NLI, base size, 8-bit (default)"},
+    "nli-deberta-v3-small-q8": {
+        "source": "huggingface", "repo": "cross-encoder/nli-deberta-v3-small", "license": "Apache-2.0", "size_mb": 182,
+        "files": ["onnx/model_quint8_avx2.onnx", "tokenizer.json", "config.json"],
+        "main": "onnx/model_quint8_avx2.onnx", "purpose": "NLI, small size, 8-bit (candidate)"},
     "nli-deberta-v3-xsmall-q8": {
         "source": "huggingface", "repo": "cross-encoder/nli-deberta-v3-xsmall", "license": "Apache-2.0", "size_mb": 96,
         "files": ["onnx/model_quint8_avx2.onnx", "tokenizer.json", "config.json"],

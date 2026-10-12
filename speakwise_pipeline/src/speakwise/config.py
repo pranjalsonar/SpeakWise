@@ -75,7 +75,7 @@ class PipelineConfig:
 
     # ------------------------------------------------------------- context
     embed_model: str = "all-MiniLM-L6-v2"
-    nli_model: str = "nli-deberta-v3-xsmall-q8"  # same accuracy as full precision in Colab test, 1/3 the size
+    nli_model: str = "nli-deberta-v3-base-q8"  # chosen in the Colab comparison (README "Results")
     ctx_sim_floor: float = 0.12  # cosine at/below = unrelated (anchors measured on seed data; see README)
     ctx_sim_full: float = 0.50  # cosine at/above = clearly the same subject
     ctx_unit_min_words: int = 12

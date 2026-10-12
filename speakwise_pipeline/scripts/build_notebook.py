@@ -64,7 +64,7 @@ env = inspect_environment("/content")
 import json; print(json.dumps({k: v for k, v in env.items() if k != "libraries"}, indent=1)); print(env["libraries"])
 print("ASR choice:", choose_asr("auto", "auto", "auto", env))
 """)
-md("## 4. Download the default models (MiniLM 23 MB, NLI 96 MB, MediaPipe 10 MB; Whisper downloads on first use)")
+md("## 4. Download the default models (MiniLM 23 MB, NLI 253 MB, MediaPipe 10 MB; Whisper downloads on first use)")
 code("""
 !python -m speakwise.models download
 """)
@@ -98,11 +98,11 @@ Video("outputs/fixture/fixture.mp4", embed=True, width=320)
 """)
 md("""
 ## 7. Experiment: NLI model choice (consistency check)
-The 8-bit model gave wrong labels on simple pairs during local testing. This compares the candidates on
-`data/nli_pairs.jsonl` (20 author-written pairs: catches a broken model, does not prove a good one).
+Compares the NLI candidates on `data/nli_pairs.jsonl` (20 author-written pairs: catches a broken model,
+does not prove a good one). The base model was chosen from this comparison plus the seed-set results.
 """)
 code("""
-!python -m speakwise.models download all   # adds the two 293 MB NLI candidates
+!python -m speakwise.models download all   # adds the other NLI candidates (~900 MB)
 !python scripts/compare_nli_models.py
 """)
 md("## 8. Experiment: context evaluation on the seed set (PRELIMINARY: author-written expectations)")

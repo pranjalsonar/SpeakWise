@@ -24,7 +24,7 @@ and run cells 1-6. Each session re-clones the repo; nothing depends on earlier s
 ```bash
 cd speakwise_pipeline
 pip install -r requirements.txt          # plus FFmpeg on PATH
-python -m speakwise.models download      # ~330 MB (MiniLM, NLI, MediaPipe)
+python -m speakwise.models download      # ~290 MB (MiniLM, NLI, MediaPipe)
 python -m pytest tests -m "not slow"     # fast test suite
 python scripts/generate_test_fixture.py  # synthetic MP4 (needs espeak-ng or Windows SAPI)
 ```
@@ -57,7 +57,7 @@ handling, filler rules, VAD pause logic, MediaPipe head pose / iris / smoothing 
 | VAD | Silero VAD (bundled with faster-whisper) | <2 MB | MIT | Independent of the transcript. |
 | Face / pose | MediaPipe Face Landmarker, Pose Landmarker lite | 10 MB | Apache-2.0 | CPU real-time; iris + head-pose matrix; suits webcam framing. |
 | Embeddings | all-MiniLM-L6-v2 (ONNX int8) | 23 MB | Apache-2.0 | Relevance, retrieval, key points; no PyTorch. |
-| NLI | cross-encoder/nli-deberta-v3-xsmall, 8-bit ONNX | 96 MB | Apache-2.0 | 3-way entail/contradict/neutral per claim; same accuracy as full precision (below). |
+| NLI | cross-encoder/nli-deberta-v3-base, 8-bit ONNX | 253 MB | Apache-2.0 | 3-way entail/contradict/neutral per claim; best of 5 candidates tested in Colab (below). |
 
 Not chosen: CrisperWhisper (better at fillers, but CC-BY-NC), hosted LLM APIs (cost, privacy, keys;
 can be added later as an optional evaluator), large NLI/LLM models (memory).
@@ -78,7 +78,9 @@ synthetic data), **M** = measured accuracy on human-annotated data (**none yet**
 | Same suite | Colab, Python 3.13, Tesla T4 | **F** 47/47 passed on the first commit (3 regression tests added since) |
 | Full pipeline on synthetic MP4 (30 s, espeak-ng speech) | Colab T4, Whisper `small` fp16 | **F/P** 10.6 s end to end; transcript mean word probability 0.95; fillers 3/3 (um, uh, you know); inserted pauses 4/4 with correct short/long class (longest measured 2.4 s vs 2.5 s true); no face found in the test pattern and reported as *unavailable* |
 | Speech recognisers on the fixture | Colab T4 | **P** WER: base 3.0 %, small 3.0 %, large-v3-turbo 1.5 %; decode 0.5-0.9 s for 30 s; all kept "um/uh"; **none kept the deliberate "the the"** |
-| NLI candidates on 20 author-written pairs | Colab | **P** xsmall 8-bit 0.75, xsmall fp32 0.75 (identical: quantisation was *not* the problem), binary MIT model 0.90 (entailed vs not; cannot detect contradiction) |
+| NLI candidates on 20 author-written pairs | Colab | **P** xsmall 8-bit 0.75, xsmall fp32 0.75 (identical: quantisation was *not* the problem), small 8-bit 0.75, **base 8-bit 0.85**, binary MIT model 0.90 (entailed vs not; cannot detect contradiction) |
+| NLI candidates inside the context rubric (11 seed speeches + fixture, 64 claims) | Colab | **P** planted inconsistencies found 3/3 by all; false flags: xsmall 1 (flagged the correct fixture sentence "the ice is melting and sea levels are rising"), small 0, base 0; claims recognised as supported: xsmall 8, small 14, **base 21**. Time per pair on Colab CPU: 41 / 65 / 124 ms. Base chosen. |
+| Reproducibility | Fresh Colab runtime, notebook from GitHub, no manual edits | **F** clone, install, kernel import, model download, 50/50 tests and the GPU pipeline all ran unattended |
 | Context rubric on 11 author-written seed speeches | Local | **P** relevance ordering 16/16 pairs; poor transcript flagged unavailable; key points precision 0.85 / recall 0.82; planted inconsistencies 3/3 with 0 false flags **after tuning the rule on this same set** (2 false flags before) |
 
 Resource use (Colab T4, 30 s clip): peak process RSS 2.7 GB, GPU memory 1.2 GB, timings
@@ -94,9 +96,9 @@ pipeline reports this as a failed transcription and continues with signal-level 
 * **Fillers and repetitions are lower bounds:** Whisper drops many hesitations and cleaned up the planted
   "the the" in every model tested. Short untranscribed voiced sounds are reported separately as possible
   dropped fillers.
-* **Consistency:** the xsmall NLI model over-predicts contradiction for related and even unrelated passages;
-  only the closest passage may contradict a claim (threshold tuned on seed data). "Supported" is
-  under-detected for paraphrases, so most correct claims show as "not addressed", which is *not* "wrong".
+* **Consistency:** NLI models over-predict contradiction for related and even unrelated passages, so only the
+  closest passage may contradict a claim (threshold tuned on seed data). Even with the base model, about two
+  thirds of correct paraphrased claims show as "not addressed", which is *not* "wrong".
 * **Context thresholds** (relevance anchors 0.12/0.50, coverage 0.50 + margin 0.02, contradiction rule) were
   set on the seed set; the 70/100 target is provisional.
 * **Gaze** is a head-pose + iris heuristic, never validated; a test pattern cannot validate it. Posture is

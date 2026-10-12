@@ -47,7 +47,7 @@
   "shoulder_visibility_min": 0.5,
   "posture_drop_ratio": 0.15,
   "embed_model": "all-MiniLM-L6-v2",
-  "nli_model": "nli-deberta-v3-xsmall-q8",
+  "nli_model": "nli-deberta-v3-base-q8",
   "ctx_sim_floor": 0.12,
   "ctx_sim_full": 0.5,
   "ctx_unit_min_words": 12,
