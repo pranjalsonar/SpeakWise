@@ -3,13 +3,17 @@ from fastapi.responses import JSONResponse
 
 
 class AppException(Exception):
-    """Base for errors raised by services. Converted to a JSON response in main.py."""
+    """Base for errors raised by services. Converted to a JSON response in main.py.
+
+    `extra` adds fields next to "detail" in the response (e.g. suggestions).
+    """
 
     status_code = status.HTTP_400_BAD_REQUEST
     detail = "Bad request"
 
-    def __init__(self, detail: str | None = None):
+    def __init__(self, detail: str | None = None, extra: dict | None = None):
         self.detail = detail or self.detail
+        self.extra = extra or {}
         super().__init__(self.detail)
 
 
@@ -28,10 +32,32 @@ class NotFoundException(AppException):
     detail = "Resource not found"
 
 
-def error_response(status_code: int, detail: str) -> JSONResponse:
+class ConflictException(AppException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Resource already exists"
+
+
+class UnprocessableException(AppException):
+    status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+    detail = "The request could not be processed"
+
+
+class TooManyRequestsException(AppException):
+    status_code = status.HTTP_429_TOO_MANY_REQUESTS
+    detail = "Too many requests. Please try again later"
+
+
+class ServiceUnavailableException(AppException):
+    status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+    detail = "A required service is temporarily unavailable. Please try again shortly"
+
+
+def error_response(status_code: int, detail: str, extra: dict | None = None) -> JSONResponse:
     headers = {"WWW-Authenticate": "Bearer"} if status_code == 401 else None
-    return JSONResponse(status_code=status_code, content={"detail": detail}, headers=headers)
+    return JSONResponse(
+        status_code=status_code, content={"detail": detail, **(extra or {})}, headers=headers
+    )
 
 
 async def app_exception_handler(request: Request, exc: AppException) -> JSONResponse:
-    return error_response(exc.status_code, exc.detail)
+    return error_response(exc.status_code, exc.detail, exc.extra)

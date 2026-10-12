@@ -22,8 +22,18 @@
 }
 
 .user-row__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
   font-size: 15px;
   font-weight: 700;
+}
+
+.user-row__you {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-700);
 }
 
 .user-row__email,
@@ -64,7 +74,7 @@
 @media (min-width: 768px) {
   .user-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 90px 110px 90px 150px;
+    grid-template-columns: minmax(0, 1fr) 90px 110px 90px 130px 40px;
     gap: 16px;
     padding: 10px 16px;
     border-radius: var(--radius-pill);
@@ -106,6 +116,6 @@
 
 @media (min-width: 1024px) {
   .user-row {
-    grid-template-columns: minmax(0, 1fr) 110px 120px 110px 170px;
+    grid-template-columns: minmax(0, 1fr) 110px 120px 110px 150px 40px;
   }
 }

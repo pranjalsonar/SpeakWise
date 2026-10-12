@@ -88,6 +88,24 @@ Confirm with `.\.venv\Scripts\alembic current`. It should end in `(head)`.
 
 Safe to re-run; it resets these two accounts to the values above. It refuses to run when `ENVIRONMENT=production`.
 
+Optional: fill the admin dashboard with demo data (24 students and ~200 sessions over 12 weeks):
+
+```powershell
+.\.venv\Scripts\python scripts/seed_demo_sessions.py
+```
+
+Demo students use `@demo.speakwise.com` emails and the password `demo@123`. Re-running replaces only those users and their sessions.
+
+### 5b. Seed the topic bank and pre-build reading material
+
+```powershell
+.\.venv\Scripts\python scripts/seed_topics.py              # 30 curated topics; checks every Wikipedia title
+.\.venv\Scripts\python scripts/build_reading_materials.py  # version 1 for every curated topic (~1 min)
+```
+
+Both need internet access (Wikipedia) and are safe to re-run. Preview one topic's material with `scripts/build_reading_materials.py <topic_id> --preview`.
+Set `WIKIPEDIA_USER_AGENT` in `.env` to include your contact (Wikimedia policy). Design: [docs/TOPICS_READING_DESIGN.md](../docs/TOPICS_READING_DESIGN.md).
+
 ### 6. Run the API
 
 ```powershell
@@ -109,7 +127,29 @@ Open http://127.0.0.1:8999/docs:
 | `POST /api/v1/auth/login` | Public | Email + password → access token (valid `JWT_EXPIRE_HOURS`) |
 | `GET /api/v1/auth/me` | Bearer token | Current user's profile |
 | `POST /api/v1/auth/logout` | Bearer token | Revoke the current token |
+| `GET /api/v1/users/me` | Bearer token | Your profile (incl. `created_at`) |
+| `PATCH /api/v1/users/me` | Bearer token | Update your own `full_name` / `email` |
+| `GET /api/v1/users?search=&status=active\|inactive&skip=0&limit=50` | Admin | Users with session count / last active, newest first, plus overall counts |
+| `POST /api/v1/users` | Admin | Create a user; returns a one-time `temporary_password` |
+| `GET /api/v1/users/{id}` | Admin | Any user's profile + activity |
+| `PATCH /api/v1/users/{id}` | Admin | Update any user's `full_name`, `email`, `role_id`, `is_active` |
+| `POST /api/v1/users/{id}/reset-password` | Admin | Replace a user's password with a new temporary one |
+| `GET /api/v1/admin/dashboard` | Admin | KPIs, sessions per week, category split, recent sessions |
+| `GET /api/v1/topics/suggest?category=&difficulty=&exclude_id=` | Bearer token | Random curated topic the user hasn't recorded |
+| `GET /api/v1/topics/daily` | Bearer token | Today's topic (same for everyone) + whether you recorded it |
+| `POST /api/v1/topics/custom` `{text}` | Bearer token | Find/create a topic from typed text (201 new, 200 existing, 422 nothing found, 429 hourly limit) |
+| `GET /api/v1/topics/{id}` | Bearer token | One topic |
+| `GET /api/v1/topics/{id}/reading-material` | Bearer token | ~2,500-word material from Wikipedia; never a version you already recorded with |
 | `GET /health` | Public | API + database check |
+
+## Tests
+
+```powershell
+.\.venv\Scripts\pip install -r requirements-dev.txt
+.\.venv\Scripts\python -m pytest
+```
+
+Unit tests cover text normalization, the Wikipedia parser and client (mocked HTTP: redirects, retries, circuit breaker) and the reading-material builder. They don't need the database or internet.
 
 ## After pulling new changes
 
@@ -144,6 +184,8 @@ The schema follows [docs/speak_wise_db_design (1).md](../docs/speak_wise_db_desi
 
 - `users`: login via `email` + `hashed_password` (bcrypt); emails are stored lowercase
 - `roles`: fixed IDs `1 = admin`, `2 = user`; `users.role_id` defaults to `2`. Use `app.constants.roles.RoleId` in code instead of raw numbers.
+- `topic_categories`: fixed IDs `1 = Technology`, `2 = Environment`, `3 = Business`, `4 = Society`, `5 = Science`
+- `talk_session` extra columns for the dashboard: `topic_title`, `category_id`, `duration_seconds`
 
 ## Making schema changes
 

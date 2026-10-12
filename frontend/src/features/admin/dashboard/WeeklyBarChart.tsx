@@ -1,11 +1,10 @@
 import type { WeeklyCount } from '@/core/types'
 import './WeeklyBarChart.css'
 
-/** Bar height scale from the handoff: value / 800. */
-const SCALE_MAX = 800
-
 /** CSS bar chart of talk sessions over the last 8 weeks. */
 export function WeeklyBarChart({ weeks }: { weeks: WeeklyCount[] }) {
+  // Tallest week fills the plot (real counts vary too much for a fixed scale).
+  const scaleMax = Math.max(1, ...weeks.map((w) => w.count))
   const first = weeks[0]
   const last = weeks[weeks.length - 1]
   const summary = weeks.map((w) => `${w.week}: ${w.count}`).join(', ')
@@ -30,7 +29,7 @@ export function WeeklyBarChart({ weeks }: { weeks: WeeklyCount[] }) {
             <span className="week-chart__area">
               <span
                 className="week-chart__bar"
-                style={{ height: `${Math.min(100, (w.count / SCALE_MAX) * 100)}%` }}
+                style={{ height: `${(w.count / scaleMax) * 100}%` }}
               />
             </span>
             <span className="week-chart__label">{w.week}</span>

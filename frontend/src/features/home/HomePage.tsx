@@ -1,5 +1,6 @@
 import { Mic } from 'lucide-react'
 import { Link } from 'react-router'
+import * as topicsApi from '@/api/api.topics'
 import { ROUTES } from '@/app/routes'
 import { AppShell } from '@/components/layout/AppShell'
 import { SessionRow } from '@/components/shared/SessionRow'
@@ -7,7 +8,7 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { useCurrentUser } from '@/context/AuthContext'
 import { useAsync } from '@/core/hooks/useAsync'
-import { sessionService, topicService } from '@/core/services'
+import { sessionService } from '@/core/services'
 import { greetingFor } from '@/core/utils'
 import { useStartSession } from '@/hooks/useStartSession'
 import { StartSessionCard } from './StartSessionCard'
@@ -19,7 +20,8 @@ export function HomePage() {
   const user = useCurrentUser()
   const startSession = useStartSession()
   const { data, loading } = useAsync(() => sessionService.getDashboard(user.email), [user.email])
-  const todaysTopic = topicService.getTodaysTopic()
+  const { data: daily, error: dailyError } = useAsync(() => topicsApi.getDailyTopic(), [])
+  const todaysTopic = daily?.topic
   const hasSessions = (data?.recentSessions.length ?? 0) > 0
 
   return (
@@ -39,12 +41,19 @@ export function HomePage() {
               onSuggest={() => startSession({ random: true })}
             />
           </div>
-          <div className="home-page__today">
-            <TodayTopicCard
-              topic={todaysTopic}
-              onUse={() => startSession({ topicId: todaysTopic.id })}
-            />
-          </div>
+          {/* If the daily topic can't load, the start card alone still works. */}
+          {!dailyError && (
+            <div className="home-page__today">
+              {todaysTopic ? (
+                <TodayTopicCard
+                  topic={todaysTopic}
+                  onUse={() => startSession({ topic: todaysTopic })}
+                />
+              ) : (
+                <Skeleton height={220} radius={36} />
+              )}
+            </div>
+          )}
         </div>
 
         {loading && (

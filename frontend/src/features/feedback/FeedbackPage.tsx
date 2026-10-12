@@ -8,8 +8,7 @@ import { Skeleton } from '@/components/ui/Skeleton'
 import { usePreferences } from '@/context/PreferencesContext'
 import { useSession } from '@/context/SessionContext'
 import { useAsync } from '@/core/hooks/useAsync'
-import type { SessionTopic } from '@/core/session/sessionReducer'
-import { sessionService, topicService } from '@/core/services'
+import { sessionService } from '@/core/services'
 import type { DurationMin, FeedbackReport } from '@/core/types'
 import { formatClock, formatLongDate } from '@/core/utils'
 import { useStartSession } from '@/hooks/useStartSession'
@@ -43,24 +42,16 @@ export function FeedbackPage() {
     if (!report) return
     if (isLatest && session.topic) {
       dispatch({ type: 'practiceAgain' })
-    } else {
-      const known = topicService.getTopics().find((t) => t.title === report.topicTitle)
-      const topic: SessionTopic = known
-        ? {
-            id: known.id,
-            title: known.title,
-            category: known.category,
-            difficulty: known.difficulty,
-          }
-        : { id: 'own', title: report.topicTitle }
-      const minutes = Number.parseInt(report.duration, 10)
-      const durationMin = ([1, 3, 5] as const).includes(minutes as DurationMin)
-        ? (minutes as DurationMin)
-        : preferences.defaultDurationMin
-      dispatch({ type: 'start', durationMin })
-      dispatch({ type: 'confirmTopic', topic })
+      navigate(ROUTES.sessionPrepare)
+      return
     }
-    navigate(ROUTES.sessionPrepare)
+    // A past report only knows the topic title: open "My own topic" with it filled in,
+    // so the backend resolves it (to the same topic if it exists) when the user continues.
+    const minutes = Number.parseInt(report.duration, 10)
+    const durationMin = ([1, 3, 5] as const).includes(minutes as DurationMin)
+      ? (minutes as DurationMin)
+      : preferences.defaultDurationMin
+    startSession({ ownTopic: report.topicTitle, durationMin })
   }
 
   const actions = (

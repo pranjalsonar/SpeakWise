@@ -35,6 +35,12 @@
   font-size: 24px;
 }
 
+.app-shell__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .app-shell__main {
   padding: 8px var(--gutter-mobile) calc(var(--tabbar-height) + 24px + env(safe-area-inset-bottom));
 }
@@ -152,11 +158,24 @@
     font-weight: 700;
   }
 
+  .app-shell__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .app-shell__logout {
+    width: 100%;
+    font-family: var(--font-body);
+    line-height: inherit;
+    text-align: left;
+  }
+
   .app-shell__user {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: auto;
     padding: 8px;
   }
 

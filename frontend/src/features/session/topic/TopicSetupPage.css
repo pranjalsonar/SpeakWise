@@ -34,6 +34,25 @@
   display: none;
 }
 
+.topic-page__error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.topic-page__hint {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
+
+.topic-page__related {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
 .topic-page__summary {
   font-size: 14px;
   font-weight: 600;

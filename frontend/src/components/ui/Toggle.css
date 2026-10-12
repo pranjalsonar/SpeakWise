@@ -53,3 +53,7 @@
 .toggle--sm.toggle--on .toggle__knob {
   transform: translateX(20px);
 }
+
+.toggle:disabled {
+  opacity: 0.5;
+}

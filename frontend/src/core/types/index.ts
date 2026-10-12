@@ -11,6 +11,8 @@ export interface Topic {
   category: Category
   difficulty: Difficulty
   teaser: string
+  /** Has the current user already recorded a talk on it? (from the API) */
+  recorded?: boolean
 }
 
 export type SessionStatus = 'completed' | 'processing'
@@ -38,12 +40,31 @@ export interface ArticleSection {
   showKeyPoints?: boolean
 }
 
+export interface ReadingSource {
+  title: string
+  /** Permalink to the exact Wikipedia revision used. */
+  url: string
+}
+
+/** One version of a topic's reading material (GET /topics/{id}/reading-material). */
 export interface ReadingMaterial {
+  /** Send back when the talk session is saved, so this version isn't served again. */
+  id: number
   topicId: string
+  version: number
+  /** The user has recorded every version; this one is shown again. */
+  isRepeat: boolean
   readMinutes: number
   wordCount: number
+  summary: string
   keyPoints: string[]
   sections: ArticleSection[]
+  sources: ReadingSource[]
+  /** "Adapted from Wikipedia articles … licensed under CC BY-SA 4.0." */
+  attribution: string
+  licenseUrl: string
+  /** Only when isRepeat: other topics the user hasn't recorded yet. */
+  relatedTopics: Topic[]
 }
 
 export interface Metric {
@@ -80,6 +101,8 @@ export interface User {
   email: string
   initials: string
   role: Role
+  /** ISO date the account was created (only for backend users). */
+  joinedAt?: string
 }
 
 export type ReadingTextSize = 'Small' | 'Medium' | 'Large'
@@ -98,22 +121,33 @@ export interface DeviceOptions {
 }
 
 // ---------- Admin ----------
-export type UserStatus = 'Active' | 'Inactive'
-
+/** A user as the admin Users screen sees them (from GET /users). */
 export interface AdminUser {
-  id: string
+  id: number
   name: string
+  /** null when the account has no name set (name falls back to the email). */
+  fullName: string | null
   email: string
+  initials: string
+  role: Role
+  isActive: boolean
   sessions: number
-  lastActive: string
-  joined: string
-  status: UserStatus
+  /** ISO dates. lastActiveAt is null if they never logged in or recorded a session. */
+  lastActiveAt: string | null
+  joinedAt: string
+}
+
+export interface AdminUserCounts {
+  all: number
+  active: number
+  inactive: number
 }
 
 export interface AdminKpi {
   key: 'totalUsers' | 'activeUsers' | 'sessions' | 'minutes' | 'avgScore'
   label: string
-  value: number
+  /** null when there's no data yet (e.g. no scored sessions); shown as "—". */
+  value: number | null
   delta: string
 }
 
@@ -128,10 +162,19 @@ export interface CategoryShare {
 }
 
 export interface AdminRecentSession {
+  id?: string
   user: string
   topic: string
   score: number
   when: string
+}
+
+export interface AdminDashboard {
+  kpis: AdminKpi[]
+  sessionsPerWeek: WeeklyCount[]
+  sessionsByCategory: CategoryShare[]
+  recentSessions: AdminRecentSession[]
+  lastUpdated: string
 }
 
 export interface LandingFeature {

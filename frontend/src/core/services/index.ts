@@ -1,5 +1,4 @@
-// Single entry point for data access. Swap these mock modules for API-backed ones later.
-export * as adminService from './adminService'
+// Mock data access for screens not yet on the backend. Real API calls live in src/api.
 export * as authService from './authService'
 export { AuthError } from './authService'
 export * as contentService from './contentService'

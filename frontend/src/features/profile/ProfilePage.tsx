@@ -1,6 +1,7 @@
 import { Pen } from 'lucide-react'
-import { useNavigate } from 'react-router'
-import { ROUTES } from '@/app/routes'
+import { useEffect, useState } from 'react'
+import * as usersApi from '@/api/api.users'
+import { getAccessToken } from '@/api/authToken'
 import { AppShell } from '@/components/layout/AppShell'
 import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
@@ -13,34 +14,59 @@ import { usePreferences } from '@/context/PreferencesContext'
 import { useToast } from '@/context/ToastContext'
 import { preferencesService } from '@/core/services'
 import type { ReadingTextSize } from '@/core/types'
+import { useLogout } from '@/hooks/useLogout'
 import { useIsDesktop } from '@/hooks/useMediaQuery'
 import { useMediaDevices } from '@/hooks/useMediaDevices'
+import { EditProfileDialog } from './EditProfileDialog'
 import { PreferenceRow } from './PreferenceRow'
 import './ProfilePage.css'
 
 const TEXT_SIZES: readonly ReadingTextSize[] = ['Small', 'Medium', 'Large']
 
+/** "2026-10-04T…" → "Oct 2026" */
+const formatJoined = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+
 export function ProfilePage() {
   const user = useCurrentUser()
-  const { logout } = useAuth()
-  const navigate = useNavigate()
+  const { updateUser } = useAuth()
+  const onLogout = useLogout()
+  // Only backend accounts have a token; mock-registered users can't load or edit a profile.
+  const hasAccount = getAccessToken() !== null
+  const [editOpen, setEditOpen] = useState(false)
+  const [editKey, setEditKey] = useState(0)
   const isDesktop = useIsDesktop()
   const { showToast } = useToast()
   const { preferences, updatePreferences } = usePreferences()
   const devices = useMediaDevices()
 
-  const onLogout = () => {
-    logout()
-    navigate(ROUTES.login, { replace: true })
+  // Show the latest details from the server (an admin or another device may have changed them).
+  // A 401 here signs the user out via AuthProvider, so other errors just keep the saved details.
+  useEffect(() => {
+    if (!hasAccount) return
+    let cancelled = false
+    usersApi
+      .getMyProfile()
+      .then((fresh) => {
+        if (!cancelled) updateUser(fresh)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [hasAccount, updateUser])
+
+  const openEdit = () => {
+    if (!hasAccount) {
+      showToast('Log in with your SpeakWise account to edit your profile.')
+      return
+    }
+    setEditKey((k) => k + 1) // fresh form each time
+    setEditOpen(true)
   }
 
   const editButton = (
-    <Button
-      variant="secondary"
-      iconLeft={<Pen size={16} />}
-      block={!isDesktop}
-      onClick={() => showToast('Profile editing is coming soon.')}
-    >
+    <Button variant="secondary" iconLeft={<Pen size={16} />} block={!isDesktop} onClick={openEdit}>
       Edit profile
     </Button>
   )
@@ -59,6 +85,9 @@ export function ProfilePage() {
           <div className="profile-page__identity">
             <span className="profile-page__name">{user.name}</span>
             <span className="profile-page__email">{user.email}</span>
+            {user.joinedAt && (
+              <span className="profile-page__meta">Member since {formatJoined(user.joinedAt)}</span>
+            )}
           </div>
           {isDesktop && editButton}
         </section>
@@ -140,6 +169,18 @@ export function ProfilePage() {
           Log out
         </Button>
       </div>
+
+      <EditProfileDialog
+        key={editKey}
+        open={editOpen}
+        user={user}
+        onClose={() => setEditOpen(false)}
+        onSaved={(updated) => {
+          updateUser(updated)
+          setEditOpen(false)
+          showToast('Profile updated.')
+        }}
+      />
     </AppShell>
   )
 }

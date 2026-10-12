@@ -8,7 +8,9 @@ export function KpiGrid({ kpis }: { kpis: AdminKpi[] }) {
       {kpis.map((kpi) => (
         <div key={kpi.key} className="kpi-grid__card">
           <span className="kpi-grid__label">{kpi.label}</span>
-          <span className="kpi-grid__value">{formatNumber(kpi.value)}</span>
+          <span className="kpi-grid__value">
+            {kpi.value === null ? '—' : formatNumber(kpi.value)}
+          </span>
           <span className="kpi-grid__delta">{kpi.delta}</span>
         </div>
       ))}

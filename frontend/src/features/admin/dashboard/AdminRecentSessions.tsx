@@ -11,9 +11,10 @@ export function AdminRecentSessions({ sessions }: { sessions: AdminRecentSession
       <h2 id="admin-recent-title" className="admin-recent__title">
         Recent sessions
       </h2>
+      {sessions.length === 0 && <p className="admin-recent__empty">No scored sessions yet.</p>}
       <ul className="admin-recent__list">
         {sessions.map((s) => (
-          <li key={`${s.user}-${s.topic}`} className="admin-recent__row">
+          <li key={s.id ?? `${s.user}-${s.topic}`} className="admin-recent__row">
             <Avatar initials={initialsOf(s.user)} size={36} tone="raised" />
             <span className="admin-recent__user">{s.user}</span>
             <span className="admin-recent__main">

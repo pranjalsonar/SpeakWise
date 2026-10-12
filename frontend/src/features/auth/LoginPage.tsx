@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
+import * as authApi from '@/api/api.auth'
+import { ApiError } from '@/api/client'
 import { ROUTES } from '@/app/routes'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 import { Banner } from '@/components/ui/Banner'
@@ -7,7 +9,7 @@ import { Button } from '@/components/ui/Button'
 import { PasswordField } from '@/components/ui/PasswordField'
 import { TextField } from '@/components/ui/TextField'
 import { useAuth } from '@/context/AuthContext'
-import { AuthError, contentService } from '@/core/services'
+import { contentService } from '@/core/services'
 import { isValidEmail } from '@/core/utils'
 import './AuthForm.css'
 
@@ -16,9 +18,18 @@ interface LoginErrors {
   password?: string
 }
 
+type LoginCopy = ReturnType<typeof contentService.getLoginCopy>
+
+function loginErrorMessage(error: unknown, errors: LoginCopy['errors']): string {
+  if (!(error instanceof ApiError)) return errors.credentials
+  if (error.status === 401) return errors.credentials
+  if (error.status === 403) return errors.inactive
+  return error.message // network, timeout, validation or server error
+}
+
 export function LoginPage() {
   const copy = contentService.getLoginCopy()
-  const { login } = useAuth()
+  const { signIn } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<LoginErrors>({})
@@ -40,9 +51,9 @@ export function LoginPage() {
     setSubmitting(true)
     try {
       // On success RedirectIfAuthed sends the user to their home (or where they came from).
-      await login(email, password)
+      signIn(await authApi.login(email, password))
     } catch (error) {
-      setBanner(error instanceof AuthError ? error.message : copy.errors.credentials)
+      setBanner(loginErrorMessage(error, copy.errors))
       setSubmitting(false)
     }
   }

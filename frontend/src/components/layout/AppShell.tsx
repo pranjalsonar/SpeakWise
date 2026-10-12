@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react'
-import { History, House, Plus, User as UserIcon, type LucideIcon } from 'lucide-react'
+import { History, House, LogOut, Plus, User as UserIcon, type LucideIcon } from 'lucide-react'
 import { NavLink } from 'react-router'
 import { ROUTES } from '@/app/routes'
 import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
+import { IconButton } from '@/components/ui/IconButton'
 import { useCurrentUser } from '@/context/AuthContext'
+import { useLogout } from '@/hooks/useLogout'
 import { useStartSession } from '@/hooks/useStartSession'
 import './AppShell.css'
 
@@ -39,6 +41,7 @@ export function AppShell({
 }: AppShellProps) {
   const user = useCurrentUser()
   const startSession = useStartSession()
+  const logout = useLogout()
 
   return (
     <div className={['app-shell', hideTabBar && 'app-shell--no-tabs'].filter(Boolean).join(' ')}>
@@ -70,11 +73,17 @@ export function AppShell({
             </NavLink>
           ))}
         </nav>
-        <div className="app-shell__user">
-          <Avatar initials={user.initials} />
-          <div className="app-shell__user-text">
-            <span className="app-shell__user-name">{user.name}</span>
-            <span className="app-shell__user-email">{user.email}</span>
+        <div className="app-shell__footer">
+          <button type="button" className="app-shell__nav-item app-shell__logout" onClick={logout}>
+            <LogOut size={20} aria-hidden="true" />
+            Log out
+          </button>
+          <div className="app-shell__user">
+            <Avatar initials={user.initials} />
+            <div className="app-shell__user-text">
+              <span className="app-shell__user-name">{user.name}</span>
+              <span className="app-shell__user-email">{user.email}</span>
+            </div>
           </div>
         </div>
       </aside>
@@ -88,7 +97,17 @@ export function AppShell({
           ) : (
             <span className="app-shell__topbar-logo">SpeakWise</span>
           )}
-          {mobileAvatar && <Avatar initials={user.initials} />}
+          <div className="app-shell__topbar-actions">
+            {mobileAvatar && <Avatar initials={user.initials} />}
+            <IconButton
+              icon={<LogOut size={20} />}
+              aria-label="Log out"
+              title="Log out"
+              size={40}
+              tone="plain"
+              onClick={logout}
+            />
+          </div>
         </header>
       )}
 

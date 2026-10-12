@@ -3,7 +3,10 @@ import type { User } from '@/core/types'
 
 export interface AuthContextValue {
   user: User | null
-  login: (email: string, password: string) => Promise<User>
+  /** Store the user returned by authApi.login() as the signed-in user. */
+  signIn: (user: User) => User
+  /** Replace the signed-in user's details (e.g. after loading or editing the profile). */
+  updateUser: (user: User) => User
   register: (name: string, email: string, password: string) => Promise<User>
   logout: () => void
 }

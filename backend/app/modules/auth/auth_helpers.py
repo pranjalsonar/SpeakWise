@@ -1,7 +1,16 @@
+import secrets
+
 import bcrypt
 
 # Max bytes bcrypt will hash; bcrypt>=5 raises ValueError beyond this.
 MAX_PASSWORD_BYTES = 72
+
+TEMPORARY_PASSWORD_BYTES = 9  # -> 12 URL-safe characters
+
+
+def generate_temporary_password() -> str:
+    """Random password an admin hands to a new user (or after a reset)."""
+    return secrets.token_urlsafe(TEMPORARY_PASSWORD_BYTES)
 
 
 def hash_password(password: str) -> str:

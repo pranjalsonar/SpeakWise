@@ -1,0 +1,28 @@
+.edit-user__reset {
+  padding-top: 14px;
+  border-top: 1px solid var(--color-divider);
+}
+
+.edit-user__reset-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.edit-user__reset-text {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
+
+.edit-user__reset-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-user__reset-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

@@ -7,10 +7,15 @@ import {
 import { readJson, STORAGE_KEYS, writeJson } from '@/lib/storage'
 import { SessionContext } from './SessionContext'
 
+/** Backend topic ids are numeric. Sessions saved before the topics API (mock "t3" ids) are dropped. */
+const isApiTopicId = (id: string | undefined) => !id || /^\d+$/.test(id)
+
 /** Restores the flow after a refresh. The recording blob URL can't survive a reload, so it's dropped. */
 function restore(): SessionState {
   const saved = readJson<SessionState | null>(STORAGE_KEYS.session, null, 'session')
-  if (!saved) return createInitialSession()
+  if (!saved || !isApiTopicId(saved.topic?.id) || !isApiTopicId(saved.suggestedTopic?.id)) {
+    return createInitialSession()
+  }
   const base = { ...createInitialSession(), ...saved, recording: null }
   // A review/processing step without its recording goes back to recording.
   return base.step === 'review' ? { ...base, step: 'record' } : base

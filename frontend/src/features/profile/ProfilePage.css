@@ -43,6 +43,12 @@
   white-space: nowrap;
 }
 
+.profile-page__meta {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--neutral-700);
+}
+
 .profile-page__overline {
   padding: 8px 4px 0;
 }

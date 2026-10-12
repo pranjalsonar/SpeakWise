@@ -24,6 +24,8 @@ def login(db: Session, email: str, password: str) -> LoginResponse:
     if not user.is_active:
         raise ForbiddenException("Account is disabled")
 
+    auth_repository.record_login(db, user)
+
     token, expires_at = create_access_token(
         user_id=user.id,
         email=user.email,

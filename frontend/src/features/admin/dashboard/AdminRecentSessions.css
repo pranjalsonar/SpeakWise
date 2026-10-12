@@ -49,6 +49,11 @@
   color: var(--neutral-700);
 }
 
+.admin-recent__empty {
+  font-size: 14px;
+  color: var(--neutral-700);
+}
+
 .admin-recent__score {
   font-family: var(--font-heading);
   font-size: 16px;

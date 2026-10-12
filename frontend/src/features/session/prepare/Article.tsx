@@ -12,8 +12,8 @@ interface ArticleProps {
 export function Article({ sections, keyPoints, textStep }: ArticleProps) {
   return (
     <div className="article" data-text-step={textStep}>
-      {sections.map((section) => (
-        <section key={section.heading} className="article__section">
+      {sections.map((section, index) => (
+        <section key={`${index}-${section.heading}`} className="article__section">
           <h2 className="article__heading">{section.heading}</h2>
           {section.paragraphs.map((paragraph, i) => (
             <p key={i} className="article__paragraph">

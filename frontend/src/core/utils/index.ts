@@ -58,3 +58,26 @@ export const formatNumber = (value: number) => value.toLocaleString('en-US')
 /** "Sep 27, 2026" */
 export const formatLongDate = (date: Date) =>
   date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+
+/** "Oct 4" this year, "Oct 4, 2025" otherwise. */
+export function formatShortDate(date: Date, now: Date = new Date()): string {
+  const sameYear = date.getFullYear() === now.getFullYear()
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    ...(sameYear ? {} : { year: 'numeric' }),
+  })
+}
+
+/** "just now", "12 min ago", "3 h ago", "Yesterday", "4 days ago", then "Sep 27" (+ year if not this year). */
+export function formatTimeAgo(date: Date, now: Date = new Date()): string {
+  const minutes = Math.floor((now.getTime() - date.getTime()) / 60_000)
+  if (minutes < 1) return 'just now'
+  if (minutes < 60) return `${minutes} min ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours} h ago`
+  const days = Math.floor(hours / 24)
+  if (days === 1) return 'Yesterday'
+  if (days < 7) return `${days} days ago`
+  return formatShortDate(date, now)
+}

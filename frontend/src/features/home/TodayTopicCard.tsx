@@ -14,6 +14,7 @@ export function TodayTopicCard({ topic, onUse }: { topic: Topic; onUse: () => vo
         <Badge tone="category">{topic.category}</Badge>
         <DifficultyBadge difficulty={topic.difficulty} />
       </div>
+      {topic.recorded && <p className="today-card__done">You've already practised this one.</p>}
       <Button variant="secondary" size="sm" className="today-card__use" onClick={onUse}>
         Use this topic
       </Button>

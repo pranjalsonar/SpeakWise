@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(npx playwright install chromium)"
+      "PowerShell(npx playwright install chromium)",
+      "PowerShell(npx vite --port 5173 --strictPort)",
+      "PowerShell(node C:\\\\Users\\\\LENOVO\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--speakwise\\\\cc7b625c-17ab-462a-9e1c-b197aacb600c\\\\scratchpad\\\\login-e2e.mjs)",
+      "PowerShell(if \\(-not \\(Test-Path app/modules/users/__init__.py\\)\\) { New-Item -ItemType File app/modules/users/__init__.py | Out-Null }; .\\\\.venv\\\\Scripts\\\\python.exe -c \"import app.main; print\\([f'{sorted\\(r.methods\\)[0]} {r.path}' for r in app.main.app.routes if r.path.startswith\\('/api'\\)]\\)\")",
+      "PowerShell(foreach \\($port in 5173,5174,8999\\) { $c = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1; if \\($c\\) { $p = Get-Process -Id $c.OwningProcess; \"$port in use by $\\($p.ProcessName\\) \\($\\($p.Id\\)\\)\" } else { \"$port free\" } })"
     ]
   }
 }

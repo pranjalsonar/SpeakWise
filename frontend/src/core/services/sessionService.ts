@@ -1,5 +1,4 @@
 import {
-  adminUsers,
   feedbackReport,
   historySessions,
   mockAccounts,
@@ -16,13 +15,7 @@ export interface Dashboard {
 }
 
 /** Accounts that come with practice history. Newly registered users start empty. */
-const hasHistory = (email: string) => {
-  const e = email.toLowerCase()
-  return (
-    mockAccounts.some((a) => a.email === e) ||
-    adminUsers.some((u) => u.email === e && u.sessions > 0)
-  )
-}
+const hasHistory = (email: string) => mockAccounts.some((a) => a.email === email.toLowerCase())
 
 export async function getDashboard(email: string): Promise<Dashboard> {
   await sleep(350)

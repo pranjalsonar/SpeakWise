@@ -8,15 +8,28 @@ interface ToggleProps {
   size?: 'sm' | 'md'
   /** `status` uses sage when on (admin); `accent` is the default. */
   tone?: 'accent' | 'status'
+  disabled?: boolean
+  /** Tooltip, e.g. why the toggle is disabled. */
+  title?: string
 }
 
-export function Toggle({ checked, onChange, label, size = 'md', tone = 'accent' }: ToggleProps) {
+export function Toggle({
+  checked,
+  onChange,
+  label,
+  size = 'md',
+  tone = 'accent',
+  disabled = false,
+  title,
+}: ToggleProps) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
       aria-label={label}
+      disabled={disabled}
+      title={title}
       className={['toggle', `toggle--${size}`, `toggle--${tone}`, checked && 'toggle--on']
         .filter(Boolean)
         .join(' ')}

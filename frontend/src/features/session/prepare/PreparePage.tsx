@@ -1,11 +1,14 @@
-import { useCallback, useState, type UIEvent } from 'react'
+import { useCallback, useEffect, useState, type UIEvent } from 'react'
 import { Pen } from 'lucide-react'
 import { useNavigate } from 'react-router'
+import * as topicsApi from '@/api/api.topics'
 import { ROUTES } from '@/app/routes'
 import { FocusLayout } from '@/components/layout/FocusLayout'
 import { StickyActionBar } from '@/components/layout/StickyActionBar'
 import { TopicBadges } from '@/components/shared/TopicBadges'
+import { Banner } from '@/components/ui/Banner'
 import { Button } from '@/components/ui/Button'
+import { Chip } from '@/components/ui/Chip'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { Skeleton } from '@/components/ui/Skeleton'
@@ -13,8 +16,8 @@ import { useSession } from '@/context/SessionContext'
 import { useAsync } from '@/core/hooks/useAsync'
 import { useInterval } from '@/core/hooks/useInterval'
 import { PREP_SECONDS, READY_THRESHOLD_PCT } from '@/core/session/sessionReducer'
-import { topicService } from '@/core/services'
 import { formatNumber } from '@/core/utils'
+import { useStartSession } from '@/hooks/useStartSession'
 import { Article } from './Article'
 import { NotesSheet } from './NotesSheet'
 import { PrepRail } from './PrepRail'
@@ -23,11 +26,23 @@ import './PreparePage.css'
 
 export function PreparePage() {
   const navigate = useNavigate()
+  const startSession = useStartSession()
   const { session, dispatch } = useSession()
   const topic = session.topic!
-  const { data: material } = useAsync(() => topicService.getReadingMaterial(topic.id), [topic.id])
+  const [attempt, setAttempt] = useState(0)
+  const { data: material, error } = useAsync(
+    () => topicsApi.getReadingMaterial(topic.id),
+    [topic.id, attempt],
+  )
   const [prepSecondsLeft, setPrepSecondsLeft] = useState(PREP_SECONDS)
   const [dialog, setDialog] = useState<'notes' | 'early' | null>(null)
+
+  // Remember which version was read (saved with the talk) and its key points (Record cue card).
+  useEffect(() => {
+    if (material && material.id !== session.readingMaterialId) {
+      dispatch({ type: 'setReadingMaterial', id: material.id, keyPoints: material.keyPoints })
+    }
+  }, [material, session.readingMaterialId, dispatch])
 
   // Advisory 15:00 reading timer (it never blocks the user).
   useInterval(
@@ -72,16 +87,72 @@ export function PreparePage() {
           <article className="prepare-page__article">
             <TopicBadges topic={topic} tone="surface" />
             <h1 className="prepare-page__title">{topic.title}</h1>
-            <p className="prepare-page__meta">
-              ≈ {material?.readMinutes ?? 15} min read · {formatNumber(material?.wordCount ?? 2800)}{' '}
-              words
-            </p>
+            {material && (
+              <p className="prepare-page__meta">
+                ≈ {material.readMinutes} min read · {formatNumber(material.wordCount)} words
+              </p>
+            )}
+            {material?.isRepeat && (
+              <div className="prepare-page__notice">
+                <Banner>
+                  You've already practised every version of this topic, so here's the one you read
+                  longest ago.
+                </Banner>
+                {material.relatedTopics.length > 0 && (
+                  <div className="prepare-page__related">
+                    <span>Want something new? Try:</span>
+                    {material.relatedTopics.map((related) => (
+                      <Chip key={related.id} onClick={() => startSession({ topic: related })}>
+                        {related.title}
+                      </Chip>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
             {material ? (
-              <Article
-                sections={material.sections}
-                keyPoints={material.keyPoints}
-                textStep={session.textStep}
-              />
+              <>
+                <Article
+                  sections={material.sections}
+                  keyPoints={material.keyPoints}
+                  textStep={session.textStep}
+                />
+                <footer className="prepare-page__sources">
+                  <p className="prepare-page__sources-title">Sources</p>
+                  <ul className="prepare-page__sources-list">
+                    {material.sources.map((source) => (
+                      <li key={source.url}>
+                        <a href={source.url} target="_blank" rel="noreferrer" className="text-link">
+                          {source.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="prepare-page__attribution">
+                    {material.attribution}{' '}
+                    <a
+                      href={material.licenseUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-link"
+                    >
+                      License
+                    </a>
+                  </p>
+                </footer>
+              </>
+            ) : error ? (
+              <div className="prepare-page__notice">
+                <Banner>Couldn't load the reading material. {error.message}</Banner>
+                <div className="prepare-page__related">
+                  <Button variant="secondary" size="sm" onClick={() => setAttempt((a) => a + 1)}>
+                    Try again
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => navigate(ROUTES.sessionTopic)}>
+                    Choose another topic
+                  </Button>
+                </div>
+              </div>
             ) : (
               <div className="prepare-page__loading">
                 <Skeleton height={28} radius={14} />

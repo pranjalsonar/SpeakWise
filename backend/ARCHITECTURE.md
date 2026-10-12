@@ -29,7 +29,9 @@ backend/
     ├── db/
     │   ├── base.py            #   Declarative Base + constraint naming convention
     │   └── session.py         #   engine, SessionLocal, get_db dependency
-    ├── constants/             # enums and fixed values (RoleId)
+    ├── constants/             # enums and fixed values (RoleId, Difficulty)
+    ├── integrations/          # clients for external services, no business logic
+    │   └── wikipedia/         #   client.py (HTTP, retries, circuit breaker), parser.py (pure)
     ├── models/                # SQLAlchemy models, shared by all modules
     ├── middleware/            # cross-cutting request handling
     │   ├── auth_middleware.py #   AuthMiddleware, get_current_user, require_roles
@@ -42,6 +44,18 @@ backend/
         │   ├── auth_repository.py   # database queries
         │   ├── auth_schemas.py      # request/response models (Pydantic)
         │   └── auth_helpers.py      # module-specific utilities (password hashing)
+        ├── users/
+        │   ├── users_controller.py  # /users/me (self) + /users, /users/{id} (admin)
+        │   ├── users_service.py     # profile rules: unique email, admin self-lockout guard
+        │   ├── users_repository.py
+        │   └── users_schemas.py     # PATCH bodies reject unknown fields (extra="forbid")
+        ├── topics/                  # suggest / daily / custom topics (docs/TOPICS_READING_DESIGN.md)
+        ├── reading/                 # reading-material versions; reading_builder.py = pure assembly logic
+        ├── dashboard/
+        │   ├── dashboard_controller.py  # GET /admin/dashboard (admin)
+        │   ├── dashboard_service.py     # KPI maths, fills empty weeks, percentages
+        │   ├── dashboard_repository.py  # aggregate SQL; periods computed in REPORTING_TIMEZONE
+        │   └── dashboard_schemas.py
         └── health/
             └── health_controller.py
 ```
@@ -118,7 +132,9 @@ A JWT is **signed, not encrypted**: anyone holding the token can read its claims
 
 ### Request verification
 
-`AuthMiddleware` runs on every request:
+`CORSMiddleware` wraps everything (it's registered last in `main.py`), so browser preflight requests and error responses carry CORS headers for the origins in `CORS_ORIGINS`.
+
+`AuthMiddleware` then runs on every request:
 
 1. Public paths pass through: `/health`, `/api/v1/auth/login`, `/docs`, `/redoc`, `/openapi.json`, and CORS preflight (`OPTIONS`). To make a new route public, add it to `PUBLIC_PATHS` in `auth_middleware.py`.
 2. Otherwise it requires `Authorization: Bearer <token>`.
@@ -140,13 +156,53 @@ def list_users(current_user: TokenPayload = Depends(require_roles(RoleId.ADMIN))
     ...  # admins only; others get 403
 ```
 
-Token claims are a snapshot from login time. If a route needs current data (e.g. is the account still active?), load the user from the DB, as `GET /auth/me` does.
+Token claims are a snapshot from login time. If a route needs current data (e.g. is the account still active?), load the user from the DB, as `GET /auth/me` and `/users/me` do.
+
+### Profile updates (`users` module)
+
+| Who | Can change | Route |
+|---|---|---|
+| Any logged-in user | Own `full_name`, `email` | `PATCH /users/me` |
+| Admin | Any user's `full_name`, `email`, `role_id`, `is_active` | `PATCH /users/{id}` |
+| Admin | Create a user (gets a temporary password) | `POST /users` |
+| Admin | Reset any user's password to a new temporary one | `POST /users/{id}/reset-password` |
+
+- **Temporary passwords:** generated with `secrets.token_urlsafe` (12 characters) and returned **once** in the response. Only the bcrypt hash is stored. There is no email service, so the admin shares the password with the user.
+- **Last active** (`last_active_at` on admin responses) is the later of `users.last_login_at` (set on every successful login) and the user's latest talk session.
+- **`GET /users`** searches `full_name`/`email` (case-insensitive, `%`/`_` taken literally), filters by `status`, pages with `skip`/`limit` (max 100), and returns `counts` (all/active/inactive) across all users for the page header.
+
+- PATCH bodies are partial: only fields that are sent change. Unknown fields are rejected (422), so a user can't sneak `role_id` into `/users/me`.
+- Emails stay unique and lowercase. A taken email returns 409.
+- An admin can't demote or deactivate themselves (403), so the system can't end up with no admin.
+- Changes to role or email don't rewrite existing tokens. The old claims stay in effect until the user logs in again. Deactivation takes effect on the next request that loads the user from the DB (`/users/me`, login). Other routes will honor it once they check the DB user too.
 
 ### Logout and the token blacklist
 
-`POST /api/v1/auth/logout` adds the token's `jti` to `token_blacklist` with a TTL equal to the token's remaining lifetime. After expiry the entry is purged, since `exp` already rejects the token at that point.
+`POST /api/v1/auth/logout` adds the token's `jti` to `token_blacklist` with a TTL equal to the token's remaining lifetime, which is at most `JWT_EXPIRE_HOURS` (8h). Once a token expires its entry is no longer needed, since `exp` already rejects the token. Expired entries are removed:
+
+- lazily, whenever the blacklist is read or written, and
+- by a background sweep every 10 minutes (`sweep_token_blacklist` in `main.py`, started in the app lifespan).
+
+The cache is never wiped all at once. A full wipe would un-revoke tokens logged out recently, and they would work again until their own expiry.
 
 **Limitation:** the blacklist is in process memory. It is cleared on restart, and with several workers or servers each has its own copy. Before running more than one process in production, replace `TokenBlacklist` with Redis (`SET blacklist:<jti> 1 EX <seconds remaining>`). Only `token_blacklist.py` needs to change.
+
+## Admin dashboard
+
+`GET /api/v1/admin/dashboard` returns raw numbers. The frontend formats them ("+64 this month").
+
+| Field | Definition |
+|---|---|
+| `total_users`, `new_users_this_month` | All users; those created since the 1st of this month |
+| `active_users`, `active_users_pct` | Users with `is_active = true` (the admin Users toggle) |
+| `total_sessions`, `sessions_this_week` | All talk sessions; those since Monday 00:00 |
+| `minutes_spoken`, `avg_minutes_per_session` | Sum / average of `duration_seconds` (sessions without a duration are skipped) |
+| `average_score`, `average_score_change_vs_last_month` | Mean `score` of scored sessions; this month's mean minus last month's (null if either month has none) |
+| `sessions_per_week` | Last 8 weeks (Monday start), oldest first, empty weeks filled with 0 |
+| `sessions_by_category` | All categories incl. 0; `pct` is the share of sessions that have a category |
+| `recent_sessions` | Latest 5 **scored** sessions; topic is `topic_title`, else the AI summary's `topic_name` |
+
+Periods use `REPORTING_TIMEZONE` and are computed in SQL (`AT TIME ZONE`), so they don't depend on the server's or Python's timezone data.
 
 ## Errors
 
@@ -159,7 +215,10 @@ Token claims are a snapshot from login time. If a route needs current data (e.g.
 | 401 | Missing/invalid/expired/revoked token, wrong credentials |
 | 403 | Authenticated but not allowed (wrong role, disabled account) |
 | 404 | Resource not found |
-| 422 | Request body/params failed validation |
+| 409 | Conflict, e.g. email already used by another account |
+| 422 | Request body/params failed validation, or `UnprocessableException` (may carry extra fields, e.g. `suggestion`) |
+| 429 | `TooManyRequestsException`, e.g. the hourly custom-topic limit |
+| 503 | `ServiceUnavailableException`, e.g. Wikipedia unreachable and nothing cached |
 
 ## API conventions
 
@@ -193,6 +252,10 @@ Example: a `talk_session` module.
 | `JWTSECRET_KEY` | none (required, ≥ 32 chars) | Signs tokens. Changing it logs everyone out. |
 | `JWT_ALGORITHM` | `HS256` | JWT signing algorithm |
 | `JWT_EXPIRE_HOURS` | `8` | Access token lifetime |
+| `WIKIPEDIA_USER_AGENT` | repo URL | Identifies the app to Wikipedia; include a contact |
+| `WIKI_CACHE_DAYS` / `READING_TARGET_WORDS` / `READING_MAX_VERSIONS` / `CUSTOM_TOPICS_PER_HOUR` | 30 / 2500 / 5 / 10 | Topics & reading material (see docs/TOPICS_READING_DESIGN.md) |
+| `REPORTING_TIMEZONE` | `UTC` (`.env.example`: `Asia/Kolkata`) | Timezone for dashboard periods ("this week" starts Monday 00:00, "this month" on the 1st). Evaluated by PostgreSQL. |
+| `CORS_ORIGINS` | `http://localhost:5173,http://127.0.0.1:5173` | Comma-separated frontend origins allowed to call the API from a browser |
 | `ENVIRONMENT` | `development` | `production` blocks the demo seed script |
 
 The app refuses to start if `DATABASE_URL` or `JWTSECRET_KEY` is missing.
@@ -202,4 +265,3 @@ The app refuses to start if `DATABASE_URL` or `JWTSECRET_KEY` is missing.
 - **Refresh tokens:** users must log in again after 8 hours.
 - **Shared blacklist:** move to Redis before scaling beyond one process.
 - **Rate limiting** on `/auth/login` to slow password guessing.
-- **CORS:** add `CORSMiddleware` with the frontend origin before the web app calls the API from a browser.

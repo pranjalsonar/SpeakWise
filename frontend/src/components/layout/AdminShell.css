@@ -24,7 +24,10 @@
   font-size: 24px;
 }
 
-.admin-shell__action {
+.admin-shell__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-left: auto;
 }
 
@@ -144,11 +147,24 @@
     font-weight: 700;
   }
 
+  .admin-shell__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .admin-shell__logout {
+    width: 100%;
+    font-family: var(--font-body);
+    line-height: inherit;
+    text-align: left;
+  }
+
   .admin-shell__user {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: auto;
     padding: 8px;
   }
 

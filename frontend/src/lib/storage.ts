@@ -38,4 +38,5 @@ export const STORAGE_KEYS = {
   auth: 'sw.auth',
   preferences: 'sw.preferences',
   session: 'sw.session',
+  token: 'sw.token',
 } as const

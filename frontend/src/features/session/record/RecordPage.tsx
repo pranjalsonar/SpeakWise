@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 import { ROUTES } from '@/app/routes'
 import { FocusLayout } from '@/components/layout/FocusLayout'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
-import { topicService } from '@/core/services'
+import { useSession } from '@/context/SessionContext'
 import { formatClock } from '@/core/utils'
 import { useIsDesktop } from '@/hooks/useMediaQuery'
 import { RecordDesktop } from './RecordDesktop'
@@ -13,7 +13,8 @@ export function RecordPage() {
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
   const rec = useRecordSession()
-  const keyPoints = topicService.getKeyPoints()
+  // Key points of the reading material the user just read (set on the Prepare step).
+  const { keyPoints } = useSession().session
   const exit = () => navigate(ROUTES.home)
 
   return (

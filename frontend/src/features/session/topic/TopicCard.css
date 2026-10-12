@@ -17,8 +17,15 @@
 .topic-card__badges,
 .topic-card__title,
 .topic-card__teaser,
+.topic-card__note,
 .topic-card__reroll {
   position: relative;
+}
+
+.topic-card__note {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-800);
 }
 
 .topic-card__badges {

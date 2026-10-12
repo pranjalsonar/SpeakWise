@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react'
-import { House, TrendingUp, User as UserIcon, type LucideIcon } from 'lucide-react'
+import { House, LogOut, TrendingUp, User as UserIcon, type LucideIcon } from 'lucide-react'
 import { NavLink } from 'react-router'
 import { ROUTES } from '@/app/routes'
 import { Avatar } from '@/components/ui/Avatar'
+import { IconButton } from '@/components/ui/IconButton'
 import { useCurrentUser } from '@/context/AuthContext'
+import { useLogout } from '@/hooks/useLogout'
 import './AdminShell.css'
 
 const navItems: { to: string; label: string; tabLabel: string; icon: LucideIcon; end?: boolean }[] =
@@ -24,6 +26,7 @@ interface AdminShellProps {
 /** Admin layout: dark 240px sidebar on desktop, title bar + 3-tab bar on mobile. */
 export function AdminShell({ mobileTitle, mobileAction, children }: AdminShellProps) {
   const user = useCurrentUser()
+  const logout = useLogout()
 
   return (
     <div className="admin-shell">
@@ -49,22 +52,41 @@ export function AdminShell({ mobileTitle, mobileAction, children }: AdminShellPr
             </NavLink>
           ))}
         </nav>
-        <div className="admin-shell__user">
-          <Avatar initials={user.initials} tone="accent" />
-          <div className="admin-shell__user-text">
-            <span className="admin-shell__user-name">{user.name}</span>
-            <span className="admin-shell__user-email">{user.email}</span>
+        <div className="admin-shell__footer">
+          <button
+            type="button"
+            className="admin-shell__nav-item admin-shell__logout"
+            onClick={logout}
+          >
+            <LogOut size={20} aria-hidden="true" />
+            Log out
+          </button>
+          <div className="admin-shell__user">
+            <Avatar initials={user.initials} tone="accent" />
+            <div className="admin-shell__user-text">
+              <span className="admin-shell__user-name">{user.name}</span>
+              <span className="admin-shell__user-email">{user.email}</span>
+            </div>
           </div>
         </div>
       </aside>
 
       <header className="admin-shell__topbar">
         <h1 className="admin-shell__title">{mobileTitle}</h1>
-        {mobileAction ? (
-          <span className="admin-shell__action">{mobileAction}</span>
-        ) : (
+        {!mobileAction && (
           <span className="admin-shell__badge admin-shell__badge--light">Admin</span>
         )}
+        <div className="admin-shell__topbar-actions">
+          {mobileAction}
+          <IconButton
+            icon={<LogOut size={20} />}
+            aria-label="Log out"
+            title="Log out"
+            size={40}
+            tone="plain"
+            onClick={logout}
+          />
+        </div>
       </header>
 
       <main className="admin-shell__main">{children}</main>

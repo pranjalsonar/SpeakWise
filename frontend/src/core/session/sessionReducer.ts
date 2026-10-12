@@ -1,7 +1,8 @@
-import type { Category, CategoryFilter, Difficulty, DurationMin } from '../types'
+import type { Category, CategoryFilter, Difficulty, DurationMin, Topic } from '../types'
 
 /** A topic chosen for a session. Own topics have no category or difficulty. */
 export interface SessionTopic {
+  /** Backend topic id (curated or custom). */
   id: string
   title: string
   category?: Category
@@ -26,10 +27,15 @@ export interface SessionState {
   step: SessionStep
   mode: TopicMode
   category: CategoryFilter
-  suggestedTopicId: string | null
+  /** The suggestion shown on the Topic step (from the API). */
+  suggestedTopic: Topic | null
   ownTopic: string
   durationMin: DurationMin
   topic: SessionTopic | null
+  /** Reading-material version read on Prepare; saved with the talk so it isn't served again. */
+  readingMaterialId: number | null
+  /** Its key points, for the cue card on the Record step. */
+  keyPoints: string[]
   readPct: number
   notes: string
   textStep: number
@@ -51,10 +57,12 @@ export const createInitialSession = (durationMin: DurationMin = 3): SessionState
   step: 'topic',
   mode: 'suggest',
   category: 'All',
-  suggestedTopicId: null,
+  suggestedTopic: null,
   ownTopic: '',
   durationMin,
   topic: null,
+  readingMaterialId: null,
+  keyPoints: [],
   readPct: 0,
   notes: '',
   textStep: 0,
@@ -63,13 +71,21 @@ export const createInitialSession = (durationMin: DurationMin = 3): SessionState
 })
 
 export type SessionAction =
-  | { type: 'start'; durationMin: DurationMin; textStep?: number; suggestedTopicId?: string }
+  | {
+      type: 'start'
+      durationMin: DurationMin
+      textStep?: number
+      suggestedTopic?: Topic
+      mode?: TopicMode
+      ownTopic?: string
+    }
   | { type: 'setMode'; mode: TopicMode }
   | { type: 'setCategory'; category: CategoryFilter }
-  | { type: 'suggestTopic'; topicId: string }
+  | { type: 'suggestTopic'; topic: Topic }
   | { type: 'setOwnTopic'; text: string }
   | { type: 'setDuration'; durationMin: DurationMin }
   | { type: 'confirmTopic'; topic: SessionTopic }
+  | { type: 'setReadingMaterial'; id: number; keyPoints: string[] }
   | { type: 'setReadPct'; pct: number }
   | { type: 'setNotes'; notes: string }
   | { type: 'setTextStep'; step: number }
@@ -87,20 +103,32 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
       return {
         ...createInitialSession(action.durationMin),
         textStep: action.textStep ?? 0,
-        suggestedTopicId: action.suggestedTopicId ?? null,
+        suggestedTopic: action.suggestedTopic ?? null,
+        mode: action.mode ?? 'suggest',
+        ownTopic: (action.ownTopic ?? '').slice(0, OWN_TOPIC_MAX),
       }
     case 'setMode':
       return { ...state, mode: action.mode }
     case 'setCategory':
       return { ...state, category: action.category }
     case 'suggestTopic':
-      return { ...state, suggestedTopicId: action.topicId }
+      return { ...state, suggestedTopic: action.topic }
     case 'setOwnTopic':
       return { ...state, ownTopic: action.text.slice(0, OWN_TOPIC_MAX) }
     case 'setDuration':
       return { ...state, durationMin: action.durationMin }
     case 'confirmTopic':
-      return { ...state, topic: action.topic, step: 'prepare', readPct: 0, recording: null }
+      return {
+        ...state,
+        topic: action.topic,
+        step: 'prepare',
+        readPct: 0,
+        recording: null,
+        readingMaterialId: null,
+        keyPoints: [],
+      }
+    case 'setReadingMaterial':
+      return { ...state, readingMaterialId: action.id, keyPoints: action.keyPoints }
     case 'setReadPct':
       return { ...state, readPct: Math.max(state.readPct, Math.round(action.pct)) }
     case 'setNotes':
@@ -121,8 +149,17 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
     case 'processed':
       return { ...state, step: 'feedback', feedbackSessionId: action.sessionId }
     case 'practiceAgain':
+      // Prepare fetches the material again: after a recorded talk the API serves a new version.
       return state.topic
-        ? { ...state, step: 'prepare', readPct: 0, recording: null, feedbackSessionId: null }
+        ? {
+            ...state,
+            step: 'prepare',
+            readPct: 0,
+            recording: null,
+            feedbackSessionId: null,
+            readingMaterialId: null,
+            keyPoints: [],
+          }
         : state
     case 'reset':
       return createInitialSession(action.durationMin)

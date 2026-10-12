@@ -60,3 +60,9 @@
     transform: translateY(-3px);
   }
 }
+
+.today-card__done {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-700);
+}

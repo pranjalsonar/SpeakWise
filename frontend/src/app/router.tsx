@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router'
 import type { SessionStep } from '@/core/session/sessionReducer'
-import { AdminDataProvider } from '@/features/admin/AdminDataProvider'
 import { AdminDashboardPage } from '@/features/admin/dashboard/AdminDashboardPage'
 import { AdminUsersPage } from '@/features/admin/users/AdminUsersPage'
 import { LoginPage } from '@/features/auth/LoginPage'
@@ -22,6 +21,7 @@ import { ROUTES } from './routes'
 
 const publicOnly = (page: ReactNode) => <RedirectIfAuthed>{page}</RedirectIfAuthed>
 const student = (page: ReactNode) => <RequireAuth role="student">{page}</RequireAuth>
+const admin = (page: ReactNode) => <RequireAuth role="admin">{page}</RequireAuth>
 /** Session steps also require the flow to have reached that step. */
 const sessionStep = (step: SessionStep, page: ReactNode) =>
   student(<RequireSessionStep step={step}>{page}</RequireSessionStep>)
@@ -44,19 +44,9 @@ export const router = createBrowserRouter([
   { path: ROUTES.sessionReview, element: sessionStep('review', <ReviewPage />) },
   { path: ROUTES.sessionProcessing, element: sessionStep('processing', <ProcessingPage />) },
 
-  // Admin (shared data provider for both pages)
-  {
-    path: ROUTES.admin,
-    element: (
-      <RequireAuth role="admin">
-        <AdminDataProvider />
-      </RequireAuth>
-    ),
-    children: [
-      { index: true, element: <AdminDashboardPage /> },
-      { path: 'users', element: <AdminUsersPage /> },
-    ],
-  },
+  // Admin (each page loads its own data from the backend)
+  { path: ROUTES.admin, element: admin(<AdminDashboardPage />) },
+  { path: ROUTES.adminUsers, element: admin(<AdminUsersPage />) },
 
   ...(import.meta.env.DEV ? [{ path: ROUTES.devUi, element: <DevUiPage /> }] : []),
 

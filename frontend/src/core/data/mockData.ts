@@ -1,12 +1,7 @@
 // SpeakWise dummy data, from design_handoff_speakwise/mockData.ts.
 // Only src/core/services may import this file. Screens get data through services.
 import type {
-  AdminKpi,
-  AdminRecentSession,
-  AdminUser,
-  ArticleSection,
   CategoryFilter,
-  CategoryShare,
   DeviceOptions,
   FeedbackReport,
   LandingFeature,
@@ -14,8 +9,6 @@ import type {
   Role,
   Session,
   Stats,
-  Topic,
-  WeeklyCount,
 } from '../types'
 
 export const user = {
@@ -37,21 +30,11 @@ export const categories: CategoryFilter[] = [
 ]
 export const durations = [1, 3, 5] as const
 
-export const topics: Topic[] = [
-  { id: 't1', title: 'Should AI tutors replace homework help?', category: 'Technology', difficulty: 'Intermediate', teaser: 'AI can explain anything at 2 a.m. Does that make homework help better, or just easier?' },
-  { id: 't2', title: 'The case for a four-day work week', category: 'Business', difficulty: 'Intermediate', teaser: 'Trials report happier staff and steady output. Can every industry make it work?' },
-  { id: 't3', title: 'Fast fashion and its environmental cost', category: 'Environment', difficulty: 'Beginner', teaser: 'Cheap clothes, fast trends, and a planet paying the difference.' },
-  { id: 't4', title: 'Is social media making us lonelier?', category: 'Society', difficulty: 'Beginner', teaser: 'More connected than ever, yet loneliness is rising. Is the feed to blame?' },
-  { id: 't5', title: 'CRISPR and the ethics of gene editing', category: 'Science', difficulty: 'Advanced', teaser: 'We can now edit genes precisely. Where should the line be drawn?' },
-  { id: 't6', title: 'Remote work vs. office culture', category: 'Business', difficulty: 'Beginner', teaser: 'Flexibility against face time: what really makes teams work?' },
-  { id: 't7', title: 'Space exploration: worth the cost?', category: 'Science', difficulty: 'Intermediate', teaser: 'Billions for rockets while problems remain on Earth. Is it worth it?' },
-]
-
-export const todaysTopicId = 't1'
 export const ownTopicExamples = [
-  'My favourite book and why',
+  // Topics Wikipedia covers well (own topics are resolved against Wikipedia).
+  'Is chess a sport?',
   'Why cities should ban cars',
-  'The best advice I have received',
+  'Should schools start later in the morning?',
 ]
 
 export const recentSessions: Session[] = [
@@ -60,35 +43,6 @@ export const recentSessions: Session[] = [
   { id: 's3', topicTitle: 'The case for a four-day work week', category: 'Business', durationMin: 5, date: 'Sep 20', score: 84, status: 'completed' },
   { id: 's4', topicTitle: 'Remote work vs. office culture', category: 'Business', durationMin: 3, date: 'Sep 18', score: null, status: 'processing' },
 ]
-
-export const keyPoints = [
-  'What defines fast fashion',
-  'Environmental impact (water, carbon, waste)',
-  'Human and labour costs',
-  'Role of consumers',
-  'Solutions: circular fashion, regulation, buying less',
-]
-
-export const article = {
-  topicId: 't3',
-  readMinutes: 15,
-  wordCount: 2800,
-  sections: [
-    { heading: 'What is fast fashion?', showKeyPoints: true, paragraphs: [
-      'Fast fashion is a business model built on speed: trend-driven clothing designed, produced, and sold in a matter of weeks at very low prices. Brands release new collections constantly, encouraging shoppers to buy more and wear items fewer times. The result is an industry that produces over 100 billion garments a year, and a growing mountain of textile waste.',
-      'The model depends on three things: cheap materials such as polyester, low-cost labour, and supply chains that can turn a sketch into a store rack in under a month.' ] },
-    { heading: 'The true cost of a $5 T-shirt', pullQuote: 'The price on the tag is only part of what a garment costs.', paragraphs: [
-      'A low price tag hides costs that never show up at the till. Growing cotton, dyeing fabric and shipping finished garments around the world all draw on resources that are rarely priced in. The fashion industry is estimated to produce up to 10% of global carbon emissions.' ] },
-    { heading: 'Water, waste and microplastics', paragraphs: [
-      'A single cotton T-shirt can take around 2,700 litres of water to produce. Synthetic fabrics bring a different problem: every wash sheds tiny plastic fibres that travel through wastewater into rivers and oceans.',
-      'Meanwhile, the equivalent of one rubbish truck of textiles is landfilled or burned every second.' ] },
-    { heading: 'Who pays the price?', paragraphs: [
-      'Most garments are sewn in countries where wages are low and labour protections are weak. The 2013 Rana Plaza collapse in Bangladesh, which killed more than 1,100 garment workers, drew global attention to unsafe factories. Communities near dyeing plants also live with polluted water.' ] },
-    { heading: 'What can change?', paragraphs: [
-      'Solutions work at several levels. Circular fashion keeps clothes in use longer through repair, resale and recycling. Governments are starting to regulate, with proposals for producer responsibility and limits on destroying unsold stock.',
-      'For shoppers, the most effective step is also the simplest: buy less, and wear what you own for longer.' ] },
-  ] as ArticleSection[],
-}
 
 export const feedbackReport: FeedbackReport = {
   sessionId: 's1',
@@ -208,41 +162,4 @@ export const registerRules = {
 
 export const mockAccounts: { email: string; password: string; role: Role }[] = [
   { email: 'priya.sharma@example.com', password: 'Speak2026!', role: 'student' },
-  { email: 'admin@speakwise.app', password: 'Admin2026!', role: 'admin' },
-]
-
-// ---------- Admin ----------
-export const adminProfile = { name: 'Admin', firstName: 'Admin', email: 'admin@speakwise.app', initials: 'AD' }
-export const adminLastUpdated = 'Sep 27, 2026'
-
-export const adminKpis: AdminKpi[] = [
-  { key: 'totalUsers', label: 'Total users', value: 1248, delta: '+64 this month' },
-  { key: 'activeUsers', label: 'Active users', value: 890, delta: '71% of all users' },
-  { key: 'sessions', label: 'Talk sessions recorded', value: 5630, delta: '+768 this week' },
-  { key: 'minutes', label: 'Minutes spoken', value: 14215, delta: '2.5 min per session' },
-  { key: 'avgScore', label: 'Average score', value: 74, delta: '+3 vs last month' },
-]
-export const sessionsPerWeek: WeeklyCount[] = [
-  { week: 'Aug 3', count: 420 }, { week: 'Aug 10', count: 468 }, { week: 'Aug 17', count: 455 }, { week: 'Aug 24', count: 512 },
-  { week: 'Aug 31', count: 590 }, { week: 'Sep 7', count: 634 }, { week: 'Sep 14', count: 702 }, { week: 'Sep 21', count: 768 },
-]
-export const sessionsByCategory: CategoryShare[] = [
-  { category: 'Technology', pct: 28 }, { category: 'Business', pct: 24 }, { category: 'Society', pct: 19 }, { category: 'Environment', pct: 16 }, { category: 'Science', pct: 13 },
-]
-export const adminRecentSessions: AdminRecentSession[] = [
-  { user: 'Mei Tanaka', topic: 'Space exploration: worth the cost?', score: 81, when: '12 min ago' },
-  { user: 'Arjun Mehta', topic: 'The case for a four-day work week', score: 88, when: '40 min ago' },
-  { user: 'Priya Sharma', topic: 'Fast fashion and its environmental cost', score: 78, when: '2 h ago' },
-  { user: 'Hannah Weber', topic: 'CRISPR and the ethics of gene editing', score: 73, when: '3 h ago' },
-  { user: 'Sara Okafor', topic: 'Is social media making us lonelier?', score: 69, when: '5 h ago' },
-]
-export const adminUsers: AdminUser[] = [
-  { id: 'u1', name: 'Priya Sharma', email: 'priya.sharma@example.com', sessions: 12, lastActive: 'Today', joined: 'Aug 02', status: 'Active' },
-  { id: 'u2', name: 'Arjun Mehta', email: 'arjun.mehta@example.com', sessions: 27, lastActive: 'Yesterday', joined: 'Jul 14', status: 'Active' },
-  { id: 'u3', name: 'Sara Okafor', email: 'sara.okafor@example.com', sessions: 8, lastActive: 'Sep 24', joined: 'Aug 19', status: 'Active' },
-  { id: 'u4', name: 'Liam Chen', email: 'liam.chen@example.com', sessions: 3, lastActive: 'Sep 02', joined: 'Aug 28', status: 'Inactive' },
-  { id: 'u5', name: 'Mei Tanaka', email: 'mei.tanaka@example.com', sessions: 19, lastActive: 'Sep 26', joined: 'Jun 30', status: 'Active' },
-  { id: 'u6', name: 'Diego Alvarez', email: 'diego.alvarez@example.com', sessions: 0, lastActive: 'Never', joined: 'Sep 21', status: 'Inactive' },
-  { id: 'u7', name: 'Hannah Weber', email: 'hannah.weber@example.com', sessions: 14, lastActive: 'Sep 25', joined: 'Jul 07', status: 'Active' },
-  { id: 'u8', name: 'Omar Haddad', email: 'omar.haddad@example.com', sessions: 6, lastActive: 'Sep 11', joined: 'Aug 09', status: 'Active' },
 ]
