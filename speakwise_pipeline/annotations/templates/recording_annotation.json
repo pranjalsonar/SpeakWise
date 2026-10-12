@@ -1,0 +1,14 @@
+{
+  "recording_id": "r001",
+  "consent": {"recording": false, "analysis": false, "storage_until": "YYYY-MM-DD", "obtained_by": "", "date": ""},
+  "speaker": {"accent": "e.g. Indian English (Maharashtra)", "notes": ""},
+  "recording": {"device": "laptop webcam", "environment": "quiet room", "duration_s": null},
+  "annotator": "",
+  "annotation_date": "",
+  "reference_transcript": "",
+  "fillers": [{"start": 0.0, "end": 0.0, "label": "um"}],
+  "repetitions": [{"start": 0.0, "end": 0.0, "text": "the the", "type": "accidental"}],
+  "pauses": [{"start": 0.0, "end": 0.0}],
+  "unclear": [{"start": 0.0, "end": 0.0, "note": ""}],
+  "visual": {"face_visible_notes": "", "looking_at_camera_intervals": [{"start": 0.0, "end": 0.0}]}
+}

@@ -1,0 +1,20 @@
+# Never commit recordings, transcripts, reports or model weights.
+models/
+outputs/
+work/
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.avi
+*.wav
+*.mp3
+*.m4a
+# real-recording annotations may contain private transcripts; keep templates only
+annotations/*
+!annotations/README.md
+!annotations/templates/
+!annotations/templates/**
+__pycache__/
+*.egg-info/
+.pytest_cache/
