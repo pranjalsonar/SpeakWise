@@ -1,0 +1,12 @@
+# Dependencies for the analysis pipeline (backend/app/analysis).
+# Kept separate from requirements.txt so the pipeline can run in a small venv.
+pydantic==2.10.6
+numpy
+faster-whisper>=1.1.0      # ASR (CTranslate2) + bundled Silero VAD (ONNX, no torch)
+praat-parselmouth>=0.4.5   # pitch / intensity (prosody)
+mediapipe>=1.0              # face / pose / hand landmarkers (models: python -m app.analysis.vision.models)
+opencv-python-headless      # frame I/O; usually pulled in by mediapipe
+psutil                     # pick a Whisper size that fits in free RAM
+scikit-learn               # optional: training the ML confidence model (fusion/ml.py)
+joblib
+pytest

@@ -1,0 +1,6 @@
+{
+  "asr_model": "tiny",
+  "asr_cpu_threads": 2,
+  "video_sample_fps": 3,
+  "pose_enabled": false
+}

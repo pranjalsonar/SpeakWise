@@ -1,0 +1,1704 @@
+{
+  "$defs": {
+    "AudioAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "speaking_time_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "speech_span_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "words_per_minute": {
+          "$ref": "#/$defs/Metric"
+        },
+        "fillers": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FillerAnalysis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "repetitions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RepetitionAnalysis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pauses": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PauseAnalysis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "clarity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ClarityAnalysis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "audio_quality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AudioQuality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "status",
+        "speaking_time_s",
+        "speech_span_s",
+        "words_per_minute"
+      ],
+      "title": "AudioAnalysis",
+      "type": "object"
+    },
+    "AudioQuality": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "peak_dbfs": {
+          "$ref": "#/$defs/Metric"
+        },
+        "rms_dbfs": {
+          "$ref": "#/$defs/Metric"
+        },
+        "speech_rms_dbfs": {
+          "$ref": "#/$defs/Metric"
+        },
+        "noise_floor_dbfs": {
+          "$ref": "#/$defs/Metric"
+        },
+        "snr_estimate_db": {
+          "$ref": "#/$defs/Metric"
+        },
+        "clipping_ratio": {
+          "$ref": "#/$defs/Metric"
+        }
+      },
+      "required": [
+        "status",
+        "peak_dbfs",
+        "rms_dbfs",
+        "speech_rms_dbfs",
+        "noise_floor_dbfs",
+        "snr_estimate_db",
+        "clipping_ratio"
+      ],
+      "title": "AudioQuality",
+      "type": "object"
+    },
+    "CheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "passed",
+        "detail"
+      ],
+      "title": "CheckResult",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        },
+        "retrieval_similarity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieval Similarity"
+        },
+        "entailment": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entailment"
+        },
+        "contradiction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contradiction"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "text",
+        "label"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ClarityAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "unclear_segments": {
+          "$ref": "#/$defs/Metric"
+        },
+        "unclear_speech_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Segments",
+          "type": "array"
+        },
+        "method": {
+          "default": "",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "unclear_segments",
+        "unclear_speech_s"
+      ],
+      "title": "ClarityAnalysis",
+      "type": "object"
+    },
+    "ContextEvaluation": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "rubric_version": {
+          "title": "Rubric Version",
+          "type": "string"
+        },
+        "method": {
+          "title": "Method",
+          "type": "object"
+        },
+        "reliability": {
+          "title": "Reliability",
+          "type": "object"
+        },
+        "topic_relevance": {
+          "$ref": "#/$defs/Metric"
+        },
+        "key_point_coverage_raw": {
+          "$ref": "#/$defs/Metric"
+        },
+        "key_point_coverage_adjusted": {
+          "$ref": "#/$defs/Metric"
+        },
+        "context_alignment": {
+          "$ref": "#/$defs/Metric"
+        },
+        "provisional_threshold": {
+          "title": "Provisional Threshold",
+          "type": "number"
+        },
+        "verdict": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verdict"
+        },
+        "key_points": {
+          "items": {
+            "$ref": "#/$defs/KeyPoint"
+          },
+          "title": "Key Points",
+          "type": "array"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "consistency_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Consistency Counts",
+          "type": "object"
+        },
+        "off_topic_segments": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Off Topic Segments",
+          "type": "array"
+        },
+        "units": {
+          "items": {
+            "$ref": "#/$defs/SpeechUnit"
+          },
+          "title": "Units",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "rubric_version",
+        "topic_relevance",
+        "key_point_coverage_raw",
+        "key_point_coverage_adjusted",
+        "context_alignment",
+        "provisional_threshold"
+      ],
+      "title": "ContextEvaluation",
+      "type": "object"
+    },
+    "ErrorRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "title": "Module",
+          "type": "string"
+        },
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "recoverable": {
+          "default": true,
+          "title": "Recoverable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "module",
+        "stage",
+        "type",
+        "message"
+      ],
+      "title": "ErrorRecord",
+      "type": "object"
+    },
+    "FillerAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "total": {
+          "$ref": "#/$defs/Metric"
+        },
+        "per_minute": {
+          "$ref": "#/$defs/Metric"
+        },
+        "per_100_words": {
+          "$ref": "#/$defs/Metric"
+        },
+        "by_type": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "By Type",
+          "type": "object"
+        },
+        "by_kind": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "By Kind",
+          "type": "object"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "possible_untranscribed_hesitations": {
+          "$ref": "#/$defs/Metric"
+        },
+        "method": {
+          "default": "",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "total",
+        "per_minute",
+        "per_100_words",
+        "possible_untranscribed_hesitations"
+      ],
+      "title": "FillerAnalysis",
+      "type": "object"
+    },
+    "InputValidation": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/CheckResult"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "has_audio": {
+          "default": false,
+          "title": "Has Audio",
+          "type": "boolean"
+        },
+        "has_video": {
+          "default": false,
+          "title": "Has Video",
+          "type": "boolean"
+        },
+        "audio_usable": {
+          "default": false,
+          "title": "Audio Usable",
+          "type": "boolean"
+        },
+        "video_usable": {
+          "default": false,
+          "title": "Video Usable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "InputValidation",
+      "type": "object"
+    },
+    "Issue": {
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "title": "Module",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "module",
+        "code",
+        "message"
+      ],
+      "title": "Issue",
+      "type": "object"
+    },
+    "KeyPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "covered": {
+          "title": "Covered",
+          "type": "boolean"
+        },
+        "similarity": {
+          "title": "Similarity",
+          "type": "number"
+        },
+        "evidence_start": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Start"
+        },
+        "evidence_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Text"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "source",
+        "covered",
+        "similarity"
+      ],
+      "title": "KeyPoint",
+      "type": "object"
+    },
+    "Metric": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "denominator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Denominator"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "unit",
+        "status"
+      ],
+      "title": "Metric",
+      "type": "object"
+    },
+    "PauseAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "thresholds": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Thresholds",
+          "type": "object"
+        },
+        "short_pauses": {
+          "$ref": "#/$defs/Metric"
+        },
+        "long_pauses": {
+          "$ref": "#/$defs/Metric"
+        },
+        "longest_pause_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "total_pause_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "pauses_per_minute": {
+          "$ref": "#/$defs/Metric"
+        },
+        "leading_silence_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "trailing_silence_s": {
+          "$ref": "#/$defs/Metric"
+        },
+        "uncertain_gaps": {
+          "$ref": "#/$defs/Metric"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "method": {
+          "default": "",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "short_pauses",
+        "long_pauses",
+        "longest_pause_s",
+        "total_pause_s",
+        "pauses_per_minute",
+        "leading_silence_s",
+        "trailing_silence_s",
+        "uncertain_gaps"
+      ],
+      "title": "PauseAnalysis",
+      "type": "object"
+    },
+    "Preprocessing": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "container": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Container"
+        },
+        "container_duration_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Container Duration S"
+        },
+        "audio_stream": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StreamInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "video_stream": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StreamInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extracted_audio": {
+          "title": "Extracted Audio",
+          "type": "object"
+        },
+        "video_sampling": {
+          "title": "Video Sampling",
+          "type": "object"
+        },
+        "alignment": {
+          "title": "Alignment",
+          "type": "object"
+        },
+        "audio_signal_dbfs": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Signal Dbfs"
+        },
+        "retained_artifacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Retained Artifacts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "Preprocessing",
+      "type": "object"
+    },
+    "ProcessingMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "title": "Environment",
+          "type": "object"
+        },
+        "config": {
+          "title": "Config",
+          "type": "object"
+        },
+        "models": {
+          "title": "Models",
+          "type": "object"
+        },
+        "timings_s": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Timings S",
+          "type": "object"
+        },
+        "peak_rss_mb": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak Rss Mb"
+        },
+        "gpu_memory_mb": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gpu Memory Mb"
+        },
+        "total_time_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Time S"
+        }
+      },
+      "title": "ProcessingMetadata",
+      "type": "object"
+    },
+    "RepetitionAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "accidental_word_repetitions": {
+          "$ref": "#/$defs/Metric"
+        },
+        "phrase_repetitions": {
+          "$ref": "#/$defs/Metric"
+        },
+        "possible_emphasis": {
+          "$ref": "#/$defs/Metric"
+        },
+        "per_100_words": {
+          "$ref": "#/$defs/Metric"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "method": {
+          "default": "",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "accidental_word_repetitions",
+        "phrase_repetitions",
+        "possible_emphasis",
+        "per_100_words"
+      ],
+      "title": "RepetitionAnalysis",
+      "type": "object"
+    },
+    "SessionMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "pipeline_version": {
+          "title": "Pipeline Version",
+          "type": "string"
+        },
+        "input_file": {
+          "title": "Input File",
+          "type": "string"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "reading_material_sha256": {
+          "title": "Reading Material Sha256",
+          "type": "string"
+        },
+        "reading_material_words": {
+          "title": "Reading Material Words",
+          "type": "integer"
+        },
+        "speaking_duration_selected_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaking Duration Selected S"
+        }
+      },
+      "required": [
+        "session_id",
+        "created_at",
+        "pipeline_version",
+        "input_file",
+        "topic",
+        "reading_material_sha256",
+        "reading_material_words"
+      ],
+      "title": "SessionMetadata",
+      "type": "object"
+    },
+    "SpeechUnit": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "relevance": {
+          "title": "Relevance",
+          "type": "number"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "closest_passage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Closest Passage"
+        }
+      },
+      "required": [
+        "text",
+        "relevance",
+        "label"
+      ],
+      "title": "SpeechUnit",
+      "type": "object"
+    },
+    "Status": {
+      "enum": [
+        "ok",
+        "warning",
+        "unavailable",
+        "failed",
+        "skipped"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "StreamInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "codec": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Codec"
+        },
+        "duration_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration S"
+        },
+        "start_time_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Time S"
+        },
+        "sample_rate": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample Rate"
+        },
+        "channels": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Channels"
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width"
+        },
+        "height": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height"
+        },
+        "frame_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frame Rate"
+        },
+        "rotation_deg": {
+          "default": 0,
+          "title": "Rotation Deg",
+          "type": "integer"
+        }
+      },
+      "title": "StreamInfo",
+      "type": "object"
+    },
+    "Suggestion": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "area": {
+          "title": "Area",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "suggestion": {
+          "title": "Suggestion",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "based_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Based On",
+          "type": "array"
+        },
+        "moments": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Moments",
+          "type": "array"
+        },
+        "certainty": {
+          "title": "Certainty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "area",
+        "title",
+        "suggestion",
+        "evidence",
+        "based_on",
+        "certainty"
+      ],
+      "title": "Suggestion",
+      "type": "object"
+    },
+    "TimedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "start": {
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "title": "End",
+          "type": "number"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "details": {
+          "title": "Details",
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "start",
+        "end"
+      ],
+      "title": "TimedEvent",
+      "type": "object"
+    },
+    "TranscriptSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "title": "End",
+          "type": "number"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "avg_logprob": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Avg Logprob"
+        },
+        "no_speech_prob": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "No Speech Prob"
+        },
+        "compression_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compression Ratio"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "text"
+      ],
+      "title": "TranscriptSegment",
+      "type": "object"
+    },
+    "Transcription": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "model": {
+          "title": "Model",
+          "type": "object"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "language_probability": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language Probability"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
+        "words": {
+          "items": {
+            "$ref": "#/$defs/WordToken"
+          },
+          "title": "Words",
+          "type": "array"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/TranscriptSegment"
+          },
+          "title": "Segments",
+          "type": "array"
+        },
+        "word_count": {
+          "$ref": "#/$defs/Metric"
+        },
+        "mean_word_probability": {
+          "$ref": "#/$defs/Metric"
+        },
+        "low_confidence_word_pct": {
+          "$ref": "#/$defs/Metric"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "Transcription",
+      "type": "object"
+    },
+    "VideoAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "model": {
+          "title": "Model",
+          "type": "object"
+        },
+        "sampling": {
+          "title": "Sampling",
+          "type": "object"
+        },
+        "frames_analyzed": {
+          "$ref": "#/$defs/Metric"
+        },
+        "usable_frame_pct": {
+          "$ref": "#/$defs/Metric"
+        },
+        "face_visible_pct": {
+          "$ref": "#/$defs/Metric"
+        },
+        "face_not_visible_intervals": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Face Not Visible Intervals",
+          "type": "array"
+        },
+        "head_toward_camera_pct": {
+          "$ref": "#/$defs/Metric"
+        },
+        "camera_directed_gaze_pct": {
+          "$ref": "#/$defs/Metric"
+        },
+        "head_orientation": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "title": "Head Orientation",
+          "type": "object"
+        },
+        "looking_away_events": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Looking Away Events",
+          "type": "array"
+        },
+        "posture": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "title": "Posture",
+          "type": "object"
+        },
+        "movement": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "title": "Movement",
+          "type": "object"
+        },
+        "posture_events": {
+          "items": {
+            "$ref": "#/$defs/TimedEvent"
+          },
+          "title": "Posture Events",
+          "type": "array"
+        },
+        "lighting": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "title": "Lighting",
+          "type": "object"
+        }
+      },
+      "required": [
+        "status",
+        "frames_analyzed",
+        "usable_frame_pct",
+        "face_visible_pct",
+        "head_toward_camera_pct",
+        "camera_directed_gaze_pct"
+      ],
+      "title": "VideoAnalysis",
+      "type": "object"
+    },
+    "WordToken": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "start": {
+          "title": "Start",
+          "type": "number"
+        },
+        "end": {
+          "title": "End",
+          "type": "number"
+        },
+        "probability": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Probability"
+        }
+      },
+      "required": [
+        "text",
+        "start",
+        "end"
+      ],
+      "title": "WordToken",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "session_metadata": {
+      "$ref": "#/$defs/SessionMetadata"
+    },
+    "input_validation": {
+      "$ref": "#/$defs/InputValidation"
+    },
+    "preprocessing": {
+      "$ref": "#/$defs/Preprocessing"
+    },
+    "transcription": {
+      "$ref": "#/$defs/Transcription"
+    },
+    "audio_analysis": {
+      "$ref": "#/$defs/AudioAnalysis"
+    },
+    "video_analysis": {
+      "$ref": "#/$defs/VideoAnalysis"
+    },
+    "context_evaluation": {
+      "$ref": "#/$defs/ContextEvaluation"
+    },
+    "improvement_suggestions": {
+      "items": {
+        "$ref": "#/$defs/Suggestion"
+      },
+      "title": "Improvement Suggestions",
+      "type": "array"
+    },
+    "processing_metadata": {
+      "$ref": "#/$defs/ProcessingMetadata"
+    },
+    "warnings": {
+      "items": {
+        "$ref": "#/$defs/Issue"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "errors": {
+      "items": {
+        "$ref": "#/$defs/ErrorRecord"
+      },
+      "title": "Errors",
+      "type": "array"
+    }
+  },
+  "required": [
+    "session_metadata",
+    "input_validation",
+    "preprocessing",
+    "transcription",
+    "audio_analysis",
+    "video_analysis",
+    "context_evaluation",
+    "processing_metadata"
+  ],
+  "title": "SessionReport",
+  "type": "object",
+  "$comment": "SpeakWise session report, schema version 1.0.0"
+}

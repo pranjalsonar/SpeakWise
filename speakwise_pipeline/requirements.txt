@@ -1,0 +1,12 @@
+# SpeakWise pipeline - runtime dependencies (same list as pyproject.toml).
+# System requirement: FFmpeg + ffprobe on PATH (preinstalled in Google Colab).
+# Install:  pip install -r requirements.txt   (or: pip install -e .[test])
+numpy>=1.24
+pydantic>=2.5,<3
+psutil>=5.9
+faster-whisper>=1.1,<2      # speech recognition (CTranslate2) + bundled Silero VAD (MIT)
+mediapipe>=0.10.14          # face / pose landmarks (Apache-2.0)
+onnxruntime>=1.17           # context models: MiniLM embeddings + DeBERTa NLI (no PyTorch needed)
+tokenizers>=0.15
+huggingface_hub>=0.20       # model downloads
+pytest>=7

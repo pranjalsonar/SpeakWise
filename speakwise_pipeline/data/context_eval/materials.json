@@ -1,0 +1,32 @@
+{
+  "_note": "Seed reading materials and key points written by the pipeline author for development. NOT human-validated. Add real SpeakWise materials using the same structure.",
+  "climate_change": {
+    "topic": "Climate change: causes, effects and what we can do",
+    "file": "materials/climate_change.txt",
+    "key_points": [
+      "Burning fossil fuels such as coal, oil and gas is the main human cause of climate change.",
+      "Greenhouse gases like carbon dioxide and methane trap heat and raise global temperatures.",
+      "Deforestation and agriculture add to emissions.",
+      "Melting ice and warming oceans cause sea levels to rise, threatening coastal areas.",
+      "Extreme weather such as heatwaves, droughts and floods is becoming more frequent.",
+      "Ecosystems such as coral reefs are damaged by warming.",
+      "Poorer countries are often most affected despite contributing least.",
+      "Renewable energy and efficiency reduce emissions (mitigation).",
+      "Adaptation prepares for unavoidable changes, such as flood defences.",
+      "Governments act through carbon pricing and agreements such as the Paris Agreement; individuals can also help."
+    ]
+  },
+  "sleep_learning": {
+    "topic": "Why sleep matters for learning",
+    "file": "materials/sleep_and_learning.txt",
+    "key_points": [
+      "The brain stays active during sleep; teenagers need about 8-10 hours and adults 7-9.",
+      "Sleep consolidates new memories into long-term memory.",
+      "Poor sleep reduces attention and the ability to learn the next day.",
+      "Lack of sleep worsens mood, reaction time and decision-making.",
+      "Sleep supports the immune system and physical health.",
+      "Regular sleep times, avoiding screens and caffeine, and a dark quiet room improve sleep.",
+      "Spreading revision over days works better than cramming without sleep."
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "speakwise"
+version = "0.1.0"
+description = "SpeakWise multimodal speech analysis pipeline (audio, video, context matching)"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pydantic>=2.5,<3",
+    "psutil>=5.9",
+    "faster-whisper>=1.1,<2",
+    "mediapipe>=0.10.14",
+    "onnxruntime>=1.17",
+    "tokenizers>=0.15",
+    "huggingface_hub>=0.20",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+speakwise = ["resources/*.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "models: needs downloaded model files (skipped if unavailable)",
+    "slow: runs a speech-recognition model (minutes on CPU)",
+]
