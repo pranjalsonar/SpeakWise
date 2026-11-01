@@ -54,7 +54,8 @@ Close and reopen the terminal, then check: `cloudflared --version`
 
 ```powershell
 cd D:\madam_project\SpeakWise\backend
-powershell -ExecutionPolicy Bypass -File scripts\start-demo.ps1
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force   # allows scripts in this window only
+.\scripts\start-demo.ps1
 ```
 
 The script:

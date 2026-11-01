@@ -5,7 +5,8 @@
 
 .EXAMPLE
   cd D:\madam_project\SpeakWise\backend
-  powershell -ExecutionPolicy Bypass -File scripts\start-demo.ps1
+  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+  .\scripts\start-demo.ps1
 #>
 param([int]$Port = 8000)
 

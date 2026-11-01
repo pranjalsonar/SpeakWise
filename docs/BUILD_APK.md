@@ -46,7 +46,8 @@ eas build --platform android --profile preview
 
 ```powershell
 cd D:\madam_project\SpeakWise\backend
-powershell -ExecutionPolicy Bypass -File scripts\start-demo.ps1
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+.\scripts\start-demo.ps1
 ```
 
 Copy the printed `https://….trycloudflare.com` address into the app: **Profile → Server →

@@ -18,7 +18,7 @@ Check: http://localhost:8000/health
 ## Make it reachable from phones
 
 - Demo from your laptop (free, no account): [docs/SETUP_LOCAL_TUNNEL.md](../docs/SETUP_LOCAL_TUNNEL.md),
-  or just run `powershell -ExecutionPolicy Bypass -File scripts\start-demo.ps1`
+  or just run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; .\scripts\start-demo.ps1`
 - Always-on cloud deployment: [docs/DEPLOY_CLOUD.md](../docs/DEPLOY_CLOUD.md)
 
 ## First-time setup
