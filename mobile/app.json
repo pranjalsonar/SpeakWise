@@ -18,7 +18,11 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.speakwise.app"
+      "package": "com.speakwise.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "server",
@@ -54,7 +58,16 @@
       "reactCompiler": true
     },
     "extra": {
-      "backendUrl": ""
-    }
+      "backendUrl": "",
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "d98e391a-27d5-4aad-a052-7244c869c2c5"
+      }
+    },
+    "owner": "counter09"
   }
 }
